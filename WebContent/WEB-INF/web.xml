@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<servlet>
+		<servlet-name>Auth</servlet-name>
+		<servlet-class>servlets.Auth</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Auth</servlet-name>
+		<url-pattern>/auth</url-pattern>
+	</servlet-mapping>
+</web-app>
