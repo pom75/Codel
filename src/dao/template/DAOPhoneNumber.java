@@ -12,6 +12,9 @@ import domain.PhoneNumber;
 @SuppressWarnings({"rawtypes"})
 public class DAOPhoneNumber extends HibernateDaoSupport implements
 		IDAOPhoneNumber {
+	
+	
+	
 	public List getPhoneNumbersByIdContact(long idContact) {
 		try {
 			List contacts = getHibernateTemplate().find(
