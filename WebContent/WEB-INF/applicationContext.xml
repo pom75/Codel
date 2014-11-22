@@ -23,25 +23,17 @@
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mappingResources">
-			<list>
-				<value>domain/Contact.hbm.xml</value>
-				<value>domain/Address.hbm.xml</value>
-				<value>domain/PhoneNumber.hbm.xml</value>
-				<value>domain/ContactGroup.hbm.xml</value>
-			</list>
+
+		<!-- retrieve conf from cfg: http://stackoverflow.com/questions/471799/spring-and-hibernate-cfg-xml -->
+		<property name="configLocation">
+			<value>hibernate.cfg.xml</value>
 		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
-				<prop key="hibernate.generate_statistics">true</prop>
-			</props>
-		</property>
+		<!-- Check if deduced from <property name="dataSource" ref="dataSource" 
+			/> <property name="hibernateProperties"> <props> <prop key="hibernate.hbm2ddl.auto">create</prop> 
+			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> <prop 
+			key="hibernate.cache.use_second_level_cache">true</prop> <prop key="hibernate.cache.use_query_cache">true</prop> 
+			<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop> 
+			<prop key="hibernate.generate_statistics">true</prop> </props> </property> -->
 	</bean>
 
 	<bean id="transactionManager"
@@ -49,19 +41,18 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+
+
 	<!-- TODO Check what this is -->
 	<!-- <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate"> -->
 	<!-- <property name="transactionManager" ref="transactionManager"/> -->
 	<!-- </bean> -->
 
-	<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter">
-		<property name="registrationBehavior" value="1" />
-		<property name="beans">
-			<map>
-				<entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean" />
-			</map>
-		</property>
-	</bean>
+
+	<!-- DISABLING WTF <bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter"> 
+		<property name="registrationBehavior" value="1" /> <property name="beans"> 
+		<map> <entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean" 
+		/> </map> </property> </bean> -->
 
 	<bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
 		<property name="statisticsEnabled" value="true" />
