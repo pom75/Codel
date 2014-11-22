@@ -12,13 +12,13 @@
 		<property name="hibernate.connection.password">motdepasse</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
-		<!-- ¤> Hibernate config -->
+		<!-- ¤> Hibernate config cache!!-->
 		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="hibernate.cache.use_query_cache">false</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
-		<!-- TODO cache -->
-		<!-- <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property> -->
-		<!-- <property name="hibernate.generate_statistics">true</property> -->
+		<property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property> 
+		<!-- TODO: check version: provide <=3.2, apres RegionFactory  -->
+		<property name="hibernate.generate_statistics">true</property> 
 
 		<!-- ¤> log config -->
 		<property name="hibernate.show_sql">true</property>
