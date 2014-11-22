@@ -248,16 +248,14 @@ public class DAOContact implements IDAOContact{
 
 	@Override
 	public Contact getContact(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
 	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
@@ -266,8 +264,7 @@ public class DAOContact implements IDAOContact{
 			String email, String street, String zip, String city,
 			String country, String home, String office, String mobile,
 			int siretnum) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
@@ -275,36 +272,31 @@ public class DAOContact implements IDAOContact{
 	public List<Contact> searchContact(String fname, String lname,
 			String email, Address address, String home, String office,
 			String mobile) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
 	@Override
 	public boolean generateContacts() {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
 	@Override
 	public List<Contact> getContactGroupByIdContact(String idContact) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
 	@Override
 	public List<Contact> getAllContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
 	@Override
 	public Object[] getContactById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
 	}
 
 
