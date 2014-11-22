@@ -3,13 +3,11 @@ package servlets;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.ContactService;
-
-public class DeleteContactServlet extends HttpServlet {
+public class DeleteContactServlet extends ContactServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 
@@ -21,7 +19,7 @@ public class DeleteContactServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long id = Long.parseLong(request.getParameter("id"));
 
-		ContactService.deleteContact(id); // FIXME GET DAO?
+		CS.deleteContact(id); // FIXME GET DAO?
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 

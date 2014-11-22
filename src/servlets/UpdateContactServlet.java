@@ -3,15 +3,12 @@ package servlets;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.ContactService;
+public class UpdateContactServlet extends ContactServlet {
 
-public class UpdateContactServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 12L;
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +23,7 @@ public class UpdateContactServlet extends HttpServlet {
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
 
-		ContactService.updateContact(null, fname, lname, email, null, null,
+		CS.updateContact(null, fname, lname, email, null, null,
 				null, null, null, email, email, 0);
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(
 				request, response);

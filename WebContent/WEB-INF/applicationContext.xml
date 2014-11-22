@@ -97,9 +97,16 @@
 	<bean id="ContactLogger" class="aspect.ContactLogger" />
 
 
-	<!-- Session factory pour les templates!! -->
+	<!-- Service implem -->
+	<bean id="ContactService" class="service.ContactService" scope="singleton">
+		<constructor-arg ref="DAOContact" />
+	</bean>
+
+	<!-- Dao Implems -->
+
 	<bean id="DAOContact" class="dao.template.DAOContact" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
+		<!-- Session factory pour les templates!! -->
 	</bean>
 
 
