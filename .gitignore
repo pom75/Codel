@@ -4,5 +4,5 @@ Cours/
 TP/
 *.DS_Store
 *.settings
-*build
-/bin
+build/*
+bin/*
