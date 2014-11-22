@@ -30,6 +30,7 @@
 			<many-to-many class="domain.ContactGroup" column="ID_CONTACTGROUP" />
 		</set>
 
+		<!-- Définition de la sous classe entreprise -->
 		<joined-subclass name="Entreprise" table="entreprise_table">
 			<key column="ID_CONTACT" />
 			<property name="numSiret" column="NUMSIRET" />
