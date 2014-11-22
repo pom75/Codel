@@ -1,4 +1,4 @@
-package dao.hibtemplate;
+package dao.template;
 
 import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
