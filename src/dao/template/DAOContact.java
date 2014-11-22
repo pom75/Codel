@@ -1,4 +1,4 @@
-package dao.hibtemplate;
+package dao.template;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,12 @@ import domain.ContactGroup;
 import domain.Entreprise;
 import domain.PhoneNumber;
 
+
+// FIXME Try togenetic
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
+
+	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
 
 	public List searchContact(final String fname, final String lname,
 			final String email, final Address address, final String home,
@@ -34,6 +39,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						try {
+							// ¤hib:crit
+							//FIXME extract helper method
 							Criteria criteria = session
 									.createCriteria(Contact.class);
 							if (!fname.isEmpty()) {
@@ -106,10 +113,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public Object[] getContactById(String id) {
 		try {
+			// ¤hib:sql
 			List contacts = getHibernateTemplate().find(
 					"select c, a from Contact c, Address a where c.id = " + id
 							+ " and c.address= a");
-			if ((contacts != null) && (contacts.size() != 0)) {
+			if ((contacts != null) && (!contacts.isEmpty())) {
 				return (Object[]) contacts.get(0);
 			}
 			return null;
@@ -125,6 +133,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						try {
+							// ¤hib:hql
 							Query query = session
 									.createQuery("from Contact c left join fetch c.address address");
 							List contacts = query.setCacheable(true).list();
@@ -142,6 +151,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			long idNum = Integer.parseInt(idContact);
 			Contact c = (Contact) getHibernateTemplate().get(Contact.class,
 					idNum);
+			// FIXME??
 
 			List contactGroup = getHibernateTemplate().find(
 					"select elements(c.books) from Contact c where c.id = "
@@ -157,6 +167,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
+	//FIXME Kill??? with?
 	public boolean generateContacts() {
 		try {
 			List<Contact> contacts = new ArrayList<Contact>();
@@ -184,6 +195,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				phoneNumbers.add((PhoneNumber) ApplicationContextUtils
 						.getApplicationContext().getBean("PhoneNumberExp" + i));
 			}
+			// Good idea, indexed names of bean!
 
 			for (int i = 0; i <= 2; i++) {
 				for (int j = 0; j < 3; j++) {

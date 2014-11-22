@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class Auth
+ * 
+ * FIXME Keep?
  */
 
 public class Auth extends HttpServlet {
@@ -19,7 +21,6 @@ public class Auth extends HttpServlet {
      */
     public Auth() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

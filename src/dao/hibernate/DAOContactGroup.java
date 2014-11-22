@@ -1,4 +1,4 @@
-package dao.hib;
+package dao.hibernate;
 
 import java.util.ArrayList;
 import java.util.List;
