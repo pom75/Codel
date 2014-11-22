@@ -1,7 +1,7 @@
 package services;
 
 import dao.IDAOContact;
-import dao.jdbc.DAOContact;
+import dao.hib.DAOContact;
 
 public class SuppContactService {
 
