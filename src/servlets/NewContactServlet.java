@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.LoginService;
+import services.NewContactService;
 
 /**
  * Servlet implementation class login
  */
-public class LoginServlet extends HttpServlet {
+public class NewContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
@@ -22,18 +22,17 @@ public class LoginServlet extends HttpServlet {
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		boolean root = LoginService.sevice(login, password);
-		
-		
-		if (root) {
-			getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
-		} else {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		}
+		String fname = null;//request.getParameter("fname");
+		String lname = null;//request.getParameter("lname");
+		String email = null;//request.getParameter("email");
+
+
+		NewContactService.addContact(fname, lname, email);
+		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 
 }

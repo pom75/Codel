@@ -7,14 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.LoginService;
+import services.NewContactService;
+import services.SuppContactService;
 
-/**
- * Servlet implementation class login
- */
-public class LoginServlet extends HttpServlet {
+public class DeleteContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 
 
 
@@ -24,16 +22,12 @@ public class LoginServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		boolean root = LoginService.sevice(login, password);
-		
-		
-		if (root) {
-			getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
-		} else {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		}
+		long id = Long.parseLong(request.getParameter("id"));
+
+
+		SuppContactService.suppContact(id);
+		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
+
 
 }

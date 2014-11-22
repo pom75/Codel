@@ -7,33 +7,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.LoginService;
+import services.SuppContactService;
+import services.UpdateContactService;
 
-/**
- * Servlet implementation class login
- */
-public class LoginServlet extends HttpServlet {
+public class UpdateContactServlet extends HttpServlet{
+
 	private static final long serialVersionUID = 1L;
-       
-
-
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		boolean root = LoginService.sevice(login, password);
+		long id = Long.parseLong(request.getParameter("id"));
+		String fname = request.getParameter("fname");
+		String lname = request.getParameter("lname");
+		String email = request.getParameter("email");
 		
-		
-		if (root) {
-			getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
-		} else {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		}
+		UpdateContactService.upContact(id,fname,lname,email);
+		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
-
 }
