@@ -1,4 +1,4 @@
-package dao.impl;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,8 @@ import util.ApplicationContextUtils;
 import util.HibernateUtil;
 import dao.IDAOContact;
 import dao.IDAOContactGroup;
-import domain.IContact;
-import domain.IContactGroup;
-import domain.impl.Contact;
-import domain.impl.ContactGroup;
+import domain.Contact;
+import domain.ContactGroup;
 
 public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactGroup {
 	public boolean createContactGroup(String name , String idContact){		
