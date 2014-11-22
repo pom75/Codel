@@ -31,7 +31,7 @@ public class NewContactServlet extends HttpServlet {
 		String email = null;//request.getParameter("email");
 
 
-		NewContactService.addContact(fname, lname, email);
+		NewContactService.addContact(fname, lname, email, null, null, 0);
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 

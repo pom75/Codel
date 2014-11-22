@@ -1,24 +1,18 @@
-package dao.impl;
+package dao.hib;
 
 import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
-import util.HibernateUtil;
 import dao.IDAOEntreprise;
-import domain.IEntreprise;
+import domain.Entreprise;
 
 public class DAOEntreprise extends HibernateDaoSupport implements IDAOEntreprise{
-	public IEntreprise getEntrepriseByIdContact(long idContact){
+	public Entreprise getEntrepriseByIdContact(long idContact){
 		try{
-			List entreprises = getHibernateTemplate().find("from Entreprise e where e.id = " + idContact);
+			List<Entreprise> entreprises = getHibernateTemplate().find("from Entreprise e where e.id = " + idContact);
 			if(entreprises.size() <= 0){
 				return null;
 			}
-			return ((IEntreprise)entreprises.get(0));
+			return ((Entreprise)entreprises.get(0));
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 			return null;
@@ -43,7 +37,7 @@ public class DAOEntreprise extends HibernateDaoSupport implements IDAOEntreprise
 		return session;
 	}
 	
-	public IEntreprise getEntrepriseByIdContact(long idContact){
+	public Entreprise getEntrepriseByIdContact(long idContact){
 		Session session = myGetSession();
 
 		try{
@@ -52,7 +46,7 @@ public class DAOEntreprise extends HibernateDaoSupport implements IDAOEntreprise
 			if(entreprises.size() <= 0){
 				return null;
 			}
-			return ((IEntreprise)entreprises.get(0));
+			return ((Entreprise)entreprises.get(0));
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 			return null;

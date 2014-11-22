@@ -20,7 +20,10 @@ public interface IDAOContact {
 	public List<Contact> searchContact(final String fname, final String lname, final String email, final Address address,
 			final String home, final String office, final String mobile);
 	public boolean generateContacts();
+	
 	public List<Contact> getContactGroupByIdContact(String idContact);
+	
 	public List<Contact> getAllContacts();
+	
 	public Object[] getContactById(String id);
 }

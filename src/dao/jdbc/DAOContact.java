@@ -221,7 +221,6 @@ public class DAOContact implements IDAOContact{
 
 
 
-	@Override
 	public boolean addContact(String fname, String lname, String email) {
 		Contact contact = new Contact();
 		contact.setFirstname(fname);
@@ -249,6 +248,61 @@ public class DAOContact implements IDAOContact{
 
 	@Override
 	public Contact getContact(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean addContact(String fname, String lname, String email,
+			Address address, Set<PhoneNumber> profiles, int numSiret) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean modifyContact(Contact c, String fname, String lname,
+			String email, String street, String zip, String city,
+			String country, String home, String office, String mobile,
+			int siretnum) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public List<Contact> searchContact(String fname, String lname,
+			String email, Address address, String home, String office,
+			String mobile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean generateContacts() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public List<Contact> getContactGroupByIdContact(String idContact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Contact> getAllContacts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Object[] getContactById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

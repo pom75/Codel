@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.hib;
 
 import java.util.List;
 
@@ -9,18 +9,17 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import dao.IDAOAddress;
-import domain.IAddress;
-import domain.impl.Address;
+import domain.Address;
 
 public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
-	public IAddress getAddressById(final long id){	
-		return (IAddress)getHibernateTemplate().executeFind(new HibernateCallback(){
+	public Address getAddressById(final long id){	
+		return (Address)getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{	
 					List addresses = session.createCriteria(Address.class).add(Restrictions.idEq(id)).list();
 
 					if((addresses != null) && (addresses.size() != 0)){
-						return (IAddress) addresses.get(0);
+						return (Address) addresses.get(0);
 					}
 					return null;
 				} catch(Exception e){
@@ -50,7 +49,7 @@ public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 		return session;
 	}
 
-	public IAddress getAddressById(long id){
+	public Address getAddressById(long id){
 		Session session = myGetSession();
 
 		try{
@@ -60,7 +59,7 @@ public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 			List addresses = session.createCriteria(Address.class).add(Restrictions.idEq(id)).list();
 
 			if((addresses != null) && (addresses.size() != 0)){
-				return (IAddress) addresses.get(0);
+				return (Address) addresses.get(0);
 			}
 			return null;
 		} catch(Exception e){

@@ -1,22 +1,16 @@
-package dao;
+package dao.hib;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.test.annotation.DirtiesContext;
-
 import util.ApplicationContextUtils;
-import util.HibernateUtil;
 import dao.IDAOContact;
 import dao.IDAOContactGroup;
 import domain.Contact;
@@ -25,12 +19,12 @@ import domain.ContactGroup;
 public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactGroup {
 	public boolean createContactGroup(String name , String idContact){		
 		try{
-			//IContactGroup c = new ContactGroup();
-			IContactGroup c = (IContactGroup)ApplicationContextUtils.getApplicationContext().getBean("ContactGroup");
+			
+			ContactGroup c = (ContactGroup)ApplicationContextUtils.getApplicationContext().getBean("ContactGroup");
 			c.setGroupName(name);
 			
 			long idNum = Integer.parseInt(idContact);
-			IContact contact = (IContact)getHibernateTemplate().get(Contact.class, idNum);
+			Contact contact = (Contact)getHibernateTemplate().get(Contact.class, idNum);
 
 			if(contact == null){
 				System.out.println("Contact " + idContact + " not found");
@@ -59,11 +53,11 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 		}
 	}
 
-	public IContactGroup getContactGroupById(String id){
+	public ContactGroup getContactGroupById(String id){
 		try{
 			List contactsGroup = getHibernateTemplate().find("select c from ContactGroup c where c.id = " + id);
 			if((contactsGroup != null) && (contactsGroup.size() != 0)){
-				return (IContactGroup) contactsGroup.get(0);
+				return (ContactGroup) contactsGroup.get(0);
 			}
 			return null;
 		} catch(Exception e){
@@ -75,7 +69,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 	public boolean addContact(String[] contacts, String idContactGroup){		
 		try{
 			long idNum = Integer.parseInt(idContactGroup);
-			IContactGroup c = (IContactGroup)getHibernateTemplate().get(ContactGroup.class, idNum);
+			ContactGroup c = (ContactGroup)getHibernateTemplate().get(ContactGroup.class, idNum);
 			if(c == null){
 				System.out.println("Group contact " + idContactGroup + " not found");
 				return false;
@@ -88,7 +82,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 				for(String idContact : contacts){	
 					try{
 						long id = Integer.parseInt(idContact);
-						IContact contact = (IContact) getHibernateTemplate().get(Contact.class, id);
+						Contact contact = (Contact) getHibernateTemplate().get(Contact.class, id);
 						if(contact == null){
 							System.out.println("Cannot find the contact " + idContact);
 							return false;
@@ -113,8 +107,8 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 		return (List)getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{
-					//IContactGroup cg = new ContactGroup();
-					IContactGroup cg = (IContactGroup)ApplicationContextUtils.getApplicationContext().getBean("ContactGroup");
+					//ContactGroup cg = new ContactGroup();
+					ContactGroup cg = (ContactGroup)ApplicationContextUtils.getApplicationContext().getBean("ContactGroup");
 					long id = Integer.parseInt(idContactGroup);
 					
 					
@@ -128,8 +122,8 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 					cg.setGroupId(id);
 					List listContactGroup = session.createCriteria(ContactGroup.class).add(Example.create(cg)).list();
 					for(Object g : listContactGroup){
-						if(String.valueOf(((IContactGroup)g).getGroupId()).equals(idContactGroup)){
-							cg = (IContactGroup)g;
+						if(String.valueOf(((ContactGroup)g).getGroupId()).equals(idContactGroup)){
+							cg = (ContactGroup)g;
 							break;
 						}
 					}
@@ -143,7 +137,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 		});
 	}
 	
-	public boolean deleteContactGroup(IContactGroup contactGroup){		
+	public boolean deleteContactGroup(ContactGroup contactGroup){		
 		try{
 			getHibernateTemplate().delete(contactGroup);
 			return true;
@@ -179,11 +173,11 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 
 		try{
 			tx = session.beginTransaction();
-			IContactGroup c = new ContactGroup();
+			ContactGroup c = new ContactGroup();
 			session.save(c);
 			c.setGroupName(name);
 			long idNum = Integer.parseInt(idContact);
-			IContact contact = (IContact)session.get(Contact.class, idNum);
+			Contact contact = (Contact)session.get(Contact.class, idNum);
 
 			if(contact == null){
 				System.out.println("Contact " + idContact + " not found");
@@ -220,14 +214,14 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 		}	
 	}
 
-	public IContactGroup getContactGroupById(String id){
+	public ContactGroup getContactGroupById(String id){
 		Session session = myGetSession();
 
 		try{
 			Query query = session.createQuery("select c from ContactGroup c where c.id = " + id);
 			List contactsGroup = query.list();
 			if((contactsGroup != null) && (contactsGroup.size() != 0)){
-				return (IContactGroup) contactsGroup.get(0);
+				return (ContactGroup) contactsGroup.get(0);
 			}
 			return null;
 		} catch(Exception e){
@@ -245,7 +239,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 		try{
 			long idNum = Integer.parseInt(idContactGroup);
 			tx = session.beginTransaction();
-			IContactGroup c = (IContactGroup)session.get(ContactGroup.class, idNum);
+			ContactGroup c = (ContactGroup)session.get(ContactGroup.class, idNum);
 			if(c == null){
 				System.out.println("Group contact " + idContactGroup + " not found");
 				return false;
@@ -260,7 +254,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 						//						Object[] result = daoContact.getContactById(idContact);
 						//						Contact contact = (Contact) result[0];
 						long id = Integer.parseInt(idContact);
-						IContact contact = (IContact) session.load(Contact.class, id);
+						Contact contact = (Contact) session.load(Contact.class, id);
 						contact.getBooks().add(c);
 						c.getContacts().add(contact);
 						System.out.println("Dans le foreach DAOCOntactGroup methode addContact idContact = " + idContact);
@@ -292,11 +286,11 @@ public class DAOContactGroup extends HibernateDaoSupport implements IDAOContactG
 			Query query = session.createQuery(
 					"select elements(c.contacts) from ContactGroup c where c.groupId = " + idContactGroup);
 			//List contactGroup = query.list();
-			IContactGroup cg = new ContactGroup();
+			ContactGroup cg = new ContactGroup();
 			long id = Integer.parseInt(idContactGroup);
 			cg.setGroupId(id);
 			List listContactGroup = session.createCriteria(ContactGroup.class).add(Example.create(cg)).list();
-			cg = (IContactGroup)listContactGroup.get(0);
+			cg = (ContactGroup)listContactGroup.get(0);
 			List contactGroup = new ArrayList(cg.getContacts());
 			return contactGroup;
 		} catch(Exception e){

@@ -1,17 +1,10 @@
-package dao.impl;
+package dao.hib;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
-import util.HibernateUtil;
 import dao.IDAOPhoneNumber;
-import domain.IPhoneNumber;
-import domain.impl.PhoneNumber;
+import domain.PhoneNumber;
 
 public class DAOPhoneNumber extends HibernateDaoSupport implements IDAOPhoneNumber {
 	public List getPhoneNumbersByIdContact(long idContact){
@@ -29,7 +22,7 @@ public class DAOPhoneNumber extends HibernateDaoSupport implements IDAOPhoneNumb
 	
 	public boolean deletePhoneNumber(long id){
 		try{
-			IPhoneNumber p = (IPhoneNumber)getHibernateTemplate().get(PhoneNumber.class, id);
+			PhoneNumber p = (PhoneNumber)getHibernateTemplate().get(PhoneNumber.class, id);
 			getHibernateTemplate().delete(p);
 
 			return true;
@@ -81,7 +74,7 @@ public class DAOPhoneNumber extends HibernateDaoSupport implements IDAOPhoneNumb
 
 		try{
 			tx = session.beginTransaction();
-			IPhoneNumber p = (IPhoneNumber)session.get(PhoneNumber.class, id);
+			PhoneNumber p = (PhoneNumber)session.get(PhoneNumber.class, id);
 			session.delete(p);
 
 			tx.commit();

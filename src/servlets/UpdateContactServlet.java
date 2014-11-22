@@ -25,7 +25,7 @@ public class UpdateContactServlet extends HttpServlet{
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
 		
-		UpdateContactService.upContact(id,fname,lname,email);
+		UpdateContactService.upContact(null, fname, lname, email, null,null,null,null,null, email, email, 0);
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 }
