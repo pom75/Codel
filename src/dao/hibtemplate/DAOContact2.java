@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.hibtemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,23 +18,21 @@ import util.ApplicationContextUtils;
 import dao.IDAOContact;
 import dao.IDAOContactGroup;
 import dao.IDAOPhoneNumber;
-import domain.IAddress;
-import domain.IContact;
-import domain.IContactGroup;
-import domain.IEntreprise;
-import domain.IPhoneNumber;
-import domain.impl.Contact;
-import domain.impl.Entreprise;
+import domain.Address;
+import domain.Contact;
+import domain.ContactGroup;
+import domain.Entreprise;
+import domain.PhoneNumber;
 
-public class DAOContact extends HibernateDaoSupport implements IDAOContact {
-	public boolean createContact(String fname, String lname, String email, IAddress address, Set<IPhoneNumber> profiles, int numSiret){		
+public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
+	public boolean createContact(String fname, String lname, String email, Address address, Set<PhoneNumber> profiles, int numSiret){		
 		try {
-			IContact c;
+			Contact c;
 			if(numSiret <= 0){
 				c = (Contact)ApplicationContextUtils.getApplicationContext().getBean("ContactConstrWithArgs");
 			} else {
 				c = (Entreprise)ApplicationContextUtils.getApplicationContext().getBean("Entreprise");
-				((IEntreprise)c).setNumSiret(numSiret);
+				((Entreprise)c).setNumSiret(numSiret);
 			}
 
 			if(address != null){
@@ -48,7 +46,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			getHibernateTemplate().save(c);
 
 			if(profiles != null){
-				for(IPhoneNumber profile : profiles){
+				for(PhoneNumber profile : profiles){
 					profile.setContact(c);
 					c.getProfiles().add(profile);
 					getHibernateTemplate().save(profile);
@@ -62,7 +60,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
-	public boolean updateContact(IContact c, String fname, String lname, String email, 
+	public boolean updateContact(Contact c, String fname, String lname, String email, 
 			String street, String zip, String city, String country, String home, String office, String mobile, int siretnum){
 		try{
 			System.out.println("version prev : " + c.getVersion());
@@ -79,12 +77,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			checkAndAdd("mobile", mobile, c, c.getProfiles());
 
 			if(siretnum == -1){
-				if(c instanceof IEntreprise){
+				if(c instanceof Entreprise){
 					return false;
 				}
 			} else {
-				if(c instanceof IEntreprise){
-					((IEntreprise)c).setNumSiret(siretnum);
+				if(c instanceof Entreprise){
+					((Entreprise)c).setNumSiret(siretnum);
 				} else {
 					return false;
 				}
@@ -111,12 +109,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 
 		try{
-			IContact c = (IContact)getHibernateTemplate().get(Contact.class, idNum);
+			Contact c = (Contact)getHibernateTemplate().get(Contact.class, idNum);
 			c.getProfiles().clear();
 
 			ApplicationContext context = ApplicationContextUtils.getApplicationContext();
 			IDAOContactGroup daoContactGroup = (IDAOContactGroup)context.getBean("DAOContactGroup");
-			for(IContactGroup cg : c.getBooks()){
+			for(ContactGroup cg : c.getBooks()){
 				cg.getContacts().remove(c);
 				if(cg.getContacts().size() == 0){
 					daoContactGroup.deleteContactGroup(cg);
@@ -132,7 +130,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
-	public List searchContact(final String fname, final String lname, final String email, final IAddress address,
+	public List searchContact(final String fname, final String lname, final String email, final Address address,
 			final String home, final String office, final String mobile){
 		return (List)getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -173,7 +171,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 
 					for(int i=0; i<contacts.size(); i++){
-						IContact c = (IContact)contacts.get(i);
+						Contact c = (Contact)contacts.get(i);
 
 						List pns = daoP.getPhoneNumbersByIdContact(c.getId());
 						if((! keep("home", home, pns)) || (! keep("office", office, pns)) || (! keep("mobile", mobile, pns))){
@@ -222,7 +220,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public List getContactGroupByIdContact(String idContact){
 		try{
 			long idNum = Integer.parseInt(idContact);
-			IContact c = (IContact)getHibernateTemplate().get(Contact.class, idNum);
+			Contact c = (Contact)getHibernateTemplate().get(Contact.class, idNum);
 
 			List contactGroup = getHibernateTemplate().find("select elements(c.books) from Contact c where c.id = " + idContact);
 
@@ -236,25 +234,25 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public boolean generateContacts(){
 		try{
-			List<IContact> contacts = new ArrayList<IContact>();
-			List<IAddress> addresses = new ArrayList<IAddress>();
-			List<IPhoneNumber> phoneNumbers = new ArrayList<IPhoneNumber>();
+			List<Contact> contacts = new ArrayList<Contact>();
+			List<Address> addresses = new ArrayList<Address>();
+			List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 
-			contacts.add((IContact)ApplicationContextUtils.getApplicationContext().getBean("ContactExp1"));
-			contacts.add((IContact)ApplicationContextUtils.getApplicationContext().getBean("EntrepriseExp1"));
-			contacts.add((IContact)ApplicationContextUtils.getApplicationContext().getBean("EntrepriseExp2"));
+			contacts.add((Contact)ApplicationContextUtils.getApplicationContext().getBean("ContactExp1"));
+			contacts.add((Contact)ApplicationContextUtils.getApplicationContext().getBean("EntrepriseExp1"));
+			contacts.add((Contact)ApplicationContextUtils.getApplicationContext().getBean("EntrepriseExp2"));
 			
-			((IEntreprise)contacts.get(1)).setNumSiret(999999999);
-			((IEntreprise)contacts.get(2)).setNumSiret(888888888);
+			((Entreprise)contacts.get(1)).setNumSiret(999999999);
+			((Entreprise)contacts.get(2)).setNumSiret(888888888);
 
 			for(int i=1; i<=3; i++){
-				addresses.add((IAddress)ApplicationContextUtils.getApplicationContext().getBean("AddressExp" + i));
+				addresses.add((Address)ApplicationContextUtils.getApplicationContext().getBean("AddressExp" + i));
 				contacts.get(i-1).setAddress(addresses.get(i-1));
 				getHibernateTemplate().save(contacts.get(i-1));
 			}
 
 			for(int i=1; i<=9; i++){
-				phoneNumbers.add((IPhoneNumber)ApplicationContextUtils.getApplicationContext().getBean("PhoneNumberExp" + i));
+				phoneNumbers.add((PhoneNumber)ApplicationContextUtils.getApplicationContext().getBean("PhoneNumberExp" + i));
 			}
 
 			for(int i=0; i<=2; i++){
@@ -272,9 +270,9 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
-	private void checkAndAdd(String kind, String number, IContact contact, Set<IPhoneNumber> profiles){
+	private void checkAndAdd(String kind, String number, Contact contact, Set<PhoneNumber> profiles){
 		if(number.equals("")){
-			for(IPhoneNumber p : profiles){
+			for(PhoneNumber p : profiles){
 				if(p.getPhoneKind().equalsIgnoreCase(kind)){
 					getHibernateTemplate().delete(p);
 					break;
@@ -282,14 +280,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 		} else {
 			boolean add = true;
-			for(IPhoneNumber p : profiles){
+			for(PhoneNumber p : profiles){
 				if(p.getPhoneKind().equalsIgnoreCase(kind)){
 					add = false;
 					p.setPhoneNumber(number);
 				}
 			}
 			if(add){
-				IPhoneNumber p = (IPhoneNumber)ApplicationContextUtils.getApplicationContext().getBean("PhoneNumber");
+				PhoneNumber p = (PhoneNumber)ApplicationContextUtils.getApplicationContext().getBean("PhoneNumber");
 				p.setPhoneKind(kind);
 				p.setPhoneNumber(number);
 				p.setContact(contact);
@@ -307,12 +305,40 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return false;
 		}
 		for(Object o : phoneNumbers){
-			IPhoneNumber p = (IPhoneNumber) o;
+			PhoneNumber p = (PhoneNumber) o;
 			if(p.getPhoneKind().equalsIgnoreCase(kind) && 
 					(p.getPhoneNumber().equalsIgnoreCase(number) || (p.getPhoneNumber().contains(number)))){
 				return true;
 			}
 		}
+		return false;
+	}
+
+	@Override
+	public boolean addContact(String fname, String lname, String email,
+			Address address, Set<PhoneNumber> profiles, int numSiret) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteContact(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Contact getContact(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean modifyContact(Contact c, String fname, String lname,
+			String email, String street, String zip, String city,
+			String country, String home, String office, String mobile,
+			int siretnum) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
