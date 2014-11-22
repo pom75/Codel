@@ -22,7 +22,7 @@ public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 					// ¤hib:crit
 					List addresses = session.createCriteria(Address.class).add(Restrictions.idEq(id)).list();
 
-					if((addresses != null) && (addresses.size() != 0)){
+					if((addresses != null) && (! addresses.isEmpty())){
 						return (Address) addresses.get(0);
 					}
 					return null;

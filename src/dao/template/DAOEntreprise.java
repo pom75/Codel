@@ -15,7 +15,7 @@ public class DAOEntreprise extends HibernateDaoSupport implements
 		try {
 			List<Entreprise> entreprises = getHibernateTemplate().find(
 					"from Entreprise e where e.id = " + idContact);
-			if (entreprises.size() <= 0) {
+			if (entreprises.isEmpty()) {
 				return null;
 			}
 			return ((Entreprise) entreprises.get(0));

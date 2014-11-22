@@ -1,5 +1,7 @@
 package dao.template;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -14,8 +16,8 @@ public class DAOPhoneNumber extends HibernateDaoSupport implements
 		try {
 			List contacts = getHibernateTemplate().find(
 					"from PhoneNumber p where p.contact.id = " + idContact);
-			if (contacts.size() <= 0) {
-				return null;
+			if (contacts.isEmpty()) {
+				return Collections.EMPTY_LIST;
 			}
 			return contacts;
 		} catch (Exception e) {

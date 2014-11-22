@@ -24,11 +24,15 @@ import domain.ContactGroup;
 import domain.Entreprise;
 import domain.PhoneNumber;
 
+// FIXME WTF IS THIS
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
+	
 	public boolean createContact(String fname, String lname, String email, Address address, Set<PhoneNumber> profiles, int numSiret){		
 		try {
 			Contact c;
+	
+			// FIXME WTF IS THIS?
 			if(numSiret <= 0){
 				c = (Contact)ApplicationContextUtils.getApplicationContext().getBean("ContactConstrWithArgs");
 			} else {
@@ -66,6 +70,7 @@ public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
 		try{
 			System.out.println("version prev : " + c.getVersion());
 
+			//FIXME Refactor, extract helper method....
 			c.setFirstname(fname);
 			c.setLastname(lname);
 			c.setEmail(email);
@@ -113,6 +118,7 @@ public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
 			Contact c = (Contact)getHibernateTemplate().get(Contact.class, idNum);
 			c.getProfiles().clear();
 
+			//FIXME WHY CONTACT HERE????
 			ApplicationContext context = ApplicationContextUtils.getApplicationContext();
 			IDAOContactGroup daoContactGroup = (IDAOContactGroup)context.getBean("DAOContactGroup");
 			for(ContactGroup cg : c.getBooks()){
@@ -128,6 +134,7 @@ public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
 		} catch(Exception e){
 			e.printStackTrace();
 			return false;
+			//FIXME Forward exception?
 		}
 	}
 
@@ -136,6 +143,7 @@ public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
 		return (List)getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{
+					// ¤hib:crit
 					Criteria criteria = session.createCriteria(Contact.class);
 					if(! fname.isEmpty()){
 						criteria.add(Restrictions.like("firstname", fname, MatchMode.ANYWHERE));

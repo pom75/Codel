@@ -39,6 +39,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						try {
+							// ¤hib:crit
+							//FIXME extract helper method
 							Criteria criteria = session
 									.createCriteria(Contact.class);
 							if (!fname.isEmpty()) {
@@ -111,10 +113,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public Object[] getContactById(String id) {
 		try {
+			// ¤hib:sql
 			List contacts = getHibernateTemplate().find(
 					"select c, a from Contact c, Address a where c.id = " + id
 							+ " and c.address= a");
-			if ((contacts != null) && (contacts.size() != 0)) {
+			if ((contacts != null) && (!contacts.isEmpty())) {
 				return (Object[]) contacts.get(0);
 			}
 			return null;
@@ -130,6 +133,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						try {
+							// ¤hib:hql
 							Query query = session
 									.createQuery("from Contact c left join fetch c.address address");
 							List contacts = query.setCacheable(true).list();
