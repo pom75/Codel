@@ -1,0 +1,10 @@
+Archives*/
+*.class
+Cours/
+TP/
+*.DS_Store
+*.project
+*.classpath
+*.settings
+*build
+/bin
