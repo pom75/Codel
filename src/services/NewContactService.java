@@ -3,7 +3,7 @@ package services;
 import java.util.Set;
 
 import dao.IDAOContact;
-import dao.hib.DAOContact;
+import dao.hibernate.DAOContact;
 import domain.Address;
 import domain.PhoneNumber;
 

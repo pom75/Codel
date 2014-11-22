@@ -22,6 +22,7 @@ public class ApplicationContextUtils {
 		}
 		return context;
 	}
+	
 //	FIXME when JSF
 //	public static ApplicationContext getApplicationContext(FacesContext facesContext){
 //		if(context == null){

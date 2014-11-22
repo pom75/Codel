@@ -13,8 +13,7 @@
 	<import resource="classpath*:/WEB-INF/stubContactContext.xml" />
 
 	<!-- Data source déduite du hibernate config -->
-	<!-- TODO -->
-	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/CODEL" />
@@ -22,9 +21,9 @@
 		<property name="password" value="motdepasse" />
 	</bean>
 
-	<bean id="mySessionFactory"
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource" ref="myDataSource" />
+		<property name="dataSource" ref="dataSource" />
 		<property name="mappingResources">
 			<list>
 				<value>domain/Contact.hbm.xml</value>
@@ -47,9 +46,10 @@
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="mySessionFactory" />
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<!-- TODO Check what this is -->
 	<!-- <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate"> -->
 	<!-- <property name="transactionManager" ref="transactionManager"/> -->
 	<!-- </bean> -->
@@ -67,7 +67,7 @@
 		<property name="statisticsEnabled" value="true" />
 		<property name="sessionFactory">
 			<!-- Uncomment the following when using Hibernate directly -->
-			<ref local="mySessionFactory" />
+			<ref local="sessionFactory" />
 
 			<!-- Uncomment the following when using Hibernate via JPA (Assuming the 
 				managed EMF is named 'entityManagerFactory'. Namespace is: xmlns:util="http://www.springframework.org/schema/util") -->
@@ -89,7 +89,7 @@
 			advice-ref="txAdvice" />
 		<aop:aspect id="ContactLoggerBean" ref="ContactLogger">
 			<aop:before
-				pointcut="execution(* dao.DAOContact.addContact(String,String,*,*,*,*)) and args(firstname,lastname,*,*,*,*)"
+				pointcut="execution(* dao.IDAOContact.addContact(String,String,*,*,*,*)) and args(firstname,lastname,*,*,*,*)"
 				method="log" arg-names="firstname,lastname" />
 		</aop:aspect>
 	</aop:config>
@@ -97,27 +97,30 @@
 	<bean id="ContactLogger" class="aspect.ContactLogger" />
 
 
-	<bean id="DAOContact" class="dao.hib.DAOContact" scope="singleton">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<!-- Session factory pour les templates!! -->
+	<bean id="DAOContact" class="dao.template.DAOContact" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOAddress" class="dao.hib.DAOAddress" scope="singleton">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<bean id="DAOAddress" class="dao.template.DAOAddress" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOContactGroup" class="dao.hib.DAOContactGroup" scope="singleton">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<bean id="DAOContactGroup" class="dao.template.DAOContactGroup"
+		scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOEntreprise" class="dao.hib.DAOEntreprise" scope="singleton">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<bean id="DAOEntreprise" class="dao.template.DAOEntreprise" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="DAOPhoneNumber" class="dao.hib.DAOPhoneNumber" scope="singleton">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<bean id="DAOPhoneNumber" class="dao.template.DAOPhoneNumber"
+		scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 </beans>

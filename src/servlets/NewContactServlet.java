@@ -26,6 +26,7 @@ public class NewContactServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//FIXME
 		String fname = null;//request.getParameter("fname");
 		String lname = null;//request.getParameter("lname");
 		String email = null;//request.getParameter("email");
