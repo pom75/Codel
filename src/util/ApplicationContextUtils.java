@@ -1,6 +1,5 @@
 package util;
 
-import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
@@ -23,12 +22,12 @@ public class ApplicationContextUtils {
 		}
 		return context;
 	}
-	
-	public static ApplicationContext getApplicationContext(FacesContext facesContext){
-		if(context == null){
-			context = WebApplicationContextUtils
-					.getWebApplicationContext((ServletContext) facesContext.getExternalContext().getContext());
-		}
-		return context;
-	}
+//	FIXME when JSF
+//	public static ApplicationContext getApplicationContext(FacesContext facesContext){
+//		if(context == null){
+//			context = WebApplicationContextUtils
+//					.getWebApplicationContext((ServletContext) facesContext.getExternalContext().getContext());
+//		}
+//		return context;
+//	}
 }
