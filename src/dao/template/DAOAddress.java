@@ -16,7 +16,7 @@ public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 	@SuppressWarnings({"rawtypes"})
 	public Address getAddressById(final long id){	
 		//FIXME see genetic for hibernate callbacl
-		return (Address)getHibernateTemplate().executeFind(new HibernateCallback<Object>(){
+		return (Address)getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{	
 					// ¤hib:crit
