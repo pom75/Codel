@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import services.SearchContactService;
-import services.UpdateContactService;
 
 public class SearchContactServlet extends HttpServlet {
 
@@ -24,8 +23,7 @@ public class SearchContactServlet extends HttpServlet {
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
 		
-		SearchContactService.upContact(fname,lname,email);
-		//TODO change HERE 
+		SearchContactService.upContact(fname, lname, email);
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 }
