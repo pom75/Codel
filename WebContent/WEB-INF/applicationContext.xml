@@ -54,17 +54,7 @@
 		<map> <entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean" 
 		/> </map> </property> </bean> -->
 
-	<bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
-		<property name="statisticsEnabled" value="true" />
-		<property name="sessionFactory">
-			<!-- Uncomment the following when using Hibernate directly -->
-			<ref local="sessionFactory" />
-
-			<!-- Uncomment the following when using Hibernate via JPA (Assuming the 
-				managed EMF is named 'entityManagerFactory'. Namespace is: xmlns:util="http://www.springframework.org/schema/util") -->
-			<!-- util:property-path path="entityManagerFactory.sessionFactory" / -->
-		</property>
-	</bean>
+	<!-- statistics are deprecated in latest hibernate -->
 
 	<tx:advice id="txAdvice">
 		<tx:attributes>
