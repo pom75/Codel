@@ -2,10 +2,18 @@ package domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
+@Entity
 public class ContactGroup {
+	@Id
+	@GeneratedValue
 	private long groupId;
 	private String groupName;
+	@ManyToMany()
 	private Set<Contact> contacts;
 
 	public ContactGroup() {

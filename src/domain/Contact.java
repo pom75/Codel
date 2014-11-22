@@ -43,6 +43,10 @@ public class Contact {
 		books = new HashSet<ContactGroup>();
 	}
 
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public long getId() {
 		return id;
 	}
