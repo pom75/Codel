@@ -7,7 +7,12 @@
 	<div class="container">
 		<h2>Ajout d'un nouveau contact</h2>
 		
-		<form action="newcontact" method="post" class="form-horizontal">
+		<form action="updatecontact" method="post" class="form-horizontal">
+			<div class="form-group">
+				<label  for="inputId">Id
+					</label> <input type="text" id="inputId" name="id"
+					Value="12" placeholder="Id Contact" class="form-control"/>
+			</div>
 			<div class="form-group">
 				<label  for="inputSiretNum">Siret
 					number</label> <input type="text" id="inputSiretNum" name="siretNum"
@@ -16,19 +21,19 @@
 
 			<div class="form-group">
 				<label  for="inputFname">First Name</label> <input
-					type="text"  name="fname" Value="Test"
+					type="text" id="inputFName" name="fname" Value="Test"
 					placeholder="Firstname"class="form-control" />
 			</div>
 
 			<div class="form-group">
 				<label  for="inputLname">Last Name</label> <input
-					type="text"  name="lname" Value="Test"
+					type="text" id="inputLName" name="lname" Value="Test"
 					placeholder="Lastname" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputEmail">Email</label> <input
-					type="text" name="email"  Value="Test"
+					type="text" name="email" id="inputEmail" Value="Test"
 					placeholder="Email" class="form-control"/>
 			</div>
 
