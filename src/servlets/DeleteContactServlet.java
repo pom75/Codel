@@ -7,13 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.NewContactService;
-import services.SuppContactService;
+import services.ContactService;
 
 public class DeleteContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,8 +21,7 @@ public class DeleteContactServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long id = Long.parseLong(request.getParameter("id"));
 
-
-		SuppContactService.suppContact(id);
+		ContactService.deleteContact(id); // FIXME GET DAO?
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 

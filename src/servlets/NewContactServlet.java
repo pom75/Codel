@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import services.NewContactService;
+import services.ContactService;
 
 /**
  * Servlet implementation class login
@@ -32,7 +32,7 @@ public class NewContactServlet extends HttpServlet {
 		String email = null;//request.getParameter("email");
 
 
-		NewContactService.addContact(fname, lname, email, null, null, 0);
+		ContactService.addContact(fname, lname, email, null, null, 0);
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 
