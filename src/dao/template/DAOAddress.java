@@ -12,11 +12,14 @@ import dao.IDAOAddress;
 import domain.Address;
 
 public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
+	
+	@SuppressWarnings({"rawtypes"})
 	public Address getAddressById(final long id){	
 		//FIXME see genetic for hibernate callbacl
 		return (Address)getHibernateTemplate().executeFind(new HibernateCallback<Object>(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{	
+					// ¤hib:crit
 					List addresses = session.createCriteria(Address.class).add(Restrictions.idEq(id)).list();
 
 					if((addresses != null) && (addresses.size() != 0)){

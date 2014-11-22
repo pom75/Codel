@@ -3,9 +3,11 @@ package dao.template;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
 import dao.IDAOPhoneNumber;
 import domain.PhoneNumber;
 
+@SuppressWarnings({"rawtypes"})
 public class DAOPhoneNumber extends HibernateDaoSupport implements
 		IDAOPhoneNumber {
 	public List getPhoneNumbersByIdContact(long idContact) {

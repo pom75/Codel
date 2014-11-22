@@ -24,6 +24,7 @@ import domain.ContactGroup;
 import domain.Entreprise;
 import domain.PhoneNumber;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class DAOContact2 extends HibernateDaoSupport implements IDAOContact {
 	public boolean createContact(String fname, String lname, String email, Address address, Set<PhoneNumber> profiles, int numSiret){		
 		try {
