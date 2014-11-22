@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SearchContactServlet extends ContactServlet {
-
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request,
@@ -21,6 +20,7 @@ public class SearchContactServlet extends ContactServlet {
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
+
 
 		// ContactService.updateContact(fname, lname, email);
 		// FIXME Send to some specific page, after having set the result in a
