@@ -72,43 +72,43 @@
 			advice-ref="txAdvice" />
 		<aop:aspect id="ContactLoggerBean" ref="ContactLogger">
 			<aop:before
-				pointcut="execution(* dao.IDAOContact.addContact(String,String,*,*,*,*)) and args(firstname,lastname,*,*,*,*)"
+				pointcut="execution(* codel.as.dao.IDAOContact.addContact(String,String,*,*,*,*)) and args(firstname,lastname,*,*,*,*)"
 				method="log" arg-names="firstname,lastname" />
 		</aop:aspect>
 	</aop:config>
 
-	<bean id="ContactLogger" class="aspect.ContactLogger" />
+	<bean id="ContactLogger" class="codel.as.aspect.ContactLogger" />
 
 
 	<!-- Service implem -->
-	<bean id="ContactService" class="service.ContactService" scope="singleton">
+	<bean id="ContactService" class="codel.as.service.ContactService" scope="singleton">
 		<constructor-arg ref="DAOContact" />
 	</bean>
 
 	<!-- Dao Implems -->
 
-	<bean id="DAOContact" class="dao.template.DAOContact" scope="singleton">
+	<bean id="DAOContact" class="codel.as.dao.template.DAOContact" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<!-- Session factory pour les templates!! -->
 	</bean>
 
 
-	<bean id="DAOAddress" class="dao.template.DAOAddress" scope="singleton">
+	<bean id="DAOAddress" class="codel.as.dao.template.DAOAddress" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOContactGroup" class="dao.template.DAOContactGroup"
+	<bean id="DAOContactGroup" class="codel.as.dao.template.DAOContactGroup"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOEntreprise" class="dao.template.DAOEntreprise" scope="singleton">
+	<bean id="DAOEntreprise" class="codel.as.dao.template.DAOEntreprise" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="DAOPhoneNumber" class="dao.template.DAOPhoneNumber"
+	<bean id="DAOPhoneNumber" class="codel.as.dao.template.DAOPhoneNumber"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
