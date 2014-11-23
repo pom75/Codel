@@ -6,3 +6,4 @@ TP/
 *.settings
 build/*
 bin/*
+/target/

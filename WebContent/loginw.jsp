@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<!--  On passera ptetre après à une tuile -->
-<%@include file="templates/header.jsp"%>
-<body>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:wrapper>
 	<div class="container">
 		<h2>Connexion</h2>
-
 		<form method="post" action="login" class="form-horizontal">
 			<div class="form-group">
 				<label for="login">Login</label> <input type="login"
@@ -23,5 +18,4 @@
 			<button type="reset" class="btn btn-default">Reset</button>
 		</form>
 	</div>
-</body>
-</html>
+</t:wrapper>

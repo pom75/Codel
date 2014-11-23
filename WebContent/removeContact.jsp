@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<%@include file="includes/header.jsp"%>
+<%@include file="templates/header.jsp"%>
 <body>
 	<div class="container">
 		<h2>Supprimer un contact</h2>
