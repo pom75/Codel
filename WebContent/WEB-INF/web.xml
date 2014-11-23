@@ -24,7 +24,7 @@
 	<!-- Loging -->
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>core.as.servlets.LoginServlet</servlet-class>
+		<servlet-class>codel.as.servlets.LoginServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -36,7 +36,7 @@
 
 	<servlet>
 		<servlet-name>NewContact</servlet-name>
-		<servlet-class>core.as.servlets.NewContactServlet</servlet-class>
+		<servlet-class>codel.as.servlets.NewContactServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewContact</servlet-name>
@@ -46,7 +46,7 @@
 
 	<servlet>
 		<servlet-name>DeleteContact</servlet-name>
-		<servlet-class>core.as.servlets.DeleteContactServlet</servlet-class>
+		<servlet-class>codel.as.servlets.DeleteContactServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteContact</servlet-name>
@@ -55,7 +55,7 @@
 
 	<servlet>
 		<servlet-name>UpdateContact</servlet-name>
-		<servlet-class>core.as.servlets.UpdateContactServlet</servlet-class>
+		<servlet-class>codel.as.servlets.UpdateContactServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateContact</servlet-name>
@@ -64,7 +64,7 @@
 
 	<servlet>
 		<servlet-name>SearchContact</servlet-name>
-		<servlet-class>core.as.servlets.SearchContactServlet</servlet-class>
+		<servlet-class>codel.as.servlets.SearchContactServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SearchContact</servlet-name>
