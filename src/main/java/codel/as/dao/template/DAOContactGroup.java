@@ -23,9 +23,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements
 	public boolean createContactGroup(String name, String idContact) {
 		try {
 
-			// FIXME WHY CONTACT GROUP DI
-			ContactGroup c = (ContactGroup) ApplicationContextUtils
-					.getApplicationContext().getBean("ContactGroup");
+			ContactGroup c = new ContactGroup();
 			c.setGroupName(name);
 
 			long idNum = Integer.parseInt(idContact);
@@ -87,12 +85,6 @@ public class DAOContactGroup extends HibernateDaoSupport implements
 				return false;
 			}
 
-			ApplicationContext context = ApplicationContextUtils
-					.getApplicationContext();
-			IDAOContact daoContact = (IDAOContact) context
-					.getBean("DAOContact");
-			// FIXME Not used?
-
 			if (contacts != null) {
 				for (String idContact : contacts) {
 					try {
@@ -106,9 +98,9 @@ public class DAOContactGroup extends HibernateDaoSupport implements
 						}
 						contact.getBooks().add(c);
 						c.getContacts().add(contact);
-						System.out
-								.println("Dans le foreach DAOCOntactGroup methode addContact idContact = "
-										+ idContact);
+						// System.out
+						// .println("Dans le foreach DAOCOntactGroup methode addContact idContact = "
+						// + idContact);
 					} catch (NonUniqueObjectException e) {
 					}
 				}
@@ -117,51 +109,43 @@ public class DAOContactGroup extends HibernateDaoSupport implements
 			}
 			return true;
 		} catch (Exception e) {
-			System.out
-					.println("========================================= Erreur DAOContactGroup AddContact ============================================");
+			System.out.println("====== Erreur DAOContactGroup AddContact ==");
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	public List getContactGroupByIdContactGroup(final String idContactGroup) {
-		return (List) getHibernateTemplate().execute(
-				new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						try {
-							// FIXME WTF BEAN?
-							ContactGroup cg = (ContactGroup) ApplicationContextUtils
-									.getApplicationContext().getBean(
-											"ContactGroup");
-							long id = Integer.parseInt(idContactGroup);
+		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session)
+					throws HibernateException {
+				try {
+					ContactGroup cg = new ContactGroup();
+					long id = Integer.parseInt(idContactGroup);
 
-							System.out.println("cg.getGroupId() : "
-									+ cg.getGroupId());
-							System.out.println("cg.getGroupName()"
-									+ cg.getGroupName());
+					System.out.println("cg.getGroupId() : " + cg.getGroupId());
+					System.out.println("cg.getGroupName()" + cg.getGroupName());
 
-							cg.setGroupId(id);
-							// ¤hib:crit
-							List listContactGroup = session
-									.createCriteria(ContactGroup.class)
-									.add(Example.create(cg)).list();
-							for (Object g : listContactGroup) {
-								if (String.valueOf(
-										((ContactGroup) g).getGroupId())
-										.equals(idContactGroup)) {
-									cg = (ContactGroup) g;
-									break;
-								}
-							}
-							List contacts = new ArrayList(cg.getContacts());
-							return contacts;
-						} catch (Exception e) {
-							System.out.println(e.getMessage());
-							return null;
+					cg.setGroupId(id);
+					// ¤hib:crit
+					List listContactGroup = session
+							.createCriteria(ContactGroup.class)
+							.add(Example.create(cg)).list();
+					for (Object g : listContactGroup) {
+						if (String.valueOf(((ContactGroup) g).getGroupId())
+								.equals(idContactGroup)) {
+							cg = (ContactGroup) g;
+							break;
 						}
 					}
-				});
+					List contacts = new ArrayList(cg.getContacts());
+					return contacts;
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					return null;
+				}
+			}
+		});
 	}
 
 	public boolean deleteContactGroup(ContactGroup contactGroup) {

@@ -24,9 +24,8 @@ import codel.as.domain.Entreprise;
 import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
 
-
 // FIXME Try togenetic
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
@@ -34,89 +33,86 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public List searchContact(final String fname, final String lname,
 			final String email, final Address address, final String home,
 			final String office, final String mobile) {
-		return (List) getHibernateTemplate().execute(
-				new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						try {
-							// ¤hib:crit
-							//FIXME extract helper method
-							Criteria criteria = session
-									.createCriteria(Contact.class);
-							if (!fname.isEmpty()) {
-								criteria.add(Restrictions.like("firstname",
-										fname, MatchMode.ANYWHERE));
-							}
-							if (!lname.isEmpty()) {
-								criteria.add(Restrictions.like("lastname",
-										lname, MatchMode.ANYWHERE));
-							}
-							if (!email.isEmpty()) {
-								criteria.add(Restrictions.like("email", email,
-										MatchMode.ANYWHERE));
-							}
-							if (!address.getStreet().isEmpty()) {
-								criteria.add(Restrictions.like(
-										"address.street", address.getStreet(),
-										MatchMode.ANYWHERE));
-							}
-							if (!address.getZip().isEmpty()) {
-								criteria.add(Restrictions.like("address.zip",
-										address.getZip(), MatchMode.ANYWHERE));
-							}
-							if (!address.getCity().isEmpty()) {
-								criteria.add(Restrictions.like("address.city",
-										address.getCity(), MatchMode.ANYWHERE));
-							}
-							if (!address.getCountry().isEmpty()) {
-								criteria.add(Restrictions.like(
-										"address.country",
-										address.getCountry(),
-										MatchMode.ANYWHERE));
-							}
+		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session)
+					throws HibernateException {
+				try {
+					// ¤hib:crit
+					// FIXME extract helper method
+					// Maybe, by example?
+					Criteria criteria = session.createCriteria(Contact.class);
+					if (!fname.isEmpty()) {
+						criteria.add(Restrictions.like("firstname", fname,
+								MatchMode.ANYWHERE));
+					}
+					if (!lname.isEmpty()) {
+						criteria.add(Restrictions.like("lastname", lname,
+								MatchMode.ANYWHERE));
+					}
+					if (!email.isEmpty()) {
+						criteria.add(Restrictions.like("email", email,
+								MatchMode.ANYWHERE));
+					}
+					if (!address.getStreet().isEmpty()) {
+						criteria.add(Restrictions.like("address.street",
+								address.getStreet(), MatchMode.ANYWHERE));
+					}
+					if (!address.getZip().isEmpty()) {
+						criteria.add(Restrictions.like("address.zip",
+								address.getZip(), MatchMode.ANYWHERE));
+					}
+					if (!address.getCity().isEmpty()) {
+						criteria.add(Restrictions.like("address.city",
+								address.getCity(), MatchMode.ANYWHERE));
+					}
+					if (!address.getCountry().isEmpty()) {
+						criteria.add(Restrictions.like("address.country",
+								address.getCountry(), MatchMode.ANYWHERE));
+					}
 
-							List contacts = criteria.list();
+					List contacts = criteria.list();
 
-							if (home.isEmpty() && office.isEmpty()
-									&& mobile.isEmpty()) {
-								return contacts;
-							}
+					if (home.isEmpty() && office.isEmpty() && mobile.isEmpty()) {
+						return contacts;
+					}
 
-							List toRemove = new ArrayList();
+					List toRemove = new ArrayList();
 
-							ApplicationContext context = ApplicationContextUtils
-									.getApplicationContext();
-							IDAOPhoneNumber daoP = (IDAOPhoneNumber) context
-									.getBean("DAOPhoneNumber");
+					// FIXME WTF???
+					ApplicationContext context = ApplicationContextUtils
+							.getApplicationContext();
+					IDAOPhoneNumber daoP = (IDAOPhoneNumber) context
+							.getBean("DAOPhoneNumber");
 
-							for (int i = 0; i < contacts.size(); i++) {
-								Contact c = (Contact) contacts.get(i);
+					for (int i = 0; i < contacts.size(); i++) {
+						Contact c = (Contact) contacts.get(i);
 
-								List pns = daoP.getPhoneNumbersByIdContact(c
-										.getId());
-								if ((!keep("home", home, pns))
-										|| (!keep("office", office, pns))
-										|| (!keep("mobile", mobile, pns))) {
-									toRemove.add(c);
-								}
-							}
-
-							contacts.removeAll(toRemove);
-							return contacts;
-						} catch (Exception e) {
-							e.printStackTrace();
-							return null;
+						List pns = daoP.getPhoneNumbersByIdContact(c.getId());
+						if ((!keep("home", home, pns))
+								|| (!keep("office", office, pns))
+								|| (!keep("mobile", mobile, pns))) {
+							toRemove.add(c);
 						}
 					}
-				});
+
+					contacts.removeAll(toRemove);
+					return contacts;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		});
 	}
 
+	// FIXME KILL?
 	public Object[] getContactById(String id) {
 		try {
 			// ¤hib:sql
 			List contacts = getHibernateTemplate().find(
 					"select c, a from Contact c, Address a where c.id = " + id
 							+ " and c.address= a");
+			// FIX Address???
 			if ((contacts != null) && (!contacts.isEmpty())) {
 				return (Object[]) contacts.get(0);
 			}
@@ -128,22 +124,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	public List getAllContacts() {
-		return (List) getHibernateTemplate().execute(
-				new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						try {
-							// ¤hib:hql
-							Query query = session
-									.createQuery("from Contact c left join fetch c.address address");
-							List contacts = query.setCacheable(true).list();
-							return contacts;
-						} catch (Exception e) {
-							e.printStackTrace();
-							return null;
-						}
-					}
-				});
+		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session)
+					throws HibernateException {
+				try {
+					// ¤hib:hql
+					Query query = session
+							.createQuery("from Contact c left join fetch c.address address");
+					// force chargement
+					List contacts = query.setCacheable(true).list();
+					return contacts;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		});
 	}
 
 	public List getContactGroupByIdContact(String idContact) {
@@ -151,7 +147,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			long idNum = Integer.parseInt(idContact);
 			Contact c = (Contact) getHibernateTemplate().get(Contact.class,
 					idNum);
-			// FIXME??
 
 			List contactGroup = getHibernateTemplate().find(
 					"select elements(c.books) from Contact c where c.id = "
@@ -160,14 +155,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return contactGroup;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			System.out.println("================================ idContact = "
-					+ idContact
-					+ "======================================================");
+			System.out.println("==idContact = " + idContact + "=====");
 			return null;
 		}
 	}
 
-	//FIXME Kill??? with?
+	// FIXME Kill??? Update with ours
 	public boolean generateContacts() {
 		try {
 			List<Contact> contacts = new ArrayList<Contact>();
@@ -265,14 +258,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		try {
 			Contact c;
 			if (numSiret <= 0) {
-				c = (Contact) ApplicationContextUtils.getApplicationContext()
-						.getBean("ContactConstrWithArgs");
+				c = new Contact();
+
 			} else {
-				c = (Entreprise) ApplicationContextUtils
-						.getApplicationContext().getBean("Entreprise");
+				c = new Entreprise();
 				((Entreprise) c).setNumSiret(numSiret);
 			}
 
+			// FIXME Dis check if cascade
 			if (address != null) {
 				getHibernateTemplate().save(address);
 			}
@@ -307,6 +300,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					idNum);
 			c.getProfiles().clear();
 
+			// Other dao
 			ApplicationContext context = ApplicationContextUtils
 					.getApplicationContext();
 			IDAOContactGroup daoContactGroup = (IDAOContactGroup) context

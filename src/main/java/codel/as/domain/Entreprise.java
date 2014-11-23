@@ -1,14 +1,9 @@
 package codel.as.domain;
 
-
 public class Entreprise extends Contact {
 	private int numSiret;
 
-	public Entreprise(){}
-	
-	public Entreprise(int numSiret) {
-		super();
-		this.numSiret = numSiret;
+	public Entreprise() {
 	}
 
 	public int getNumSiret() {
@@ -18,6 +13,7 @@ public class Entreprise extends Contact {
 	public void setNumSiret(int numSiret) {
 		this.numSiret = numSiret;
 	}
-	
-	
+
+	// FIXME TOstring
+
 }

@@ -14,6 +14,8 @@ import codel.as.domain.Address;
 public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 	// see how to log in lambda
 	
+	// FIXME Useless....
+	
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Address getAddressById(final long id){	
 		//FIXME see genetic for hibernate callbacl
