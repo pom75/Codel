@@ -22,7 +22,8 @@
 	</bean>
 
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- 3 working? -->
 
 		<!-- retrieve conf from cfg: http://stackoverflow.com/questions/471799/spring-and-hibernate-cfg-xml -->
 		<property name="configLocation">
