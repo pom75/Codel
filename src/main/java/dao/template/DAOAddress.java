@@ -5,18 +5,18 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import dao.IDAOAddress;
 import domain.Address;
 
 public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 	
-	@SuppressWarnings({"rawtypes"})
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Address getAddressById(final long id){	
 		//FIXME see genetic for hibernate callbacl
-		return (Address)getHibernateTemplate().executeFind(new HibernateCallback(){
+		return (Address)getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				try{	
 					// ¤hib:crit

@@ -11,8 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import util.ApplicationContextUtils;
 import dao.IDAOContact;
@@ -34,7 +34,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public List searchContact(final String fname, final String lname,
 			final String email, final Address address, final String home,
 			final String office, final String mobile) {
-		return (List) getHibernateTemplate().executeFind(
+		return (List) getHibernateTemplate().execute(
 				new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -128,7 +128,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	public List getAllContacts() {
-		return (List) getHibernateTemplate().executeFind(
+		return (List) getHibernateTemplate().execute(
 				new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {

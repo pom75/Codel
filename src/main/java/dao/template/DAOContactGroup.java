@@ -8,8 +8,8 @@ import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.springframework.context.ApplicationContext;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import util.ApplicationContextUtils;
 import dao.IDAOContact;
@@ -125,7 +125,7 @@ public class DAOContactGroup extends HibernateDaoSupport implements
 	}
 
 	public List getContactGroupByIdContactGroup(final String idContactGroup) {
-		return (List) getHibernateTemplate().executeFind(
+		return (List) getHibernateTemplate().execute(
 				new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
