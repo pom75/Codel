@@ -10,7 +10,7 @@
                      	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<!-- Référence vers les méthodes stubs -->
-	<!--  <import resource="classpath*:/WEB-INF/stubContactContext.xml" />-->
+	<import resource="classpath*:/WEB-INF/stubContactContext.xml" />
 
 	<!-- Data source déduite du hibernate config -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -38,7 +38,7 @@
 	</bean>
 
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
