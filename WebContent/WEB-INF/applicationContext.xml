@@ -77,23 +77,26 @@
 		</aop:aspect>
 	</aop:config>
 
+
 	<bean id="ContactLogger" class="codel.as.aspect.ContactLogger" />
 
-
 	<!-- Service implem -->
-	<bean id="ContactService" class="codel.as.service.ContactService" scope="singleton">
+	<bean id="ContactService" class="codel.as.service.ContactService"
+		scope="singleton">
 		<constructor-arg ref="DAOContact" />
 	</bean>
 
 	<!-- Dao Implems -->
 
-	<bean id="DAOContact" class="codel.as.dao.template.DAOContact" scope="singleton">
+	<bean id="DAOContact" class="codel.as.dao.template.DAOContact"
+		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<!-- Session factory pour les templates!! -->
 	</bean>
 
 
-	<bean id="DAOAddress" class="codel.as.dao.template.DAOAddress" scope="singleton">
+	<bean id="DAOAddress" class="codel.as.dao.template.DAOAddress"
+		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
@@ -104,7 +107,8 @@
 	</bean>
 
 
-	<bean id="DAOEntreprise" class="codel.as.dao.template.DAOEntreprise" scope="singleton">
+	<bean id="DAOEntreprise" class="codel.as.dao.template.DAOEntreprise"
+		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

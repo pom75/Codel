@@ -57,12 +57,8 @@
 			</plugin>
 		</plugins>
 		<!-- Configuration which allows configuration files (such as xml files) 
-			to be placed in the same folder as java files
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/java/</directory>
-			</resource>
-		</resources> -->
+			to be placed in the same folder as java files <resources> <resource> <directory>${basedir}/src/main/java/</directory> 
+			</resource> </resources> -->
 	</build>
 
 
@@ -154,6 +150,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${sl4j.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
@@ -171,6 +168,12 @@
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 
 		<dependency>

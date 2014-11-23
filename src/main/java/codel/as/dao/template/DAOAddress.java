@@ -12,6 +12,7 @@ import codel.as.dao.IDAOAddress;
 import codel.as.domain.Address;
 
 public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
+	// see how to log in lambda
 	
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Address getAddressById(final long id){	
@@ -28,7 +29,7 @@ public class DAOAddress extends HibernateDaoSupport implements IDAOAddress {
 					}
 					return null;
 				} catch(Exception e){
-					System.out.println(e.getMessage());
+					System.err.println(e.getMessage());
 					return null;
 				}
 			}
