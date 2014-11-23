@@ -24,13 +24,13 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
-		boolean root = LoginService.service(login, password);
-		
-		
+		boolean root = LoginService.checkLogin(login, password);
+				
 		if (root) {
 			getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 		} else {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+			//maybe: can add information about the failed attempt
 		}
 	}
 

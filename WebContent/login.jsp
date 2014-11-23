@@ -1,12 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Insert title here</title>
-</head>
+<!--  On passera ptetre après à une tuile -->
+<%@include file="templates/header.jsp"%>
 <body>
+	<div class="container">
+		<h2>Connexion</h2>
 
+		<form method="post" action="login" class="form-horizontal">
+			<div class="form-group">
+				<label for="login">Login</label> <input type="login"
+					class="form-control" id="login" name="login"
+					placeholder="Enter Login">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label> <input type="password"
+					class="form-control" id="password" placeholder="Password"
+					name="password">
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="reset" class="btn btn-default">Reset</button>
+		</form>
+	</div>
 </body>
 </html>
