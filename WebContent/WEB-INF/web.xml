@@ -9,7 +9,7 @@
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 
 	<!-- Listeners -->
 	<listener>
@@ -17,41 +17,54 @@
 	</listener>
 	<listener>
 		<listener-class>
-			org.springframework.web.context.request.RequestContextListener</listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
 	</listener>
 
 	<!-- Mapping (en attendant jsf) -->
-	
-	<filter>  
-      <filter-name>OpenSessionInViewFilter</filter-name>  
-     <filter-class>  
-           org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>  
-       <init-param>  
-            <param-name>sessionFactoryContact</param-name>  
-           <param-value>sessionFactory</param-value>  
-        </init-param>  
-       <init-param>  
-           <param-name>singleSession</param-name>  
-            <param-value>true</param-value>  
-       </init-param>  
-       <init-param>  
-            <param-name>flushMode</param-name>  
-           <param-value>AUTO</param-value>  
-       </init-param>  
-   </filter>
+
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate4.support.OpenSessionInViewFilter
+		</filter-class>
+		<init-param>
+			<param-name>sessionFactoryContact</param-name>
+			<param-value>sessionFactory</param-value>
+		</init-param>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>flushMode</param-name>
+			<param-value>AUTO</param-value>
+		</init-param>
+	</filter>
 
 	<!-- Login -->
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>codel.as.servlets.LoginServlet</servlet-class>
+		<servlet-class>codel.as.servlets.auth.LoginServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<filter>
+		<filter-name>Authentification</filter-name>
+		<filter-class>codel.as.filter.AuthentificationFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Authentification</filter-name>
+		<url-pattern>/contact/*</url-pattern>
+		<!-- <servlet-name>myservlet</servlet-name> -->
+	</filter-mapping>
+
+	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>codel.as.servlets.TestServlet</servlet-class>
 	</servlet>
@@ -60,7 +73,7 @@
 		<servlet-name>Test</servlet-name>
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
-	
+
 
 	<!-- Contacts -->
 

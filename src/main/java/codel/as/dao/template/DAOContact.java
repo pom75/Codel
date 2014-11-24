@@ -284,6 +284,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String country, String home, String office, String mobile,
 			int siretnum) {
 		try {
+			//FIXME JUST CHECL VALUE!!! 
 			System.out.println("version prev : " + c.getVersion());
 
 			c.setFirstname(fname);
