@@ -11,12 +11,11 @@ import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Example;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import codel.as.dao.IDAOContact;
@@ -31,9 +30,7 @@ import codel.as.util.ApplicationContextUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 // FIXME Try togenetic
-@Repository
 @Transactional
-// Hibernate 4+Spring4
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
@@ -46,83 +43,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		super();
 		this.daoPhone = daoPhone;
 		this.daoContactGroup = daoContactGroup;
-	}
-
-	@Override
-	public List searchContact(final String fname, final String lname,
-			final String email, final Address address, final String home,
-			final String office, final String mobile) {
-		return (List) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session)
-					throws HibernateException {
-				try {
-					// ¤hib:crit
-					// FIXME extract helper method
-					// Maybe, by example?
-					Criteria criteria = session.createCriteria(Contact.class);
-					if (!fname.isEmpty()) {
-						criteria.add(Restrictions.like("firstname", fname,
-								MatchMode.ANYWHERE));
-					}
-					if (!lname.isEmpty()) {
-						criteria.add(Restrictions.like("lastname", lname,
-								MatchMode.ANYWHERE));
-					}
-					if (!email.isEmpty()) {
-						criteria.add(Restrictions.like("email", email,
-								MatchMode.ANYWHERE));
-					}
-					if (!address.getStreet().isEmpty()) {
-						criteria.add(Restrictions.like("address.street",
-								address.getStreet(), MatchMode.ANYWHERE));
-					}
-					if (!address.getZip().isEmpty()) {
-						criteria.add(Restrictions.like("address.zip",
-								address.getZip(), MatchMode.ANYWHERE));
-					}
-					if (!address.getCity().isEmpty()) {
-						criteria.add(Restrictions.like("address.city",
-								address.getCity(), MatchMode.ANYWHERE));
-					}
-					if (!address.getCountry().isEmpty()) {
-						criteria.add(Restrictions.like("address.country",
-								address.getCountry(), MatchMode.ANYWHERE));
-					}
-
-					List contacts = criteria.list();
-
-					if (home.isEmpty() && office.isEmpty() && mobile.isEmpty()) {
-						return contacts;
-					}
-
-					List toRemove = new ArrayList();
-
-					for (int i = 0; i < contacts.size(); i++) {
-						Contact c = (Contact) contacts.get(i);
-
-						List pns = daoPhone.getPhoneNumbersByIdContact(c
-								.getId());
-						if ((!keep(MOBILE_CATEGORY, home, pns))
-								|| (!keep(WORK_CATEGORY, office, pns))
-								|| (!keep("mobile", mobile, pns))) {
-							toRemove.add(c);
-						}
-					}
-
-					contacts.removeAll(toRemove);
-					return contacts;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		});
-	}
-
-	@Override
-	public Contact getContactById(long id) {
-		// ¤hib:sql
-		return getHibernateTemplate().get(Contact.class, id);
 	}
 
 	@Override
@@ -173,10 +93,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 			if (add) {
 
-				PhoneNumber p = new PhoneNumber();
-				p.setPhoneKind(kind);
-				p.setPhoneNumber(number);
-				p.setContact(contact);
+				PhoneNumber p = new PhoneNumber(kind, number, contact);
 				getHibernateTemplate().save(p);
 				profiles.add(p);
 			}
@@ -202,31 +119,21 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return false;
 	}
 
-	@Transactional(readOnly = false)
-	// FIXME KILL
 	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
+		// FIXME Signature.
 
 		Contact c;
 		if (numSiret <= 0) {
-			c = new Contact();
+			c = new Contact(fname, lname, email, address, profiles);
 		} else {
-			c = new Entreprise();
-			((Entreprise) c).setNumSiret(numSiret);
+			c = new Entreprise(fname, lname, email, address, profiles, numSiret);
 		}
 
-		c.setFirstname(fname);
-		c.setLastname(lname);
-		c.setEmail(email);
-		c.setAddress(address);
-		c.setProfiles(profiles);
 		getHibernateTemplate().setCheckWriteOperations(false);
-		if (numSiret <= 0) {
-			getHibernateTemplate().save(c);
-		} else {
-			getHibernateTemplate().save(((Entreprise) c));
-		}
+		// FIXME
+		getHibernateTemplate().save(c);
 
 		try {
 
@@ -238,9 +145,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			 * 
 			 * // FIXME Dis check if cascade if (address != null) {
 			 * getHibernateTemplate().save(address); }
-			 * 
-			 * c.setFirstname(fname); c.setLastname(lname); c.setEmail(email);
-			 * c.setAddress(address); getHibernateTemplate().save(c);
 			 * 
 			 * if (profiles != null) { for (PhoneNumber profile : profiles) {
 			 * profile.setContact(c); c.getProfiles().add(profile);
@@ -284,16 +188,15 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String country, String home, String office, String mobile,
 			int siretnum) {
 		try {
-			//FIXME JUST CHECL VALUE!!! 
-			System.out.println("version prev : " + c.getVersion());
+			// FIXME JUST CHECL VALUE!!!
+			log.info("Updating contact. version prev : " + c.getVersion());
 
 			c.setFirstname(fname);
 			c.setLastname(lname);
 			c.setEmail(email);
-			c.getAddress().setStreet(street);
-			c.getAddress().setZip(zip);
-			c.getAddress().setCity(city);
-			c.getAddress().setCountry(country);
+			Address adr = new Address(street, city, zip, country);
+			c.setAddress(adr);
+
 			checkAndAdd(MOBILE_CATEGORY, home, c, c.getProfiles());
 			checkAndAdd(WORK_CATEGORY, office, c, c.getProfiles());
 			checkAndAdd(MOBILE_CATEGORY, mobile, c, c.getProfiles());
@@ -322,16 +225,36 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	@Override
-	public List<Contact> searchByExampleContact(String fname, String lname,
-			String email, String street, String zip, String city,
-			String country, String home, String office, String mobile,
-			int siretnum) {
+	public List<Contact> searchByExampleContact(String firstname,
+			String lastname, String email, String street, String zip,
+			String city, String country, String home, String office,
+			String mobile, int siretnum) {
 
+		Address address = new Address(street, city, zip, country);
 		// Create the example
-		Contact example = new Contact();
-		// firstname, lastname, email, address, profiles, books);
-		//
+		Contact example;
+		if (siretnum <= 0) {
+			example = new Contact(firstname, lastname, email, address);
+		} else {
+			example = new Entreprise(firstname, lastname, email, address,
+					siretnum);
+		}
 		return (List<Contact>) getHibernateTemplate().findByExample(example);
+	}
+
+	@Override
+	public List<Contact> searchContactByEmail(String email) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
+		filter.add(Restrictions.eq("email", email));
+		return  (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+	}
+
+	@Override
+	public List<Contact> searchContactByName(String fname, String lname) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
+		filter.add(Restrictions.like("firstname", fname));
+		filter.add(Restrictions.like("lastname", lname));
+		return  (List<Contact>) getHibernateTemplate().findByCriteria(filter);
 	}
 
 	// FIXME Kill??? Update with ours
@@ -379,12 +302,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public Contact getContactById(String id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
