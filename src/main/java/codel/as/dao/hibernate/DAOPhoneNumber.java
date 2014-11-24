@@ -1,59 +1,33 @@
 package codel.as.dao.hibernate;
 
+import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import codel.as.dao.IDAOPhoneNumber;
 import codel.as.domain.PhoneNumber;
-import codel.as.util.HibernateUtil;
 
-public class DAOPhoneNumber implements IDAOPhoneNumber {
-
-	@Override
+// TOKILL
+// FIXME Maybe merge with contact??
+@SuppressWarnings({"rawtypes"})
+public class DAOPhoneNumber extends HibernateDaoSupport implements
+		IDAOPhoneNumber {
+	
 	public List getPhoneNumbersByIdContact(long idContact) {
-		Session session = HibernateUtil.getSession();
-
-		try {
-			Query query = session
-					.createQuery("from PhoneNumber p where p.contact.id = "
-							+ idContact);
-			List contacts = query.list();
-			if (contacts.size() <= 0) {
-				return null;
+			List contacts = getHibernateTemplate().find(
+					"from PhoneNumber p where p.contact.id = " + idContact);
+			if (contacts.isEmpty()) {
+				return Collections.EMPTY_LIST;
 			}
 			return contacts;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		} finally {
-			session.close();
-		}
 	}
 
-	@Override
 	public boolean deletePhoneNumber(long id) {
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-
-		try {
-			tx = session.beginTransaction();
-			PhoneNumber p = (PhoneNumber) session.get(PhoneNumber.class, id);
-			session.delete(p);
-
-			tx.commit();
+			PhoneNumber p = (PhoneNumber) getHibernateTemplate().get(
+					PhoneNumber.class, id);
+			getHibernateTemplate().delete(p);
 
 			return true;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			if (tx != null)
-				tx.rollback();
-			return false;
-		} finally {
-			session.close();
-		}
 	}
 }

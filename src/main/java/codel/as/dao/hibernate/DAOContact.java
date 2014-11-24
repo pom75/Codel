@@ -1,326 +1,78 @@
 package codel.as.dao.hibernate;
 
+import static codel.as.domain.PhoneNumber.MOBILE_CATEGORY;
+import static codel.as.domain.PhoneNumber.WORK_CATEGORY;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.ApplicationContext;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import codel.as.dao.IDAOContact;
+import codel.as.dao.IDAOContactGroup;
+import codel.as.dao.IDAOPhoneNumber;
 import codel.as.domain.Address;
 import codel.as.domain.Contact;
+import codel.as.domain.ContactGroup;
 import codel.as.domain.Entreprise;
 import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
-import codel.as.util.HibernateUtil;
 
-/**
- * Old, do not follow implem
- *
- */
-abstract public class DAOContact implements IDAOContact {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+// FIXME Try togenetic
+public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
-	public boolean createContact(String fname, String lname, String email,
-			Address address, Set<PhoneNumber> profiles, int numSiret) {
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
+	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
+	private static Logger log = Logger.getLogger("template.DAOContact");
 
-		try {
-			tx = session.beginTransaction();
-			Contact c;
-			if (numSiret <= 0) {
-				c = new Contact();
-				// c =
-				// (Contact)ApplicationContextUtils.getApplicationContext().getBean("ContactSetter");
-			} else {
-				c = new Entreprise();
-				// c =
-				// (Entreprise)ApplicationContextUtils.getApplicationContext().getBean("Entreprise");
-				((Entreprise) c).setNumSiret(numSiret);
-			}
+	private IDAOPhoneNumber daoPhone;
+	private IDAOContactGroup daoContactGroup;
 
-			c.setFirstname(fname);
-			c.setLastname(lname);
-			c.setEmail(email);
-			c.setAddress(address);
-			session.save(c);
-
-			if (profiles != null) {
-				for (PhoneNumber profile : profiles) {
-					profile.setContact(c);
-					c.getProfiles().add(profile);
-					// session.save(profile);
-				}
-			}
-
-			tx.commit();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-			return false;
-		} finally {
-			session.close();
-		}
+	public DAOContact(IDAOPhoneNumber daoPhone, IDAOContactGroup daoContactGroup) {
+		super();
+		this.daoPhone = daoPhone;
+		this.daoContactGroup = daoContactGroup;
 	}
 
-
-	public boolean updateContact(Contact c, String fname, String lname,
-			String email, String street, String zip, String city,
-			String country, String home, String office, String mobile,
-			int siretnum) {
-		// long idNum = 0;
-		// try{
-		// idNum = Integer.parseInt(id);
-		// } catch (NumberFormatException e){
-		// e.printStackTrace();
-		// return false;
-		// }
-
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			// IContact c = (IContact)session.get(Contact.class, idNum);
-			// if(c == null){
-			// System.out.println("Contact " + id + " not found");
-			// return false;
-			// }
-
-			System.out.println("version prev : " + c.getVersion());
-
-			c.setFirstname(fname);
-			c.setLastname(lname);
-			c.setEmail(email);
-			c.getAddress().setStreet(street);
-			c.getAddress().setZip(zip);
-			c.getAddress().setCity(city);
-			c.getAddress().setCountry(country);
-			checkAndAdd("home", home, c, c.getProfiles(), session);
-			checkAndAdd("office", office, c, c.getProfiles(), session);
-			checkAndAdd("mobile", mobile, c, c.getProfiles(), session);
-
-			if (siretnum == -1) {
-				if (c instanceof Entreprise) {
-					return false;
-				}
-			} else {
-				if (c instanceof Entreprise) {
-					((Entreprise) c).setNumSiret(siretnum);
-				} else {
-					return false;
-				}
-			}
-
-			session.update(c);
-
-			tx.commit();
-
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-			return false;
-		} finally {
-			System.out.println("version : " + c.getVersion());
-			session.close();
-		}
+	@Override
+	public Contact getContact(long id) {
+		return getHibernateTemplate().get(Contact.class, id);
 	}
-
-	public boolean deleteContact(String id) {
-		long idNum = 0;
-		try {
-			idNum = Integer.parseInt(id);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			return false;
-		}
-
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-
-		try {
-			tx = session.beginTransaction();
-			Contact c = (Contact) session.get(Contact.class, idNum);
-			Address a = c.getAddress();
-
-			c.getProfiles().clear();
-			c.getBooks().clear();
-
-			session.delete(a);
-			session.delete(c);
-
-			tx.commit();
-
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-			return false;
-		} finally {
-			session.close();
-		}
-	}
-
-//	@Override
-	public List searchContact(String fname, String lname, String email,
-			Address address, String home, String office, String mobile) {
-		Session session = HibernateUtil.getSession();
-
-		try {
-			// StringBuffer s = new StringBuffer();
-			//
-			// s.append("select c, a from Contact c, Address a where c.address = a ");
-			//
-			// if(! fname.isEmpty()){
-			// s.append("and c.firstname like '%" + fname + "%' ");
-			// }
-			// if(! lname.isEmpty()){
-			// s.append("and c.lastname like '%" + lname + "%' ");
-			// }
-			// if(! email.isEmpty()){
-			// s.append("and c.email like '%" + email + "%' ");
-			// }
-			// if(! address.getStreet().isEmpty()){
-			// s.append("and a.street like '%" + address.getStreet() + "%' ");
-			// }
-			// if(! address.getZip().isEmpty()){
-			// s.append("and a.zip like '%" + address.getZip() + "%' ");
-			// }
-			// if(! address.getCity().isEmpty()){
-			// s.append("and a.city like '%" + address.getCity() + "%' ");
-			// }
-			// if(! address.getCountry().isEmpty()){
-			// s.append("and a.country like '%" + address.getCountry() + "%' ");
-			// }
-			// System.out.println("Query : " + s.toString());
-			// Query query = session.createQuery(s.toString());
-			// List contacts = query.list();
-
-			Criteria criteria = session.createCriteria(Contact.class);
-			if (!fname.isEmpty()) {
-				criteria.add(Restrictions.like("firstname", fname,
-						MatchMode.ANYWHERE));
-			}
-			if (!lname.isEmpty()) {
-				criteria.add(Restrictions.like("lastname", lname,
-						MatchMode.ANYWHERE));
-			}
-			if (!email.isEmpty()) {
-				criteria.add(Restrictions.like("email", email,
-						MatchMode.ANYWHERE));
-			}
-			if (!address.getStreet().isEmpty()) {
-				criteria.add(Restrictions.like("address.street",
-						address.getStreet(), MatchMode.ANYWHERE));
-			}
-			if (!address.getZip().isEmpty()) {
-				criteria.add(Restrictions.like("address.zip", address.getZip(),
-						MatchMode.ANYWHERE));
-			}
-			if (!address.getCity().isEmpty()) {
-				criteria.add(Restrictions.like("address.city",
-						address.getCity(), MatchMode.ANYWHERE));
-			}
-			if (!address.getCountry().isEmpty()) {
-				criteria.add(Restrictions.like("address.country",
-						address.getCountry(), MatchMode.ANYWHERE));
-			}
-
-			List contacts = criteria.list();
-
-			if (home.isEmpty() && office.isEmpty() && mobile.isEmpty()) {
-				return contacts;
-			}
-
-			List toRemove = new ArrayList();
-
-			// DAOPhoneNumber daoP = new DAOPhoneNumber();
-			ApplicationContext context = ApplicationContextUtils
-					.getApplicationContext();
-			DAOPhoneNumber daoP = (DAOPhoneNumber) context
-					.getBean("DAOPhoneNumber");
-
-			for (int i = 0; i < contacts.size(); i++) {
-				// Object[] o = (Object[])contacts.get(i);
-				// Contact c = (Contact) o[0];
-
-				Contact c = (Contact) contacts.get(i);
-
-				List pns = daoP.getPhoneNumbersByIdContact(c.getId());
-				if ((!keep("home", home, pns))
-						|| (!keep("office", office, pns))
-						|| (!keep("mobile", mobile, pns))) {
-					toRemove.add(c);
-				}
-			}
-
-			contacts.removeAll(toRemove);
-			return contacts;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			session.close();
-		}
-	}
-
-//	@Override
-//	public Object[] getContactById(String id) {
-//		Session session = HibernateUtil.getSession();
-//
-//		try {
-//			Query query = session
-//					.createQuery("select c, a from Contact c, Address a where c.id = "
-//							+ id + " and c.address= a");
-//			List contacts = query.list();
-//			if ((contacts != null) && (contacts.size() != 0)) {
-//				return (Object[]) contacts.get(0);
-//			}
-//			return null;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		} finally {
-//			session.close();
-//		}
-//	}
 
 	@Override
 	public List getAllContacts() {
-		Session session = HibernateUtil.getSession();
+		// TODO TEST
+		return getHibernateTemplate().find(
+				"from Contact c left join fetch c.address address");
+		// CHECK should modif to have something else
+	}
 
+	@Override
+	public List getContactGroupByIdContact(long idContact) {
 		try {
-			// Query query = session.createQuery(
-			// "select c, a from Contact c, Address a " +
-			// "where c.address = a");
-			Query query = session
-					.createQuery("from Contact c left join fetch c.address address");
-			List contacts = query.setCacheable(true).list();
-			return contacts;
+			List contactGroup = getHibernateTemplate().findByNamedParam(
+					"select elements(c.books) from Contact c where c.id = :id",
+					"id", idContact);
+			// FIXME CHECK QUERRY
+			return contactGroup;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warning(e.getMessage());
+			log.warning("idContact: " + idContact + ":");
 			return null;
-		} finally {
-			session.close();
 		}
 	}
 
+	// FIXME What is it?
 	private void checkAndAdd(String kind, String number, Contact contact,
-			Set<PhoneNumber> profiles, Session session) {
+			Set<PhoneNumber> profiles) {
 		if (number.equals("")) {
 			for (PhoneNumber p : profiles) {
 				if (p.getPhoneKind().equalsIgnoreCase(kind)) {
-					session.delete(p);
+					getHibernateTemplate().delete(p);
 					break;
 				}
 			}
@@ -333,18 +85,15 @@ abstract public class DAOContact implements IDAOContact {
 				}
 			}
 			if (add) {
-				// PhoneNumber p = new PhoneNumber(kind, number, contact);
-				PhoneNumber p = (PhoneNumber) ApplicationContextUtils
-						.getApplicationContext().getBean("PhoneNumber");
-				p.setPhoneKind(kind);
-				p.setPhoneNumber(number);
-				p.setContact(contact);
-				session.save(p);
+
+				PhoneNumber p = new PhoneNumber(kind, number, contact);
+				getHibernateTemplate().save(p);
 				profiles.add(p);
 			}
 		}
 	}
 
+	// FIXME See what is it
 	private boolean keep(String kind, String number, List phoneNumbers) {
 		if (number.isEmpty()) {
 			return true;
@@ -364,57 +113,199 @@ abstract public class DAOContact implements IDAOContact {
 	}
 
 	@Override
-	public List getContactGroupByIdContact(long idContact) {
-		Session session = HibernateUtil.getSession();
-
-		try {
-		
-			Contact c = (Contact) session.get(Contact.class, idContact);
-
-			Query query = session
-					.createQuery("select elements(c.books) from Contact c where c.id = "
-							+ idContact);
-			List contactGroup = query.list();
-
-			return contactGroup;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println("================================ idContact = "
-					+ idContact
-					+ "======================================================");
-			return null;
-		} finally {
-			session.close();
-		}
-
-	}
-
-	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
-		throw new UnsupportedOperationException("Not supported bu ths dao");
+		// FIXME Signature.
+
+		Contact c;
+		if (numSiret <= 0) {
+			c = new Contact(fname, lname, email, address, profiles);
+		} else {
+			c = new Entreprise(fname, lname, email, address, profiles, numSiret);
+		}
+
+		getHibernateTemplate().setCheckWriteOperations(false);
+		// FIXME
+		getHibernateTemplate().save(c);
+
+		try {
+
+			/*
+			 * if (numSiret <= 0) { c = new Contact();
+			 * 
+			 * } else { c = new Entreprise(); ((Entreprise)
+			 * c).setNumSiret(numSiret); }
+			 * 
+			 * // FIXME Dis check if cascade if (address != null) {
+			 * getHibernateTemplate().save(address); }
+			 * 
+			 * if (profiles != null) { for (PhoneNumber profile : profiles) {
+			 * profile.setContact(c); c.getProfiles().add(profile);
+			 * getHibernateTemplate().save(profile); } }
+			 */
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deleteContact(long id) {
-		throw new UnsupportedOperationException("Not supported bu ths dao");
+		long idNum = id;
+		// FIXME Do it recursive?
+		try {
+			Contact c = (Contact) getHibernateTemplate().get(Contact.class,
+					idNum);
+			c.getProfiles().clear();
+
+			for (ContactGroup cg : c.getBooks()) {
+				cg.getContacts().remove(c);
+				if (cg.getContacts().size() == 0) {
+					daoContactGroup.deleteContactGroup(cg);
+				}
+			}
+
+			getHibernateTemplate().delete(c);
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	@Override
-	public Contact getContact(long id) {
-		throw new UnsupportedOperationException("Not supported bu ths dao");
-	}
-
-	@Override
 	public boolean modifyContact(Contact c, String fname, String lname,
 			String email, String street, String zip, String city,
 			String country, String home, String office, String mobile,
 			int siretnum) {
-		throw new UnsupportedOperationException("Not supported bu ths dao");
+		try {
+			// FIXME JUST CHECL VALUE!!!
+			log.info("Updating contact. version prev : " + c.getVersion());
+
+			c.setFirstname(fname);
+			c.setLastname(lname);
+			c.setEmail(email);
+			Address adr = new Address(street, city, zip, country);
+			c.setAddress(adr);
+
+			checkAndAdd(MOBILE_CATEGORY, home, c, c.getProfiles());
+			checkAndAdd(WORK_CATEGORY, office, c, c.getProfiles());
+			checkAndAdd(MOBILE_CATEGORY, mobile, c, c.getProfiles());
+
+			if (siretnum == -1) {
+				if (c instanceof Entreprise) {
+					return false;
+				}
+			} else {
+				if (c instanceof Entreprise) {
+					((Entreprise) c).setNumSiret(siretnum);
+				} else {
+					return false;
+				}
+			}
+
+			getHibernateTemplate().update(c);
+
+			System.out.println("version : " + c.getVersion());
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
+	public List<Contact> searchByExampleContact(String firstname,
+			String lastname, String email, String street, String zip,
+			String city, String country, String home, String office,
+			String mobile, int siretnum) {
+
+		Address address = new Address(street, city, zip, country);
+		// Create the example
+		Contact example;
+		if (siretnum <= 0) {
+			example = new Contact(firstname, lastname, email, address);
+		} else {
+			example = new Entreprise(firstname, lastname, email, address,
+					siretnum);
+		}
+		return (List<Contact>) getHibernateTemplate().findByExample(example);
+	}
+
+	@Override
+	public List<Contact> searchContactByEmail(String email) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
+		filter.add(Restrictions.eq("email", email));
+		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+	}
+
+	@Override
+	public List<Contact> searchContactByName(String fname, String lname) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
+		filter.add(Restrictions.like("firstname", fname));
+		filter.add(Restrictions.like("lastname", lname));
+		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+	}
+
+	@Override
+	public List<Contact> searchContactByPhone(String phone) {
+		// TODO Check
+		return (List<Contact>) getHibernateTemplate().findByNamedParam(
+				"FROM Contact c WHERE (  elements(c.profiles).phoneNumber LIKE :phone   ) ", "phone", phone);
+	}
+
+	// FIXME Kill??? Update with ours
+	@Override
 	public boolean generateContacts() {
-		throw new UnsupportedOperationException("Not supported bu ths dao");
+		
+		Contact premierContact = (Contact) ApplicationContextUtils
+				.getApplicationContext().getBean("ContactExp1");
+		
+		// TODO Check no exist?
+		if(this.searchContactByName(premierContact.getFirstname(), premierContact.getLastname()).isEmpty()){
+
+			//FIXME
+			List<Contact> contacts = new ArrayList<Contact>();
+			List<Address> addresses = new ArrayList<Address>();
+			List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+
+			contacts.add(premierContact);
+			contacts.add((Contact) ApplicationContextUtils
+					.getApplicationContext().getBean("L'entreprise"));
+			contacts.add((Contact) ApplicationContextUtils
+					.getApplicationContext().getBean("EntrepriseExp2"));
+
+			((Entreprise) contacts.get(1)).setNumSiret(999999999);
+			((Entreprise) contacts.get(2)).setNumSiret(888888888);
+
+			for (int i = 1; i <= 3; i++) {
+				addresses.add((Address) ApplicationContextUtils
+						.getApplicationContext().getBean("AddressExp" + i));
+				contacts.get(i - 1).setAddress(addresses.get(i - 1));
+				getHibernateTemplate().save(contacts.get(i - 1));
+			}
+
+			for (int i = 1; i <= 9; i++) {
+				phoneNumbers.add((PhoneNumber) ApplicationContextUtils
+						.getApplicationContext().getBean("PhoneNumberExp" + i));
+			}
+			// Good idea, indexed names of bean!
+
+			for (int i = 0; i <= 2; i++) {
+				for (int j = 0; j < 3; j++) {
+					phoneNumbers.get(j + 3 * i).setContact(contacts.get(i));
+					contacts.get(i).getProfiles()
+							.add(phoneNumbers.get(j + 3 * i));
+					getHibernateTemplate().save(phoneNumbers.get(j + 3 * i));
+				}
+			}
+			return true;
+		} else {
+			log.warning("Stub contact already created");
+			return false;
+		}
 	}
 }

@@ -65,7 +65,7 @@
 
 	<!-- Dao Implems -->
 
-	<bean id="DAOContact" class="codel.as.dao.template.DAOContact"
+	<bean id="DAOContact" class="codel.as.dao.hibernate.DAOContact"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<!-- Session factory pour les templates!! -->
@@ -77,13 +77,13 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="DAOContactGroup" class="codel.as.dao.template.DAOContactGroup"
+	<bean id="DAOContactGroup" class="codel.as.dao.hibernate.DAOContactGroup"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 
-	<bean id="DAOPhoneNumber" class="codel.as.dao.template.DAOPhoneNumber"
+	<bean id="DAOPhoneNumber" class="codel.as.dao.hibernate.DAOPhoneNumber"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
