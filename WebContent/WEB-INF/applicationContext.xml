@@ -46,7 +46,7 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:advisor pointcut="execution(* dao.*.*(..))"
+		<aop:advisor pointcut="execution(* codel.as.dao.*.*(..))"
 			advice-ref="txAdvice" />
 	</aop:config>
 

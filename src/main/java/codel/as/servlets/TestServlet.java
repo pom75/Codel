@@ -33,26 +33,28 @@ public class TestServlet extends ContactServlet {
 		String test = request.getParameter("test");
 
 		if(test == null) test = CURRENT;
-		
-		
+
+
 		switch(test){
-			case "delete":
-				// PUT TEST HERE
-				Contact c = CS.getContact(2);
-				
-				log.info("maybe null?"+c.toString());
-				
-				break;
-			
-			
-			default:
-				log.severe("Should not test this: provide a test");
-			
+		case "delete":
+			// PUT TEST HERE
+			Contact c = CS.getContact(2);
+
+			log.info("maybe null?"+c.toString());
+
+			break;
+		case "add":
+			CS.addContact("toto", "toto", "toto", null, null, 12);
+			break;
+
+		default:
+			log.severe("Should not test this: provide a test");
+
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 }

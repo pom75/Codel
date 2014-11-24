@@ -92,14 +92,13 @@ public class NewContactServlet extends ContactServlet {
 		// TODO page pour afficher message!!
 		
 		if(fname.isEmpty() || lname.isEmpty() || email.isEmpty()){
-			response.sendRedirect("addContact.jsp"); 
+			response.sendRedirect(PathUtils.ADD_PAGE); 
 		}else if(! siretNum.isEmpty()){
 			try{
 				numSiret = Integer.parseInt(siretNum);
 			} catch(NumberFormatException e) {
-				// TODO add message in response param, set also in page
-				response.sendRedirect("addContact.jsp"); 
-				return;
+				System.out.println(e);
+				response.sendRedirect(PathUtils.ADD_PAGE); 
 			}
 		}else {
 			getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(
