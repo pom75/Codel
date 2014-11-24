@@ -24,6 +24,8 @@ public interface IDAOContact {
 	
 	public List<Contact> searchContactByName (final String fname, final String lname);
 	
+	public List<Contact> searchContactByPhone ( final String phone);
+	
 	// MAYBE JUST AN UPDATE, SAVE OPERATION??
 	
 	public boolean generateContacts();
@@ -31,5 +33,6 @@ public interface IDAOContact {
 	public List<Contact> getContactGroupByIdContact(long idContact);
 	
 	public List<Contact> getAllContacts();
+
 	
 }

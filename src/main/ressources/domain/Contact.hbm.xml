@@ -21,6 +21,7 @@
 		</property>
 		<many-to-one name="address" column="ID_ADDRESS" class="codel.as.domain.Address"
 			unique="true" cascade="all-delete-orphan" lazy="false"></many-to-one>
+			
 		<set name="profiles" table="phonenumber_table" inverse="true"
 			cascade="all-delete-orphan" lazy="false">
 			<key column="ID_CONTACT" />

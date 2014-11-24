@@ -8,15 +8,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
 
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
@@ -30,7 +24,6 @@ import codel.as.util.ApplicationContextUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 // FIXME Try togenetic
-@Transactional
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
