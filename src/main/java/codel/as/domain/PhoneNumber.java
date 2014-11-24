@@ -16,9 +16,10 @@ public class PhoneNumber {
 	private long id;
 	private String phoneKind;
 	private String phoneNumber;
+
 	@ManyToOne
 	private Contact contact;
-	
+
 	@Override
 	public String toString() {
 		return "PhoneNumber [id=" + id + ", phoneKind=" + phoneKind
@@ -66,7 +67,6 @@ public class PhoneNumber {
 			return false;
 		return true;
 	}
-
 
 	public PhoneNumber() {
 	}
@@ -120,5 +120,26 @@ public class PhoneNumber {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+
+	public static PhoneNumber newHome(String num) {
+		PhoneNumber tmp = new PhoneNumber();
+		tmp.setPhoneNumber(num);
+		tmp.setPhoneNumber(HOME_CATEGORY);
+		return tmp;
+	}
+
+	public static PhoneNumber newWork(String num) {
+		PhoneNumber tmp = new PhoneNumber();
+		tmp.setPhoneNumber(num);
+		tmp.setPhoneNumber(WORK_CATEGORY);
+		return tmp;
+	}
+
+	public static PhoneNumber newMobile(String num) {
+		PhoneNumber tmp = new PhoneNumber();
+		tmp.setPhoneNumber(num);
+		tmp.setPhoneNumber(MOBILE_CATEGORY);
+		return tmp;
 	}
 }
