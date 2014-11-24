@@ -13,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
@@ -26,6 +28,8 @@ import codel.as.util.ApplicationContextUtils;
 
 
 // FIXME Try togenetic
+@Repository
+@Transactional
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
@@ -260,10 +264,34 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return false;
 	}
 
+	@Transactional(readOnly = false)
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
+		
+		Contact c;
+		if(numSiret <= 0){
+			c = new Contact();
+		} else {
+			c = new Entreprise();
+			(( Entreprise )c).setNumSiret(numSiret);
+		}
+		
+		c.setFirstname(fname);
+		c.setLastname(lname);
+		c.setEmail(email);
+		c.setAddress(address);
+		c.setProfiles(profiles);
+		getHibernateTemplate().setCheckWriteOperations(false);
+		if(numSiret <= 0){
+			getHibernateTemplate().save(c);
+		}else{
+			getHibernateTemplate().save((( Entreprise )c));
+		}
+		
 		try {
-			Contact c;
+			
+			
+			/*
 			if (numSiret <= 0) {
 				c = (Contact) ApplicationContextUtils.getApplicationContext()
 						.getBean("ContactConstrWithArgs");
@@ -290,6 +318,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					getHibernateTemplate().save(profile);
 				}
 			}
+			*/
 
 			return true;
 		} catch (Exception e) {

@@ -16,7 +16,7 @@
 
 			<div class="form-group">
 				<label  for="inputFname">First Name</label> <input
-					type="text"  name="fname" Value="Test"
+					type="text" id="fname"  name="fname" Value="Test"
 					placeholder="Firstname"class="form-control" />
 			</div>
 
