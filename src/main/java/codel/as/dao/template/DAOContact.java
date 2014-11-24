@@ -115,14 +115,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				});
 	}
 
-	public Object[] getContactById(String id) {
+	public Object getContactById(String id) {
 		try {
 			// ¤hib:sql
 			List contacts = getHibernateTemplate().find(
 					"select c, a from Contact c, Address a where c.id = " + id
 							+ " and c.address= a");
 			if ((contacts != null) && (!contacts.isEmpty())) {
-				return (Object[]) contacts.get(0);
+				return (Object) contacts.get(0);
 			}
 			return null;
 		} catch (Exception e) {

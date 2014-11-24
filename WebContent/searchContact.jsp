@@ -24,6 +24,12 @@
 					class="form-control" />
 			</div>
 			
+			<div class="form-group">
+				<label for="inputSiretNum">Id</label> <input type="text"
+					id="inputSiretNum" name="id" Value="1" placeholder="ID Contact"
+					class="form-control" />
+			</div>
+			
 			<button type="submit" class="btn btn-primary">Search</button>
 		</form>
 	</div>

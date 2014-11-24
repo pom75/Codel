@@ -39,6 +39,11 @@ public class ContactService {
 		daoContact.deleteContact(id);
 
 	}
+	
+	public Object getContact(String id) {
+		return daoContact.getContactById(id);
+
+	}
 
 	// TODO SEARCH. Meme méthodes que dans DAO!!
 
