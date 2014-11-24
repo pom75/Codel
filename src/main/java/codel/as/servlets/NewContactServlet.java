@@ -5,14 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import codel.as.domain.PhoneNumber;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import codel.as.domain.Address;
+import codel.as.domain.PhoneNumber;
 import codel.as.util.PathUtils;
 
 /**
@@ -37,7 +38,7 @@ public class NewContactServlet extends ContactServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		//FIXME Extract Const!!
+		// FIXME Extract Const!!
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
@@ -52,55 +53,40 @@ public class NewContactServlet extends ContactServlet {
 		// FIXME values
 		String siretNum = request.getParameter("siretNum");
 
-		int numSiret = -1;
-		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()) {
+		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()
+				|| StringUtils.isNumericSpace(siretNum)) {
+			// FIXME add error message:!!!
+			log.warning("Invalid param");
 			response.sendRedirect(PathUtils.ADD_PAGE);
 		} else {
 
-			if (!siretNum.isEmpty()) {
-				try {
-					numSiret = Integer.parseInt(siretNum);
-				} catch (NumberFormatException e) {
-					System.out.println(e);
-					response.sendRedirect(PathUtils.ADD_PAGE);
-				}
+			int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
+
+			Address address = (street.isEmpty() && zip.isEmpty()
+					&& city.isEmpty() && country.isEmpty()) ? null
+					: new Address(street, city, zip, country);
+
+			// FIXME Extract util
+			Set<PhoneNumber> profiles;
+			if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
+				profiles = null;
 			} else {
-				Address address;
-				if (street.isEmpty() && zip.isEmpty() && city.isEmpty()
-						&& country.isEmpty()) {
-					address = null;
-				} else {
-					address = new Address();
-					address.setStreet(street);
-					address.setCity(city);
-					address.setZip(zip);
-					address.setCountry(country);
-				}
+				profiles = new HashSet<PhoneNumber>();
+				if (!homeNum.isEmpty())
+					profiles.add(PhoneNumber.newHome(homeNum));
 
-				Set<PhoneNumber> profiles;
-				if (homeNum.isEmpty() && officeNum.isEmpty()
-						&& mobileNum.isEmpty()) {
-					profiles = null;
-				} else {
-					profiles = new HashSet<PhoneNumber>();
-					if (!homeNum.isEmpty())
-						profiles.add(PhoneNumber.newHome(homeNum));
+				if (!officeNum.isEmpty())
+					profiles.add(PhoneNumber.newHome(officeNum));
 
-					if (!officeNum.isEmpty())
-						profiles.add(PhoneNumber.newHome(officeNum));
-
-					if (!mobileNum.isEmpty())
-						profiles.add(PhoneNumber.newHome(mobileNum));
-				}
-
-				CS.addContact(fname, lname, email, address, profiles, numSiret);
-				// FIXME insert in page page pour afficher message!!
-
-				getServletContext().getRequestDispatcher(PathUtils.ACCUEIL)
-						.forward(request, response);
+				if (!mobileNum.isEmpty())
+					profiles.add(PhoneNumber.newHome(mobileNum));
 			}
 
+			CS.addContact(fname, lname, email, address, profiles, numSiret);
+			// FIXME insert in page page pour afficher message!!
+
+			getServletContext().getRequestDispatcher(PathUtils.ACCUEIL)
+					.forward(request, response);
 		}
 	}
-
 }
