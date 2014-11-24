@@ -6,7 +6,7 @@
 <body>
 	<div class="container">
 		<h2>Supprimer un contact</h2>
-		<form action="deletecontact" method="post" class="form-horizontal">
+		<form action="contact/delete" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label for="inputSiretNum">Id Contact</label> <input type="text"
 					id="inputSiretNum" name="id" Value="12" placeholder="Id Contact"

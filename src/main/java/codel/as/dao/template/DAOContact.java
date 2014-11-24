@@ -3,6 +3,7 @@ package codel.as.dao.template;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -28,7 +29,7 @@ import codel.as.util.ApplicationContextUtils;
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
-	
+	private static Logger log = Logger.getLogger("template.DAOContact");
 
 	private IDAOPhoneNumber daoPhone;
 	private IDAOContactGroup daoContactGroup;
@@ -118,22 +119,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public List getAllContacts() {
 		//TODO TEST
 		return getHibernateTemplate().find("from Contact c left join fetch c.address address");
+		// CHECK should modif to have something else
 	}
 
 	public List getContactGroupByIdContact(String idContact) {
 		try {
 			long idNum = Integer.parseInt(idContact);
-			Contact c = (Contact) getHibernateTemplate().get(Contact.class,
+			Contact c = getHibernateTemplate().get(Contact.class,
 					idNum);
 
-			List contactGroup = getHibernateTemplate().find(
-					"select elements(c.books) from Contact c where c.id = "
-							+ idContact);
-
+			List contactGroup = getHibernateTemplate().
+					findByNamedParam("select elements(c.books) from Contact c where c.id = :id", "id", idContact);
+			// FIXME CHECK QUERRY
 			return contactGroup;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println("==idContact = " + idContact + "=====");
+			log.warning(e.getMessage());
+			log.warning("==idContact = " + idContact + "=====");
 			return null;
 		}
 	}

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import codel.as.domain.Address;
+import codel.as.util.PathUtils;
 
 /**
  * Servlet implementation class login
@@ -22,7 +23,7 @@ public class NewContactServlet extends ContactServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request,
+		getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(request,
 				response);
 	}
 
@@ -62,6 +63,7 @@ public class NewContactServlet extends ContactServlet {
 			}
 		}
 		
+		// FIXME MOVE
 		// TODO WHY Here?
 		Address address;
 		if(street.isEmpty() && zip.isEmpty() && city.isEmpty() && country.isEmpty()){
@@ -101,7 +103,7 @@ public class NewContactServlet extends ContactServlet {
 		
 		CS.addContact(fname, lname, email, address, profiles, numSiret);
 		// TODO page pour afficher message!!
-		getServletContext().getRequestDispatcher("/accueil.jsp").forward(
+		getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(
 				request, response);
 		
 	}

@@ -70,7 +70,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewContact</servlet-name>
-		<url-pattern>/newcontact</url-pattern>
+		<url-pattern>/contact/new</url-pattern>
 	</servlet-mapping>
 
 
@@ -80,7 +80,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteContact</servlet-name>
-		<url-pattern>/deletecontact</url-pattern>
+		<url-pattern>/contact/delete</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -89,7 +89,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateContact</servlet-name>
-		<url-pattern>/updatecontact</url-pattern>
+		<url-pattern>/contact/update</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -98,6 +98,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SearchContact</servlet-name>
-		<url-pattern>/searchcontact</url-pattern>
+		<url-pattern>/contact/search</url-pattern>
 	</servlet-mapping>
 </web-app>

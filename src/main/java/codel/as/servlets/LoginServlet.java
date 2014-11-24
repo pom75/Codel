@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import codel.as.service.LoginService;
+import codel.as.util.PathUtils;
 
 /**
  * Servlet implementation class login
@@ -22,10 +23,12 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/login.jsp").forward(request,
+		getServletContext().getRequestDispatcher(PathUtils.LOGIN_PAGE).forward(request,
 				response);
 	}
 
+	
+	// TODO Make a filter!!
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
@@ -34,12 +37,12 @@ public class LoginServlet extends HttpServlet {
 
 		if (root) {
 			log.info("" + login + " sucessfully connected");
-			getServletContext().getRequestDispatcher("/accueil.jsp").forward(
+			getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(
 					request, response);
 
 		} else {
 			log.info("Failed attempt to log with id" + login);
-			getServletContext().getRequestDispatcher("/login.jsp").forward(
+			getServletContext().getRequestDispatcher(PathUtils.LOGIN_PAGE).forward(
 					request, response);
 			// maybe: can add information about the failed attempt
 		}

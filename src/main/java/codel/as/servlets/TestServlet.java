@@ -39,7 +39,8 @@ public class TestServlet extends ContactServlet {
 			case"delete":
 				// PUT TEST HERE
 				Contact c = CS.getContact("0");
-				log.info(c.toString());
+				
+				log.info("maybe null?"+c.toString());
 				
 				break;
 			

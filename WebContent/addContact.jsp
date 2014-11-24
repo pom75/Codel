@@ -9,7 +9,7 @@
 		
 		<!-- TODO message about error or stuff being done! -->
 		
-		<form action="newcontact" method="post" class="form-horizontal">
+		<form action="contact/new" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label  for="inputSiretNum">Siret
 					number</label> <input type="text" id="inputSiretNum" name="siretNum"
