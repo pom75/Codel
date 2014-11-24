@@ -45,7 +45,7 @@
 	<!-- Login -->
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>codel.as.servlets.auth.LoginServlet</servlet-class>
+		<servlet-class>codel.as.servlets.LoginServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
