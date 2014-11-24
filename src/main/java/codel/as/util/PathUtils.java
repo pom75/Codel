@@ -9,11 +9,11 @@ package codel.as.util;
 public class PathUtils {
 
 	public static final String LOGIN_SERVLET = "login",
-			LOGIN_PAGE = "login.jsp", ADD_SERVLET = "contact/add",
-			ADD_PAGE = "addContact.jsp", DELETE_SERVLET = "contact/delete",
-			DELETE_PAGE = "deleteContact.jsp",
-			UPDATE_SERVLET = "contact/update",
-			UPDATE_PAGE = "updateContact.jsp",
-			SEARCH_SERVLET = "contact/update",
-			SEARCH_PAGE = "updateContact.jsp", ACCUEIL = "accueil.jsp";
+			LOGIN_PAGE = "/login.jsp", ADD_SERVLET = "/contact/add",
+			ADD_PAGE = "/addContact.jsp", DELETE_SERVLET = "/contact/delete",
+			DELETE_PAGE = "/deleteContact.jsp",
+			UPDATE_SERVLET = "/contact/update",
+			UPDATE_PAGE = "/updateContact.jsp",
+			SEARCH_SERVLET = "/contact/update",
+			SEARCH_PAGE = "/updateContact.jsp", ACCUEIL = "/accueil.jsp";
 }

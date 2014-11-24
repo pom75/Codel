@@ -47,24 +47,9 @@ public class NewContactServlet extends ContactServlet {
 		String[] contactGroups = request.getParameterValues("ContactGroup"); // FIXME values
 		String siretNum = request.getParameter("siretNum");
 		
-		if(fname.isEmpty() || lname.isEmpty() || email.isEmpty()){
-			response.sendRedirect("addContact.jsp"); 
-		}
-		
 		
 		int numSiret = -1;
-		if(! siretNum.isEmpty()){
-			try{
-				numSiret = Integer.parseInt(siretNum);
-			} catch(NumberFormatException e) {
-				// TODO add message in response param, set also in page
-				response.sendRedirect("addContact.jsp"); 
-				return;
-			}
-		}
 		
-		// FIXME MOVE
-		// TODO WHY Here?
 		Address address;
 		if(street.isEmpty() && zip.isEmpty() && city.isEmpty() && country.isEmpty()){
 			address = null;
@@ -77,6 +62,8 @@ public class NewContactServlet extends ContactServlet {
 		}
 		
 		Set<PhoneNumber> profiles;
+
+		
 		if(homepn.isEmpty() && officepn.isEmpty() && mobilepn.isEmpty()){
 			profiles = null;
 		} else {
@@ -103,8 +90,22 @@ public class NewContactServlet extends ContactServlet {
 		
 		CS.addContact(fname, lname, email, address, profiles, numSiret);
 		// TODO page pour afficher message!!
-		getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(
-				request, response);
+		
+		if(fname.isEmpty() || lname.isEmpty() || email.isEmpty()){
+			response.sendRedirect("addContact.jsp"); 
+		}else if(! siretNum.isEmpty()){
+			try{
+				numSiret = Integer.parseInt(siretNum);
+			} catch(NumberFormatException e) {
+				// TODO add message in response param, set also in page
+				response.sendRedirect("addContact.jsp"); 
+				return;
+			}
+		}else {
+			getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(
+					request, response);
+		}
+		
 		
 	}
 
