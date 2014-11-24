@@ -11,7 +11,7 @@
 
 	<h4>
 		Hello
-		<s:property value="login" />
+		<s:property value="username" />
 	</h4>
 
 </body>

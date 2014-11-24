@@ -9,7 +9,7 @@
 	<h2>Connexion</h2>
  
 	<s:form action="Welcome" class="form-horizontal">
-		<s:textfield name="login" label="Username" />
+		<s:textfield name="username" label="Username" />
 		<s:password name="password" label="Password" />
 		<s:submit class="btn btn-default" />
 		<s:reset class="btn btn-default"/>
