@@ -9,6 +9,7 @@
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
+	
 
 	<!-- Listeners -->
 	<listener>
@@ -20,6 +21,24 @@
 	</listener>
 
 	<!-- Mapping (en attendant jsf) -->
+	
+	<filter>  
+      <filter-name>OpenSessionInViewFilter</filter-name>  
+     <filter-class>  
+           org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>  
+       <init-param>  
+            <param-name>sessionFactoryContact</param-name>  
+           <param-value>sessionFactory</param-value>  
+        </init-param>  
+       <init-param>  
+           <param-name>singleSession</param-name>  
+            <param-value>true</param-value>  
+       </init-param>  
+       <init-param>  
+            <param-name>flushMode</param-name>  
+           <param-value>AUTO</param-value>  
+       </init-param>  
+   </filter>
 
 	<!-- Loging -->
 	<servlet>
