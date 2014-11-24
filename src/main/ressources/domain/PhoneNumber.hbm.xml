@@ -11,6 +11,8 @@
 	<property name="phoneKind">
 		<column name="PHONEKIND"/>
 	</property>
+	<!-- Maybe use enum
+	http://codejava.net/frameworks/hibernate/hibernate-enum-type-mapping-example -->
 	<property name="phoneNumber">
 		<column name="PHONENUMBER"/>
 	</property>

@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class PhoneNumber {
 
+	
+
 	public static final String HOME_CATEGORY = "home",
 			MOBILE_CATEGORY = "mobile", WORK_CATEGORY = "work";
 

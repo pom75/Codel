@@ -55,6 +55,8 @@ public class NewContactServlet extends ContactServlet {
 
 		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()
 				|| StringUtils.isNumericSpace(siretNum)) {
+			// or guava Ints.tryParse
+			
 			// FIXME add error message:!!!
 			log.warning("Invalid param");
 			response.sendRedirect(PathUtils.ADD_PAGE);

@@ -42,7 +42,7 @@ public class ContactService {
 
 
 	public Contact getContact(long id) {
-		return daoContact.getContactById(id);
+		return daoContact.getContact(id);
 
 	}
 
