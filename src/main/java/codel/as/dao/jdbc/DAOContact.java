@@ -15,7 +15,13 @@ import codel.as.domain.PhoneNumber;
 import codel.as.util.Messages;
 
 
-public class DAOContact implements IDAOContact{
+/**
+ * OLD do not respect contract anymore
+ * Should be killed
+ *
+ */
+abstract public class DAOContact// implements IDAOContact
+{
 
 	public DAOContact(){
 	}
@@ -243,63 +249,5 @@ public class DAOContact implements IDAOContact{
 			return false;
 		}
 	}
-
-
-
-	@Override
-	public Contact getContact(long id) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public boolean addContact(String fname, String lname, String email,
-			Address address, Set<PhoneNumber> profiles, int numSiret) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public boolean modifyContact(Contact c, String fname, String lname,
-			String email, String street, String zip, String city,
-			String country, String home, String office, String mobile,
-			int siretnum) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public List<Contact> searchContact(String fname, String lname,
-			String email, Address address, String home, String office,
-			String mobile) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public boolean generateContacts() {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public List<Contact> getContactGroupByIdContact(String idContact) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public List<Contact> getAllContacts() {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-	@Override
-	public Object[] getContactById(String id) {
-		throw new UnsupportedOperationException("Prefer a jdbc dao :)");
-	}
-
-
-
 
 }

@@ -20,7 +20,11 @@ import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
 import codel.as.util.HibernateUtil;
 
-public class DAOContact implements IDAOContact {
+/**
+ * Old, do not follow implem
+ *
+ */
+abstract public class DAOContact implements IDAOContact {
 
 	public boolean createContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
@@ -167,7 +171,7 @@ public class DAOContact implements IDAOContact {
 		}
 	}
 
-	@Override
+//	@Override
 	public List searchContact(String fname, String lname, String email,
 			Address address, String home, String office, String mobile) {
 		Session session = HibernateUtil.getSession();
@@ -270,26 +274,26 @@ public class DAOContact implements IDAOContact {
 		}
 	}
 
-	@Override
-	public Object[] getContactById(String id) {
-		Session session = HibernateUtil.getSession();
-
-		try {
-			Query query = session
-					.createQuery("select c, a from Contact c, Address a where c.id = "
-							+ id + " and c.address= a");
-			List contacts = query.list();
-			if ((contacts != null) && (contacts.size() != 0)) {
-				return (Object[]) contacts.get(0);
-			}
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			session.close();
-		}
-	}
+//	@Override
+//	public Object[] getContactById(String id) {
+//		Session session = HibernateUtil.getSession();
+//
+//		try {
+//			Query query = session
+//					.createQuery("select c, a from Contact c, Address a where c.id = "
+//							+ id + " and c.address= a");
+//			List contacts = query.list();
+//			if ((contacts != null) && (contacts.size() != 0)) {
+//				return (Object[]) contacts.get(0);
+//			}
+//			return null;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		} finally {
+//			session.close();
+//		}
+//	}
 
 	@Override
 	public List getAllContacts() {
@@ -360,12 +364,12 @@ public class DAOContact implements IDAOContact {
 	}
 
 	@Override
-	public List getContactGroupByIdContact(String idContact) {
+	public List getContactGroupByIdContact(long idContact) {
 		Session session = HibernateUtil.getSession();
 
 		try {
-			long idNum = Integer.parseInt(idContact);
-			Contact c = (Contact) session.get(Contact.class, idNum);
+		
+			Contact c = (Contact) session.get(Contact.class, idContact);
 
 			Query query = session
 					.createQuery("select elements(c.books) from Contact c where c.id = "

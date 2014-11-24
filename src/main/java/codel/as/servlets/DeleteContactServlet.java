@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codel.as.util.PathUtils;
+
 public class DeleteContactServlet extends ContactServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -20,8 +22,8 @@ public class DeleteContactServlet extends ContactServlet {
 		long id = Long.parseLong(request.getParameter("id"));
 
 		CS.deleteContact(id); // FIXME GET DAO?
-		
-		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
+		//FIXME MASSAGE
+		getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(request, response);
 	}
 
 

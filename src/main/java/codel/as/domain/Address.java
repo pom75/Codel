@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity
 public class Address {
 	@Id
@@ -14,55 +13,72 @@ public class Address {
 	private String city;
 	private String zip;
 	private String country;
-	
+
 	public Address() {
 	}
-	public Address(long id, String street, String city, String zip, String country) {
+
+	public Address(long id, String street, String city, String zip,
+			String country) {
 		this.id = id;
 		this.street = street;
 		this.city = city;
 		this.zip = zip;
 		this.country = country;
 	}
-	
+
 	public Address(String street, String city, String zip, String country) {
 		this.street = street;
 		this.city = city;
 		this.zip = zip;
 		this.country = country;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getStreet() {
 		return street;
 	}
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getZip() {
 		return zip;
 	}
+
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", street=" + street + ", city=" + city
+				+ ", zip=" + zip + ", country=" + country + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,6 +90,7 @@ public class Address {
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -107,11 +124,5 @@ public class Address {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "Address [id=" + id + ", street=" + street + ", city=" + city
-				+ ", zip=" + zip + ", country=" + country + "]";
-	}
-	
-	
+
 }

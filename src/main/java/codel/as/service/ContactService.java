@@ -23,7 +23,7 @@ public class ContactService {
 	public void addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
 		daoContact.addContact(fname, lname, email, address, profiles, numSiret);
-
+		// MAYBE CHANGE SIGNATURE
 		// MAYBE: send back contact?
 	}
 
@@ -39,8 +39,9 @@ public class ContactService {
 		daoContact.deleteContact(id);
 
 	}
-	
-	public Contact getContact(String id) {
+
+
+	public Contact getContact(long id) {
 		return daoContact.getContactById(id);
 
 	}

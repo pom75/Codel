@@ -8,10 +8,11 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import codel.as.dao.IDAOPhoneNumber;
 import codel.as.domain.PhoneNumber;
 
+
+// FIXME Maybe merge with contact??
 @SuppressWarnings({"rawtypes"})
 public class DAOPhoneNumber extends HibernateDaoSupport implements
 		IDAOPhoneNumber {
-	
 	
 	
 	public List getPhoneNumbersByIdContact(long idContact) {

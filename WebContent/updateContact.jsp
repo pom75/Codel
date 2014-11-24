@@ -7,7 +7,7 @@
 	<div class="container">
 		<h2>Ajout d'un nouveau contact</h2>
 		
-		<form action="updatecontact" method="post" class="form-horizontal">
+		<form action="contact/update" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label  for="inputId">Id
 					</label> <input type="text" id="inputId" name="id"

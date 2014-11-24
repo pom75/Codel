@@ -5,9 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 @Entity
 public class PhoneNumber {
+
+	public static final String HOME_CATEGORY = "home",
+			MOBILE_CATEGORY = "mobile", WORK_CATEGORY = "work";
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -15,8 +18,6 @@ public class PhoneNumber {
 	private String phoneNumber;
 	@ManyToOne
 	private Contact contact;
-	
-	public PhoneNumber() {}
 	
 	@Override
 	public String toString() {
@@ -66,13 +67,18 @@ public class PhoneNumber {
 		return true;
 	}
 
-	public PhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact) {
+
+	public PhoneNumber() {
+	}
+
+	public PhoneNumber(long id, String phoneKind, String phoneNumber,
+			Contact contact) {
 		this.id = id;
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
 		this.contact = contact;
 	}
-	
+
 	public PhoneNumber(String phoneKind, String phoneNumber, Contact contact) {
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
@@ -83,7 +89,7 @@ public class PhoneNumber {
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -107,10 +113,12 @@ public class PhoneNumber {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Contact getContact(){
+
+	public Contact getContact() {
 		return contact;
 	}
-	public void setContact(Contact contact){
+
+	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
 }
