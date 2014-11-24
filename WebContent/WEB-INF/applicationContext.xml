@@ -103,6 +103,12 @@
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<!-- Session factory pour les templates!! -->
+		<constructor-arg>
+			<ref bean="DAOPhoneNumber" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="DAOContactGroup" />
+		</constructor-arg>
 	</bean>
 
 

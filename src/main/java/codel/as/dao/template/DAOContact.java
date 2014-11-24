@@ -34,6 +34,17 @@ import codel.as.util.ApplicationContextUtils;
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
+	
+
+	private IDAOPhoneNumber daoPhone;
+	private IDAOContactGroup daoContactGroup;
+	
+	public DAOContact(IDAOPhoneNumber daoPhone, IDAOContactGroup daoContactGroup) {
+		super();
+		this.daoPhone = daoPhone;
+		this.daoContactGroup = daoContactGroup;
+	}
+
 
 	public List searchContact(final String fname, final String lname,
 			final String email, final Address address, final String home,
@@ -83,16 +94,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 					List toRemove = new ArrayList();
 
-					// FIXME WTF???
-					ApplicationContext context = ApplicationContextUtils
-							.getApplicationContext();
-					IDAOPhoneNumber daoP = (IDAOPhoneNumber) context
-							.getBean("DAOPhoneNumber");
-
 					for (int i = 0; i < contacts.size(); i++) {
 						Contact c = (Contact) contacts.get(i);
 
-						List pns = daoP.getPhoneNumbersByIdContact(c.getId());
+						List pns = daoPhone.getPhoneNumbersByIdContact(c.getId());
 						if ((!keep("home", home, pns))
 								|| (!keep("office", office, pns))
 								|| (!keep("mobile", mobile, pns))) {
@@ -229,8 +234,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				}
 			}
 			if (add) {
-				PhoneNumber p = (PhoneNumber) ApplicationContextUtils
-						.getApplicationContext().getBean("PhoneNumber");
+				
+				PhoneNumber p = new PhoneNumber();
 				p.setPhoneKind(kind);
 				p.setPhoneNumber(number);
 				p.setContact(contact);
@@ -330,11 +335,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					idNum);
 			c.getProfiles().clear();
 
-			// Other dao
-			ApplicationContext context = ApplicationContextUtils
-					.getApplicationContext();
-			IDAOContactGroup daoContactGroup = (IDAOContactGroup) context
-					.getBean("DAOContactGroup");
 			for (ContactGroup cg : c.getBooks()) {
 				cg.getContacts().remove(c);
 				if (cg.getContacts().size() == 0) {

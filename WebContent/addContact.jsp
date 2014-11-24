@@ -7,6 +7,8 @@
 	<div class="container">
 		<h2>Ajout d'un nouveau contact</h2>
 		
+		<!-- TODO message about error or stuff being done! -->
+		
 		<form action="newcontact" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label  for="inputSiretNum">Siret
@@ -22,43 +24,43 @@
 
 			<div class="form-group">
 				<label  for="inputLname">Last Name</label> <input
-					type="text"  name="lname" Value="Test"
+					type="text"  name="lname" Value=""
 					placeholder="Lastname" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputEmail">Email</label> <input
-					type="text" name="email"  Value="Test"
+					type="text" name="email"  Value=""
 					placeholder="Email" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputStreet">Street</label> <input
-					type="text" name="street" id="inputStreet" Value="Test"
+					type="text" name="street" id="inputStreet" Value=""
 					placeholder="Street" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputZip">Zip code</label> <input
-					type="text" name="zip" id="inputZip" Value="Test"
+					type="text" name="zip" id="inputZip" Value=""
 					placeholder="Zip code" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputCity">City</label> <input
-					type="text" name="city" id="inputCity" Value="Test"
+					type="text" name="city" id="inputCity" Value=""
 					placeholder="City" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputCountry">Country</label> <input
-					type="text" name="country" id="inputCountry" Value="Test"
+					type="text" name="country" id="inputCountry" Value=""
 					placeholder="Country" class="form-control"/>
 			</div>
 
 			<div class="form-group">
 				<label  for="inputCountry">Home</label> <input
-					type="text" name="homepn" id="inputHomepn" Value="010101"
+					type="text" name="homepn" id="inputHomepn" Value=""
 					placeholder="Home phone number"class="form-control" />
 
 			</div>
