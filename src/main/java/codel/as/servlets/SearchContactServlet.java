@@ -27,8 +27,12 @@ public class SearchContactServlet extends ContactServlet {
 
 		
 		
+
 		Contact c = CS.getContact(Long.valueOf(id));
 		
+
+		System.out.println(c.getLastname());
+
 		log.info(c.toString());
 		
 		getServletContext().getRequestDispatcher(PathUtils.ACCUEIL).forward(

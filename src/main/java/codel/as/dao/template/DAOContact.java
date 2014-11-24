@@ -381,4 +381,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
+	@Override
+	public Contact getContactById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
