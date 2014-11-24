@@ -5,6 +5,78 @@ import java.util.Set;
 
 
 public class Contact {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((books == null) ? 0 : books.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result
+				+ ((profiles == null) ? 0 : profiles.hashCode());
+		result = prime * result + version;
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Contact [id=" + id + ", version=" + version + ", firstname="
+				+ firstname + ", lastname=" + lastname + ", email=" + email
+				+ ", address=" + address + ", profiles=" + profiles
+				+ ", books=" + books + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contact other = (Contact) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (books == null) {
+			if (other.books != null)
+				return false;
+		} else if (!books.equals(other.books))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstname == null) {
+			if (other.firstname != null)
+				return false;
+		} else if (!firstname.equals(other.firstname))
+			return false;
+		if (id != other.id)
+			return false;
+		if (lastname == null) {
+			if (other.lastname != null)
+				return false;
+		} else if (!lastname.equals(other.lastname))
+			return false;
+		if (profiles == null) {
+			if (other.profiles != null)
+				return false;
+		} else if (!profiles.equals(other.profiles))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
+	}
+
 	private long id;
 	private int version;
 	private String firstname;

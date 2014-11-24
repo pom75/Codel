@@ -24,9 +24,10 @@ public class SearchContactServlet extends ContactServlet {
 
 		
 		
-		Object c = CS.getContact(id);
+		Contact c = CS.getContact(id); //<- Comment caste sa en bon objet ?
 		
-		System.out.println(c.toString());
+		
+		System.out.println(c.getLastname());
 		
 		//og.info(c.getFirstname());
 		
