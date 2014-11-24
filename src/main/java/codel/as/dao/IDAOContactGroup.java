@@ -4,6 +4,7 @@ import java.util.List;
 
 import codel.as.domain.ContactGroup;
 
+
 public interface IDAOContactGroup {
 	public boolean createContactGroup(String name , String idContact);
 

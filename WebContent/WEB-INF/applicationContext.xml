@@ -73,23 +73,11 @@
 		</constructor-arg>
 	</bean>
 
-
-	<bean id="DAOAddress" class="codel.as.dao.template.DAOAddress"
-		scope="singleton">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-
 	<bean id="DAOContactGroup" class="codel.as.dao.template.DAOContactGroup"
 		scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-
-	<bean id="DAOEntreprise" class="codel.as.dao.template.DAOEntreprise"
-		scope="singleton">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 
 	<bean id="DAOPhoneNumber" class="codel.as.dao.template.DAOPhoneNumber"
 		scope="singleton">
