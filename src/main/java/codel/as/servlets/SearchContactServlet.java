@@ -27,7 +27,7 @@ public class SearchContactServlet extends ContactServlet {
 
 		
 		
-		Contact c = CS.getContact(id);
+		Contact c = CS.getContact(Long.valueOf(id));
 		
 		log.info(c.toString());
 		

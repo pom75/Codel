@@ -17,13 +17,17 @@ public interface IDAOContact {
 	public boolean modifyContact(Contact c, String fname, String lname, String email, 
 			String street, String zip, String city, String country, String home, String office, String mobile, int siretnum);
 
-	public List<Contact> searchContact(final String fname, final String lname, final String email, final Address address,
+	public List<Contact> searchByExampleContact (final String fname, final String lname, final String email, String street, String zip, String city, String country, String home, String office, String mobile, int siretnum);
+	
+	public List<Contact> searchContact (final String fname, final String lname, final String email, final Address address,
 			final String home, final String office, final String mobile);
+	// MAYBE JUST AN UPDATE, SAVE OPERATION??
+	
 	public boolean generateContacts();
 	
-	public List<Contact> getContactGroupByIdContact(String idContact);
+	public List<Contact> getContactGroupByIdContact(long idContact);
 	
 	public List<Contact> getAllContacts();
 	
-	public Contact getContactById(String id);
+	public Contact getContactById(long id);
 }

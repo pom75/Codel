@@ -45,6 +45,10 @@
 			<tx:method name="delete*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
+	<aop:config>
+		<aop:advisor pointcut="execution(* dao.*.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
 
 	<!-- TODO restore aspect <aop:config> <aop:advisor pointcut="execution(* 
 		dao.*.*(..))" advice-ref="txAdvice" /> <aop:aspect id="ContactLoggerBean" 

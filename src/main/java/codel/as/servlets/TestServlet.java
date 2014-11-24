@@ -36,9 +36,9 @@ public class TestServlet extends ContactServlet {
 		
 		
 		switch(test){
-			case"delete":
+			case "delete":
 				// PUT TEST HERE
-				Contact c = CS.getContact("0");
+				Contact c = CS.getContact(2);
 				
 				log.info("maybe null?"+c.toString());
 				
@@ -46,7 +46,7 @@ public class TestServlet extends ContactServlet {
 			
 			
 			default:
-				log.severe("Should not test this");
+				log.severe("Should not test this: provide a test");
 			
 		}
 		
