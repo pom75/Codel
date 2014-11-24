@@ -246,7 +246,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public List<Contact> searchContactByEmail(String email) {
 		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
 		filter.add(Restrictions.eq("email", email));
-		return  (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
 	}
 
 	@Override
@@ -254,21 +254,34 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
 		filter.add(Restrictions.like("firstname", fname));
 		filter.add(Restrictions.like("lastname", lname));
-		return  (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+	}
+
+	@Override
+	public List<Contact> searchContactByPhone(String phone) {
+		// TODO Check
+		return (List<Contact>) getHibernateTemplate().findByNamedParam(
+				"FROM Contact c WHERE (  elements(c.profiles).phoneNumber LIKE :phone   ) ", "phone", phone);
 	}
 
 	// FIXME Kill??? Update with ours
 	@Override
 	public boolean generateContacts() {
-		try {
+		
+		Contact premierContact = (Contact) ApplicationContextUtils
+				.getApplicationContext().getBean("ContactExp1");
+		
+		// TODO Check no exist?
+		if(this.searchContactByName(premierContact.getFirstname(), premierContact.getLastname()).isEmpty()){
+
+			//FIXME
 			List<Contact> contacts = new ArrayList<Contact>();
 			List<Address> addresses = new ArrayList<Address>();
 			List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 
+			contacts.add(premierContact);
 			contacts.add((Contact) ApplicationContextUtils
-					.getApplicationContext().getBean("ContactExp1"));
-			contacts.add((Contact) ApplicationContextUtils
-					.getApplicationContext().getBean("EntrepriseExp1"));
+					.getApplicationContext().getBean("L'entreprise"));
 			contacts.add((Contact) ApplicationContextUtils
 					.getApplicationContext().getBean("EntrepriseExp2"));
 
@@ -296,12 +309,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					getHibernateTemplate().save(phoneNumbers.get(j + 3 * i));
 				}
 			}
-
 			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			log.warning("Stub contact already created");
 			return false;
 		}
 	}
-
 }
