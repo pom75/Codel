@@ -1,14 +1,17 @@
 package codel.as.servlets;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codel.as.domain.Contact;
+
 public class SearchContactServlet extends ContactServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static Logger log = Logger.getLogger("SearchContactServlet");
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request,
@@ -17,18 +20,16 @@ public class SearchContactServlet extends ContactServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String fname = request.getParameter("fname");
-		String lname = request.getParameter("lname");
-		String email = request.getParameter("email");
+		String id = request.getParameter("id");
 
-
-		// ContactService.updateContact(fname, lname, email);
-		// FIXME Send to some specific page, after having set the result in a
-		// var!!
-		// RequestDispatcher rd = getServletContext().getRequestDispatcher(
-		// responseUrl );
-		// rd.forward(request, response);
-
+		
+		
+		Object c = CS.getContact(id);
+		
+		System.out.println(c.toString());
+		
+		//og.info(c.getFirstname());
+		
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(
 				request, response);
 	}

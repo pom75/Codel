@@ -20,6 +20,7 @@ public class DeleteContactServlet extends ContactServlet {
 		long id = Long.parseLong(request.getParameter("id"));
 
 		CS.deleteContact(id); // FIXME GET DAO?
+		
 		getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
 	}
 

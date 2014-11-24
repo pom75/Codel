@@ -13,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
@@ -24,8 +26,11 @@ import codel.as.domain.Entreprise;
 import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
 
-// FIXME Try togenetic
-@SuppressWarnings({ "rawtypes", "unchecked" })
+
+@Repository
+@Transactional
+@SuppressWarnings({"rawtypes", "unchecked"})
+//FIXME Try togenetic
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
@@ -105,8 +110,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		});
 	}
 
-	// FIXME KILL?
-	public Object[] getContactById(String id) {
+
+	public Object getContactById(String id) {
 		try {
 			// ¤hib:sql
 			List contacts = getHibernateTemplate().find(
@@ -114,7 +119,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 							+ " and c.address= a");
 			// FIX Address???
 			if ((contacts != null) && (!contacts.isEmpty())) {
-				return (Object[]) contacts.get(0);
+				return (Object) contacts.get(0);
 			}
 			return null;
 		} catch (Exception e) {
@@ -253,10 +258,34 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return false;
 	}
 
+	@Transactional(readOnly = false)
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
+		
+		Contact c;
+		if(numSiret <= 0){
+			c = new Contact();
+		} else {
+			c = new Entreprise();
+			(( Entreprise )c).setNumSiret(numSiret);
+		}
+		
+		c.setFirstname(fname);
+		c.setLastname(lname);
+		c.setEmail(email);
+		c.setAddress(address);
+		c.setProfiles(profiles);
+		getHibernateTemplate().setCheckWriteOperations(false);
+		if(numSiret <= 0){
+			getHibernateTemplate().save(c);
+		}else{
+			getHibernateTemplate().save((( Entreprise )c));
+		}
+		
 		try {
-			Contact c;
+			
+			
+			/*
 			if (numSiret <= 0) {
 				c = new Contact();
 
@@ -283,6 +312,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					getHibernateTemplate().save(profile);
 				}
 			}
+			*/
 
 			return true;
 		} catch (Exception e) {

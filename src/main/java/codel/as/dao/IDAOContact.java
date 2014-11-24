@@ -25,5 +25,5 @@ public interface IDAOContact {
 	
 	public List<Contact> getAllContacts();
 	
-	public Object[] getContactById(String id);
+	public Object getContactById(String id);
 }

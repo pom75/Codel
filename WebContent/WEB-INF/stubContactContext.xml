@@ -45,13 +45,13 @@
 			<value>0</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value></value>
+			<value>Jean</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value></value>
+			<value>Charle</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value></value>
+			<value>dzdqdqd</value>
 		</constructor-arg>
 		<constructor-arg>
 			<ref bean="Address" />
