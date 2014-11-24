@@ -1,4 +1,4 @@
-package codel.as.dao.template;
+package codel.as.dao.hibernate;
 
 import java.util.Collections;
 import java.util.List;

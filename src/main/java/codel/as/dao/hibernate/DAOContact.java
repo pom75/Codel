@@ -1,4 +1,4 @@
-package codel.as.dao.template;
+package codel.as.dao.hibernate;
 
 import static codel.as.domain.PhoneNumber.MOBILE_CATEGORY;
 import static codel.as.domain.PhoneNumber.WORK_CATEGORY;
