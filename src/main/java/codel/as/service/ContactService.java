@@ -40,7 +40,7 @@ public class ContactService {
 
 	}
 
-	public Object getContact(String id) {
+	public Contact getContact(String id) {
 		return daoContact.getContactById(id);
 
 	}

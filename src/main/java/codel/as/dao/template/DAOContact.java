@@ -6,14 +6,11 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import codel.as.dao.IDAOContact;
@@ -26,9 +23,6 @@ import codel.as.domain.Entreprise;
 import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
 
-
-@Repository
-@Transactional
 @SuppressWarnings({"rawtypes", "unchecked"})
 //FIXME Try togenetic
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
@@ -116,40 +110,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 
-	public Object getContactById(String id) {
-		try {
+	public Contact getContactById(String id) {
 			// ¤hib:sql
-			List contacts = getHibernateTemplate().find(
-					"select c, a from Contact c, Address a where c.id = " + id
-							+ " and c.address= a");
-			// FIX Address???
-			if ((contacts != null) && (!contacts.isEmpty())) {
-				return (Object) contacts.get(0);
-			}
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+			return getHibernateTemplate().get(Contact.class, id);	
 	}
 
 	public List getAllContacts() {
-		return (List) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session)
-					throws HibernateException {
-				try {
-					// ¤hib:hql
-					Query query = session
-							.createQuery("from Contact c left join fetch c.address address");
-					// force chargement
-					List contacts = query.setCacheable(true).list();
-					return contacts;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		});
+		//TODO TEST
+		return getHibernateTemplate().find("from Contact c left join fetch c.address address");
 	}
 
 	public List getContactGroupByIdContact(String idContact) {
