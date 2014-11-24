@@ -1,27 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
-<!--  On passera ptetre après à une tuile -->
+<!--  On passera ptetre aprÃ¨s Ã  une tuile -->
 <%@include file="templates/header.jsp"%>
 <body>
 	<div class="container">
-		<h2>Connexion</h2>
-
-		<form method="post" action="login" class="form-horizontal">
-			<div class="form-group">
-				<label for="login">Login</label> <input type="login"
-					class="form-control" id="login" name="login"
-					placeholder="Enter Login">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label> <input type="password"
-					class="form-control" id="password" placeholder="Password"
-					name="password">
-			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-			<button type="reset" class="btn btn-default">Reset</button>
-		</form>
-	</div>
+	<h2>Connexion</h2>
+ 
+	<s:form action="Welcome" class="form-horizontal">
+		<s:textfield name="login" label="Username" />
+		<s:password name="password" label="Password" />
+		<s:submit class="btn btn-default" />
+		<s:reset class="btn btn-default"/>
+	</s:form>
+ </div>
 </body>
 </html>

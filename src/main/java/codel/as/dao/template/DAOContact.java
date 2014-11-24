@@ -31,8 +31,6 @@ import codel.as.util.ApplicationContextUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 // FIXME Try togenetic
-@Repository
-@Transactional
 // Hibernate 4+Spring4
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
@@ -202,8 +200,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return false;
 	}
 
-	@Transactional(readOnly = false)
-	// FIXME KILL
 	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
