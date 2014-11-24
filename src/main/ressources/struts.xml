@@ -9,7 +9,7 @@
 		<action name="Login">
 			<result>login.jsp</result>
 		</action>
-		<action name="Welcome" class="com.mkyong.user.action.WelcomeUserAction">
+		<action name="Welcome" class="codel.as.action.WelcomeUserAction">
 			<result name="SUCCESS">welcome_user.jsp</result>
 		</action>
 	</package>
