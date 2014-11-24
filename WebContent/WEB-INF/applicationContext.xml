@@ -23,18 +23,10 @@
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<!-- 3 working? -->
-
 		<!-- retrieve conf from cfg: http://stackoverflow.com/questions/471799/spring-and-hibernate-cfg-xml -->
 		<property name="configLocation">
 			<value>classpath:hibernate.cfg.xml</value>
 		</property>
-		<!-- Check if deduced from <property name="dataSource" ref="dataSource" 
-			/> <property name="hibernateProperties"> <props> <prop key="hibernate.hbm2ddl.auto">create</prop> 
-			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> <prop 
-			key="hibernate.cache.use_second_level_cache">true</prop> <prop key="hibernate.cache.use_query_cache">true</prop> 
-			<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop> 
-			<prop key="hibernate.generate_statistics">true</prop> </props> </property> -->
 	</bean>
 
 	<bean id="transactionManager"
@@ -42,29 +34,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	
-
-
-
-	<!-- TODO Check what this is -->
-	<!-- <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate"> -->
-	<!-- <property name="transactionManager" ref="transactionManager"/> -->
-	<!-- </bean> -->
-
-
-	<!-- DISABLING WTF <bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter"> 
-		<property name="registrationBehavior" value="1" /> <property name="beans"> 
-		<map> <entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean" 
-		/> </map> </property> </bean> -->
-
-	<!-- statistics are deprecated in latest hibernate -->
-
 
 	<tx:advice id="txAdvice">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" timeout="-1" />
-			<tx:method name="sav*" propagation="REQUIRED" read-only="false"  />
+			<tx:method name="sav*" propagation="REQUIRED" read-only="false" />
 			<tx:method name="find*" read-only="true" />
 			<tx:method name="create*" read-only="false" />
 			<tx:method name="add*" read-only="false" />
@@ -72,23 +46,11 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<!--   <aop:config>
-		<aop:advisor pointcut="execution(* dao.*.*(..))"
-			advice-ref="txAdvice" />
-		<aop:aspect id="ContactLoggerBean" ref="ContactLogger">
-			<aop:before
-				pointcut="execution(* codel.as.dao.IDAOContact.addContact(String,String,*,*,*,*)) and args(firstname,lastname,*,*,*,*)"
-				method="log" arg-names="firstname,lastname" />
-		</aop:aspect>
-	</aop:config>
-	-->
-	<tx:annotation-driven/>
-
-	
-
-
-  
-
+	<!-- TODO restore aspect <aop:config> <aop:advisor pointcut="execution(* 
+		dao.*.*(..))" advice-ref="txAdvice" /> <aop:aspect id="ContactLoggerBean" 
+		ref="ContactLogger"> <aop:before pointcut="execution(* codel.as.dao.IDAOContact.addContact(String,String,*,*,*,*)) 
+		and args(firstname,lastname,*,*,*,*)" method="log" arg-names="firstname,lastname" 
+		/> </aop:aspect> </aop:config> -->
 	<bean id="ContactLogger" class="codel.as.aspect.ContactLogger" />
 
 	<!-- Service implem -->
