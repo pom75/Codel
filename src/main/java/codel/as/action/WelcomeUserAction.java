@@ -2,14 +2,14 @@ package codel.as.action;
 
 public class WelcomeUserAction{
 	 
-	private String login;
+	private String username;
  
 	public String getUsername() {
-		return login;
+		return username;
 	}
  
-	public void setUsername(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
  
 	// all struts logic here
