@@ -20,7 +20,11 @@ import codel.as.domain.PhoneNumber;
 import codel.as.util.ApplicationContextUtils;
 import codel.as.util.HibernateUtil;
 
-public class DAOContact implements IDAOContact {
+/**
+ * Old, do not follow implem
+ *
+ */
+abstract public class DAOContact implements IDAOContact {
 
 	public boolean createContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
@@ -270,26 +274,26 @@ public class DAOContact implements IDAOContact {
 		}
 	}
 
-	@Override
-	public Object[] getContactById(String id) {
-		Session session = HibernateUtil.getSession();
-
-		try {
-			Query query = session
-					.createQuery("select c, a from Contact c, Address a where c.id = "
-							+ id + " and c.address= a");
-			List contacts = query.list();
-			if ((contacts != null) && (contacts.size() != 0)) {
-				return (Object[]) contacts.get(0);
-			}
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			session.close();
-		}
-	}
+//	@Override
+//	public Object[] getContactById(String id) {
+//		Session session = HibernateUtil.getSession();
+//
+//		try {
+//			Query query = session
+//					.createQuery("select c, a from Contact c, Address a where c.id = "
+//							+ id + " and c.address= a");
+//			List contacts = query.list();
+//			if ((contacts != null) && (contacts.size() != 0)) {
+//				return (Object[]) contacts.get(0);
+//			}
+//			return null;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		} finally {
+//			session.close();
+//		}
+//	}
 
 	@Override
 	public List getAllContacts() {
