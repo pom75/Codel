@@ -58,8 +58,8 @@ public class ContactService {
 		return daoContact.searchContactByEmail(email);
 	}
 
-	public List<Contact> searchContactByName(String fname, String lname) {
-		return daoContact.searchContactByName(fname, lname);
+	public Contact searchContactByName(String fname, String lname) {
+		return daoContact.findContactByName(fname, lname);
 	}
 
 	public List<Contact> searchContactByPhone(String phone) {

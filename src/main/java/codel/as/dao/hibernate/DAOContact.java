@@ -228,11 +228,31 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	@Override
-	public List<Contact> searchContactByName(String fname, String lname) {
+	public Contact findContactByName(String fname, String lname) {
 		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
 		filter.add(Restrictions.like("firstname", fname));
 		filter.add(Restrictions.like("lastname", lname));
-		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		List<Contact> res = (List<Contact>) getHibernateTemplate()
+				.findByCriteria(filter);
+
+		if (res.isEmpty()) {
+			return null;
+		} else {
+			return res.get(0);
+		}
+	}
+
+	@Override
+	public Entreprise findEntrepriseBySiret(int siret) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Entreprise.class);
+		filter.add(Restrictions.like("numSiret", siret));
+		List<Entreprise> res = (List<Entreprise>) getHibernateTemplate()
+				.findByCriteria(filter);
+		if (res.isEmpty()) {
+			return null;
+		} else {
+			return res.get(0);
+		}
 	}
 
 	@Override
@@ -252,8 +272,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				.getApplicationContext().getBean("ContactExp1");
 
 		// TODO Check no exist?
-		if (this.searchContactByName(premierContact.getFirstname(),
-				premierContact.getLastname()).isEmpty()) {
+		if (this.findContactByName(premierContact.getFirstname(),
+				premierContact.getLastname())!= null) {
 
 			// FIXME
 			List<Contact> contacts = new ArrayList<Contact>();
@@ -296,4 +316,5 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return false;
 		}
 	}
+
 }
