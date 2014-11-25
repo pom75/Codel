@@ -264,7 +264,7 @@
 		<property name="phoneKind" value="home" />
 		<property name="phoneNumber" value="028080834" />
 		<property name="contact">
-			<ref bean="ContactExp2" />
+			<ref bean="EntrepriseExp1" />
 		</property>
 	</bean>
 
@@ -272,7 +272,7 @@
 		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="02458234" />
 	 	<property name="contact">
-			<ref bean="ContactExp2" />
+			<ref bean="EntrepriseExp1" />
 		</property>
 	</bean>
 
@@ -280,7 +280,7 @@
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="07489254728" />
 		<property name="contact">
-			<ref bean="ContactExp2" />
+			<ref bean="EntrepriseExp1" />
 		</property>
 	</bean>
 
@@ -288,7 +288,7 @@
 		<property name="phoneKind" value="home" />
 		<property name="phoneNumber" value="090298271" />
 		<property name="contact">
-			<ref bean="ContactExp3" />
+			<ref bean="EntrepriseExp2" />
 		</property>
 	</bean>
 
@@ -296,7 +296,7 @@
 		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="02803030" />
 		<property name="contact">
-			<ref bean="ContactExp3" />
+			<ref bean="EntrepriseExp2" />
 		</property>
 	</bean>
 
@@ -304,7 +304,7 @@
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="078387461" />
 		<property name="contact">
-			<ref bean="ContactExp3" />
+			<ref bean="EntrepriseExp2" />
 		</property>
 	</bean>
 

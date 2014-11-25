@@ -19,7 +19,7 @@
 
 
 
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!-- Include all compiled plugins (below), or include individual files as needed 
 	<footer>
 		<s:url id="localeEN" namespace="/" action="locale">
 			<s:param name="request_locale">en</s:param>
@@ -32,7 +32,7 @@
 			<s:a href="%{localeEN}">En</s:a>
 			<s:a href="%{localeFR}">Fr</s:a>
 		</p>
-	</footer>
+	</footer>-->
 	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
