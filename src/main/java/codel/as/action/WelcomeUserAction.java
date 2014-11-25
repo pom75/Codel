@@ -6,8 +6,8 @@ public class WelcomeUserAction{
 	 
 	private String username;
 	private String password;
-	private String test = "test";
- 
+
+
 	public String getUsername() {
 		return username;
 	}

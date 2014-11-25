@@ -20,5 +20,15 @@
 			<result name="ERROR">/login.jsp</result>
 		</action>
 	</package>
+	
+	<package name="user" namespace="/Contact" extends="struts-default">
+		<action name="PrepAdd">
+			<result>/addContact.jsp</result>
+		</action>
+		<action name="Add" class="codel.as.action.AddContactAction">
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/addContact.jsp</result>
+		</action>
+	</package>
 
 </struts>

@@ -10,7 +10,6 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 </head>
 <body>
-	<h1><s:text name="welcome" /></h1>
 	<!-- Do some customisation here :) -->
 
 	<jsp:doBody />
