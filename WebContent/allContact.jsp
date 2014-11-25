@@ -4,7 +4,7 @@
 <t:wrapper>
 	<div class="container">
 		<div class="container">
-			<h2>Mes Contacts></h2>
+			<h2>Mes Contacts</h2>
 			<p>${html}</p>
 		</div>
 </t:wrapper>

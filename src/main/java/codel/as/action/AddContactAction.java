@@ -8,17 +8,17 @@ import codel.as.domain.Address;
 import codel.as.domain.PhoneNumber;
 
 public class AddContactAction extends ContactAction {
-	private String fname;
-	private String lname;
-	private String email;
-	private String street;
-	private String city;
-	private String zip;
-	private String country;
-	private String mobileNum;
-	private String officeNum;
-	private String homeNum;
-	private String siretNum;
+	private String fname= null;
+	private String lname= null;
+	private String email= null;
+	private String street= null;
+	private String city= null;
+	private String zip= null;
+	private String country= null;
+	private String mobileNum= null;
+	private String officeNum= null;
+	private String homeNum = null;
+	private String siretNum = null;
 
 	public String getFname() {
 		return fname;
@@ -115,7 +115,7 @@ public class AddContactAction extends ContactAction {
 		} else {
 			// FIXME PAs eu le temps d'extraire addresse.
 			
-			int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
+			int numSiret = (siretNum == null || siretNum.isEmpty() ) ? -1 : Integer.valueOf(siretNum);
 			Address address = (street.isEmpty() && zip.isEmpty()
 					&& city.isEmpty() && country.isEmpty()) ? null
 					: new Address(street, city, zip, country);
