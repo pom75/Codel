@@ -67,8 +67,19 @@
 		<constructor-arg ref="DAOContact" />
 	</bean>
 	
-	
-	
+	<!-- JMX exporter
+	http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jmx.html#jmx-resources
+	TODO: test
+	 
+	<bean id="serverConnector" class="org.springframework.jmx.support.ConnectorServerFactoryBean"/>
+	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans">
+            <map>
+                <entry key="bean:name=daoContect" value-ref="DAOContact"/>
+            </map>
+        </property>
+    </bean>
+    -->
 
 	<!-- **  Dao Implems ** -->
 
