@@ -121,21 +121,21 @@ public class PhoneNumber {
 	public static PhoneNumber newHome(String num) {
 		PhoneNumber tmp = new PhoneNumber();
 		tmp.setPhoneNumber(num);
-		tmp.setPhoneNumber(HOME_CATEGORY);
+		tmp.setPhoneKind(HOME_CATEGORY);
 		return tmp;
 	}
 
 	public static PhoneNumber newWork(String num) {
 		PhoneNumber tmp = new PhoneNumber();
 		tmp.setPhoneNumber(num);
-		tmp.setPhoneNumber(WORK_CATEGORY);
+		tmp.setPhoneKind(WORK_CATEGORY);
 		return tmp;
 	}
 
 	public static PhoneNumber newMobile(String num) {
 		PhoneNumber tmp = new PhoneNumber();
 		tmp.setPhoneNumber(num);
-		tmp.setPhoneNumber(MOBILE_CATEGORY);
+		tmp.setPhoneKind(MOBILE_CATEGORY);
 		return tmp;
 	}
 	
