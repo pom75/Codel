@@ -121,6 +121,7 @@ public class UpContactAction extends ContactAction {
 	// all struts logic here
 	public String execute() {
 		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || id.isEmpty()) {
+			System.out.println("HERE");
 			return "ERROR";
 		} else {
 			try{
@@ -161,6 +162,7 @@ public class UpContactAction extends ContactAction {
 						city, country, homeNum, officeNum, mobileNum, numSiret);
 				return "SUCCESS";
 			}catch(Exception e){
+				e.printStackTrace();
 				return "ERROR";
 			}
 		}
