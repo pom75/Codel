@@ -4,14 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CODEL</title>
+<title><s:text name="title" /></title>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
 <link href="css/agency.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery.js"></script>
-
 </head>
 <body>
-	<h1>Welcome to ASContact :)</h1>
+	<h1><s:text name="welcome" /></h1>
 	<!-- Do some customisation here :) -->
 
 	<jsp:doBody />
