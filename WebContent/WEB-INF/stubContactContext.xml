@@ -6,6 +6,7 @@
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
+<!-- ** TODO CHECK AND REORGANIZE ** -->
 
 	<!-- Fichier de définitions des contacts subs, prépeuplant la base -->
 
@@ -78,6 +79,9 @@
 		<constructor-arg>
 			<ref bean="AddressExp1" />
 		</constructor-arg>
+			<constructor-arg>
+			<ref bean="ContactGroupExp1" />
+		</constructor-arg>
 	</bean>
 
 	<bean id="EntrepriseExp1" class="domain.Entreprise" scope="prototype">
@@ -87,6 +91,9 @@
 		<property name="numSiret" value="123" />
 		<property name="address">
 			<ref bean="AddressExp2" />
+		</property>
+		<property name="profiles">
+			<ref bean="ContactGroupExp2" />
 		</property>
 	</bean>
 
@@ -98,6 +105,9 @@
 		<property name="numSiret" value="2222" />
 		<property name="address">
 			<ref bean="AddressExp3" />
+		</property>
+		<property name="profiles">
+			<ref bean="ContactGroupExp3" />
 		</property>
 <!-- profiles -->
 
@@ -123,6 +133,8 @@
 		<property name="zip" value="22442" />
 		<property name="country" value="USA" />
 	</bean>
+	
+	<!-- ** Phones -->
 
 	<bean id="PhoneNumberExp1" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
@@ -145,8 +157,8 @@
 	</bean>
 
 	<bean id="PhoneNumberExp5" class="domain.PhoneNumber" scope="prototype">
-		<property name="phoneKind" value="home" />
-		<property name="phoneNumber" value="0245823°4" />
+		<property name="phoneKind" value="work" />
+		<property name="phoneNumber" value="02458234" />
 	</bean>
 
 	<bean id="PhoneNumberExp6" class="domain.PhoneNumber" scope="prototype">
@@ -167,6 +179,38 @@
 	<bean id="PhoneNumberExp9" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="078387461" />
+	</bean>
+	
+	
+	<!-- CHECK -->
+		<bean id="ContactGroupExp1" class="domain.ContactGroup" scope="prototype">
+		<property name="contacts">
+			<set>
+				<ref bean="PhoneNumberExp1" />
+				<ref bean="PhoneNumberExp2" />
+				<ref bean="PhoneNumberExp3" />
+			</set>
+		</property>
+	</bean>
+
+	<bean id="ContactGroupExp2" class="domain.ContactGroup" scope="prototype">
+		<property name="contacts">
+			<set>
+				<ref bean="PhoneNumberExp4" />
+				<ref bean="PhoneNumberExp5" />
+				<ref bean="PhoneNumberExp6" />
+			</set>
+		</property>
+	</bean>
+	
+		<bean id="ContactGroupExp3" class="domain.ContactGroup" scope="prototype">
+		<property name="contacts">
+			<set>
+				<ref bean="PhoneNumberExp7" />
+				<ref bean="PhoneNumberExp8" />
+				<ref bean="PhoneNumberExp9" />
+			</set>
+		</property>
 	</bean>
 
 </beans>
