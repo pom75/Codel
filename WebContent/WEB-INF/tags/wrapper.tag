@@ -18,6 +18,16 @@
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<footer>
+	 
+<s:url id="localeEN" namespace="/" action="locale" >
+   <s:param name="request_locale" >en</s:param>
+</s:url>
+<s:url id="localezhCN" namespace="/" action="locale" >
+   <s:param name="request_locale" >zh_CN</s:param>
+</s:url>
+<s:url id="localeDE" namespace="/" action="locale" >
+   <s:param name="request_locale" >de</s:param>
+</s:url>
 	<p> <s:text name="language.select" />
 	<s:a href="%{localeEN}" >En</s:a>
     <s:a href="%{localeFR}" >Fr</s:a>
