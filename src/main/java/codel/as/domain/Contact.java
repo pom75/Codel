@@ -22,25 +22,14 @@ public class Contact {
 
 	public Contact(String firstname, String lastname, String email,
 			Address address, Set<PhoneNumber> profiles, Set<ContactGroup> books) {
-
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.address = address;
-		this.profiles = profiles;
-		this.books = books;
+		this(firstname, lastname, email, address, profiles);
+		this.books = books == null?new HashSet<ContactGroup>(): books;
 	}
 
 	public Contact(String firstname, String lastname, String email,
 			Address address, Set<PhoneNumber> profiles) {
-
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.address = address;
-		this.profiles = profiles;
-		this.profiles = new HashSet<PhoneNumber>();
-		this.books = new HashSet<ContactGroup>();
+		this(firstname, lastname, email, address);
+		this.profiles = profiles == null?  new HashSet<PhoneNumber>():profiles;
 	}
 
 	public Contact(String firstname, String lastname, String email,
@@ -180,13 +169,7 @@ public class Contact {
 				return false;
 		} else if (!lastname.equals(other.lastname))
 			return false;
-		if (profiles == null) {
-			if (other.profiles != null)
-				return false;
-		} else if (!profiles.equals(other.profiles))
-			return false;
-		if (version != other.version)
-			return false;
+
 		return true;
 	}
 }
