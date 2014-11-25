@@ -64,6 +64,7 @@
 
 
 	<dependencies>
+
 		<!-- ** STRUSTS DEPENDENCIES ** -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -232,15 +233,5 @@
 		</dependency>
 
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>sonatype.oss.snapshots</id>
-			<name>Sonatype OSS Snapshot Repository</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</repository>
-	</repositories>
+	
 </project>
