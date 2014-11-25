@@ -120,4 +120,16 @@
 		<servlet-name>SearchContact</servlet-name>
 		<url-pattern>/contact/search</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Generate</servlet-name>
+		<servlet-class>codel.as.servlets.ContactStubServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Generate</servlet-name>
+		<url-pattern>/contact/generate</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>
