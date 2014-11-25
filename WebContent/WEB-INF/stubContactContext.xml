@@ -68,13 +68,13 @@
 			<value>0</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value>Clayton</value>
+			<value>Jules</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value>Pettet</value>
+			<value>Juliz</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value>clayton.pettet@msn.com</value>
+			<value>this.ismy.name</value>
 		</constructor-arg>
 		<constructor-arg>
 			<ref bean="AddressExp1" />
@@ -99,7 +99,7 @@
 
 	<bean id="EntrepriseExp2" parent="ContactSetter" class="domain.Entreprise"
 		scope="prototype">
-		<property name="firstname" value="L'entreprise" />hn
+		<property name="firstname" value="L'entreprise" />
 		<property name="lastname" value="JoSmith" />
 		<property name="email" value="john@smith.com" />
 		<property name="numSiret" value="2222" />
