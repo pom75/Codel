@@ -32,21 +32,21 @@
 			<result name="ERROR">/addContact.jsp</result>
 		</action>
 		<action name="PrepRm">
-			<result>/addContact.jsp</result>
+			<result>/deleteContact.jsp</result>
 		</action>
 		<action name="RM" class="codel.as.action.RMContactAction">
 			<result name="SUCCESS">/accueil.jsp</result>
 			<result name="ERROR">/deleteContact.jsp</result>
 		</action>
 		<action name="PrepUp">
-			<result>/addContact.jsp</result>
+			<result>/updateContact.jsp</result>
 		</action>
 		<action name="Up" class="codel.as.action.UpContactAction">
 			<result name="SUCCESS">/accueil.jsp</result>
 			<result name="ERROR">/updateContact.jsp</result>
 		</action>
 		<action name="PrepGet">
-			<result>/addContact.jsp</result>
+			<result>/searchContact.jsp</result>
 		</action>
 		<action name="Get" class="codel.as.action.GetContactAction">
 			<result name="SUCCESS">/affContact.jsp</result>
