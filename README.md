@@ -14,7 +14,7 @@ Utilisation des frameworks `java JEE, Hibernate, Spring, Struts`
 
 Les dépendances sont gérées par Maven, et sont toutes déclarées dans le `pom.xml`.
 
-Cette application peut être tournée sur Tomcat8.
+Cette application a vocation a été testée sur Tomcat8 et devrait tourner sur tout autre WebContainer compatible
 <!-- Check equiv for Jetty -->
 
 Sinon le projet peut être importée sur une version jee d'eclipse, luna de préférence,
