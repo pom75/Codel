@@ -65,8 +65,11 @@
 		scope="singleton">
 		<constructor-arg ref="DAOContact" />
 	</bean>
+	
+	
+	
 
-	<!-- Dao Implems -->
+	<!-- **  Dao Implems ** -->
 
 	<bean id="DAOContact" class="codel.as.dao.hibernate.DAOContact"
 		scope="singleton">
