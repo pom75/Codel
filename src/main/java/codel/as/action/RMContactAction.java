@@ -1,6 +1,6 @@
 package codel.as.action;
 
-public class RMContactAction   extends ContactAction{
+public class RMContactAction extends ContactAction {
 
 	private String id;
 
@@ -13,16 +13,16 @@ public class RMContactAction   extends ContactAction{
 	}
 
 	// all struts logic here
-	@SuppressWarnings("finally")
-	public String execute() {
-		try{
-			CS.deleteContact(Long.parseLong(id));
-		}catch(Exception e){
-			return "ERROR";
-		}finally{
-			return "SUCCESS";
-		}
 
+	public String execute() {
+		try {
+			CS.deleteContact(Long.parseLong(id));
+			// better handling exceptino
+			// FIXME Affichier message..
+			return "SUCCESS";
+		} catch (Exception e) {
+			return "ERROR";
+		}
 
 	}
 
