@@ -128,7 +128,7 @@ public class UpContactAction extends ContactAction {
 				// FIXME PAs eu le temps d'extraire addresse.
 
 				Long idL = Long.valueOf(id);
-				int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
+				int numSiret = (siretNum == null || siretNum.isEmpty()) ? -1 : Integer.valueOf(siretNum);
 				Address address = (street.isEmpty() && zip.isEmpty()
 						&& city.isEmpty() && country.isEmpty()) ? null
 								: new Address(street, city, zip, country);
