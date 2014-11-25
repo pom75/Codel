@@ -77,11 +77,6 @@
 		<version>3.8.1</version>
 		<scope>test</scope>
 	</dependency>
-	<dependency>
-		<groupId>com.jgeppert.struts2.bootstrap</groupId>
-		<artifactId>struts2-bootstrap-plugin</artifactId>
-		<version>2.0.0</version>
-	</dependency>
 		<!-- ********************************************************************** 
 			** SPRING DEPENDENCIES ** ********************************************************************** -->
 		<!-- TODO check imply what we need -->
@@ -230,22 +225,7 @@
 			<version>${spring.framework.version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-plugin</artifactId>
-			<version>3.7.1</version>
-		</dependency>
 
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>sonatype.oss.snapshots</id>
-			<name>Sonatype OSS Snapshot Repository</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</repository>
-	</repositories>
+	
 </project>
