@@ -9,7 +9,14 @@
 	<constant name="struts.custom.i18n.resources" value="global" />
 
 	<!-- Servlet combo http://stackoverflow.com/questions/5295491/how-to-use-servlet-in-struts2/5298740#5298740 -->
-	<constant name="struts.action.excludePattern" value="/login,/logout,/contact/new,/contact/delete,/contact/search,/contact/update" />
+	<constant name="struts.action.excludePattern"
+		value="/login,/logout,/contact/new,/contact/delete,/contact/search,/contact/update" />
+
+	<!-- For spring DI http://struts.apache.org/development/2.x/docs/spring-plugin.html 
+		http://struts.apache.org/release/2.3.x/docs/spring-and-struts-2.html -->
+
+
+	<constant name="struts.objectFactory" value="spring" />
 
 	<package name="user" namespace="/User" extends="struts-default">
 		<action name="Login">
@@ -20,5 +27,4 @@
 			<result name="ERROR">/login.jsp</result>
 		</action>
 	</package>
-
 </struts>
