@@ -152,10 +152,14 @@
 			<value>this.ismy.name</value>
 		</constructor-arg>
 		<constructor-arg>
-			<ref bean="AddressExp1" />
+	<ref bean="AddressExp1" />
 		</constructor-arg>
 			<constructor-arg>
-			<ref bean="ContactGroupExp1" />
+			<set>
+				<ref bean="PhoneNumberExp1" />
+				<ref bean="PhoneNumberExp2" />
+				<ref bean="PhoneNumberExp3" />
+			</set>
 		</constructor-arg>
 	</bean>
 
@@ -168,7 +172,11 @@
 			<ref bean="AddressExp2" />
 		</property>
 		<property name="profiles">
-			<ref bean="ContactGroupExp2" />
+			<set>
+				<ref bean="PhoneNumberExp4" />
+				<ref bean="PhoneNumberExp5" />
+				<ref bean="PhoneNumberExp6" />
+			</set>
 		</property>
 	</bean>
 
@@ -182,7 +190,11 @@
 			<ref bean="AddressExp3" />
 		</property>
 		<property name="profiles">
-			<ref bean="ContactGroupExp3" />
+			<set>
+				<ref bean="PhoneNumberExp7" />
+				<ref bean="PhoneNumberExp8" />
+				<ref bean="PhoneNumberExp9" />
+			</set>
 		</property>
 <!-- profiles -->
 
@@ -254,38 +266,6 @@
 	<bean id="PhoneNumberExp9" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="078387461" />
-	</bean>
-	
-	
-	<!-- CHECK -->
-		<bean id="ContactGroupExp1" class="codel.as.domain.ContactGroup" scope="prototype">
-		<property name="contacts">
-			<set>
-				<ref bean="PhoneNumberExp1" />
-				<ref bean="PhoneNumberExp2" />
-				<ref bean="PhoneNumberExp3" />
-			</set>
-		</property>
-	</bean>
-
-	<bean id="ContactGroupExp2" class="codel.as.domain.ContactGroup" scope="prototype">
-		<property name="contacts">
-			<set>
-				<ref bean="PhoneNumberExp4" />
-				<ref bean="PhoneNumberExp5" />
-				<ref bean="PhoneNumberExp6" />
-			</set>
-		</property>
-	</bean>
-	
-		<bean id="ContactGroupExp3" class="codel.as.domain.ContactGroup" scope="prototype">
-		<property name="contacts">
-			<set>
-				<ref bean="PhoneNumberExp7" />
-				<ref bean="PhoneNumberExp8" />
-				<ref bean="PhoneNumberExp9" />
-			</set>
-		</property>
 	</bean>
 
 </beans>
