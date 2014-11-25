@@ -46,6 +46,7 @@
 			<tx:method name="create*" read-only="false" />
 			<tx:method name="add*" read-only="false" />
 			<tx:method name="generate*" read-only="false" />
+			<tx:method name="modify*" read-only="false" />
 			<tx:method name="delete*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
@@ -54,11 +55,11 @@
 			advice-ref="txAdvice" />
 	</aop:config>
 
-	<!-- TODO restore aspect <aop:config> <aop:advisor pointcut="execution(* 
+	<aop:config> <aop:advisor pointcut="execution(* 
 		dao.*.*(..))" advice-ref="txAdvice" /> <aop:aspect id="ContactLoggerBean" 
-		ref="ContactLogger"> <aop:before pointcut="execution(* codel.as.dao.IDAOContact.addContact(String,String,*,*,*,*)) 
+		ref="ContactLogger"> <aop:before pointcut="execution(* codel.as.service.ContactService.addContact(String,String,*,*,*,*)) 
 		and args(firstname,lastname,*,*,*,*)" method="log" arg-names="firstname,lastname" 
-		/> </aop:aspect> </aop:config> -->
+		/> </aop:aspect> </aop:config> 
 	<bean id="ContactLogger" class="codel.as.aspect.ContactLogger" />
 
 	<!-- Service implem -->

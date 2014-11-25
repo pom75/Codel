@@ -19,5 +19,6 @@ public class ContactLogger {
 
 		log.info("Attempt to create new user "+ firstname+", "+ lastname);	
 		
+		
 	}
 }
