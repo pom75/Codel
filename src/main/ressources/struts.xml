@@ -5,7 +5,11 @@
 
 <struts>
 
+	<!-- Internationalisation -->
 	<constant name="struts.custom.i18n.resources" value="global" />
+
+	<!-- Servlet combo http://stackoverflow.com/questions/5295491/how-to-use-servlet-in-struts2/5298740#5298740 -->
+	<constant name="struts.action.excludePattern" value="/login,/logout,/contact/*" />
 
 	<package name="user" namespace="/User" extends="struts-default">
 		<action name="Login">
