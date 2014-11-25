@@ -2,7 +2,7 @@ package codel.as.action;
 
 import codel.as.domain.Contact;
 
-public class GetContactAction extends ContactAction{
+public class GetNameContactAction extends ContactAction{
 
 	private String id;
 	private String fname;
@@ -117,29 +117,29 @@ public class GetContactAction extends ContactAction{
 	// all struts logic here
 	public String execute() {
 
-		Contact c = CS.getContact(Long.valueOf(id)); //contact + num ?
+		Contact c = CS.searchContactByName(fname, lname);
 
 		if(c == null){
 			return "ERROR";
 		}else {
-			 fname = c.getFirstname();
-			 lname = c.getLastname();
-			 email = c.getEmail();
-			 street = c.getAddress().getStreet();
-			 city = c.getAddress().getCity();
-			 zip = c.getAddress().getZip();
-			 country = c.getAddress().getCountry();
-			 /* TODO How?
+			fname = c.getFirstname();
+			lname = c.getLastname();
+			email = c.getEmail();
+			street = c.getAddress().getStreet();
+			city = c.getAddress().getCity();
+			zip = c.getAddress().getZip();
+			country = c.getAddress().getCountry();
+			/* TODO How?
 			 mobileNum 
 			 officeNum 
 			 homeNum;
 			 */
-			 
-			 // FIXME Check entreprise
-		//	 siretNum = ((Entreprise)c).getNumSiret(); // geter setter int may be bug?
+
+			// FIXME Check entreprise
+			//	 siretNum = ((Entreprise)c).getNumSiret(); // geter setter int may be bug?
 			return "SUCCESS";
 		}
-		
+
 	}
 
 }
