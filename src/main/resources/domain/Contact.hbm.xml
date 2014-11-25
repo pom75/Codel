@@ -11,14 +11,14 @@
 		</id>
 		<version name="version" access="field" column="VERSION" />
 		<!--http://stackoverflow.com/questions/2741088/how-to-do-multiple-column-uniqueconstraint-in-hbm -->
-		<properties name="name" unique="true">
+		<!-- DISTEMP <properties name="name" unique="true"> -->
 			<property name="firstname">
 				<column name="FIRSTNAME" />
 			</property>
 			<property name="lastname">
 				<column name="LASTNAME" />
 			</property>
-		</properties>
+	<!--	</properties>-->
 		<property name="email">
 			<column name="EMAIL" />
 		</property>
