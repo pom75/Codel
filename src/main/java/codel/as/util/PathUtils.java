@@ -18,5 +18,5 @@ public class PathUtils {
 			SEARCH_PAGE = "/updateContact.jsp", ACCUEIL = "/accueil.jsp";
 
 	public static final String ERROR = "error";
-
+	public static final String LOGOUT = "logout";
 }

@@ -23,16 +23,16 @@ import codel.as.util.PathUtils;
 public class AuthentificationFilter implements Filter {
 
 	private static Logger log = Logger.getLogger("AuthentificationFilter");
-	
+
 	FilterConfig config;
 
-	  public void setFilterConfig(FilterConfig config) {
-	    this.config = config;
-	  }
+	public void setFilterConfig(FilterConfig config) {
+		this.config = config;
+	}
 
-	  public FilterConfig getFilterConfig() {
-	    return config;
-	  }
+	public FilterConfig getFilterConfig() {
+		return config;
+	}
 
 	// FIXME: use slfh
 	/*
@@ -49,18 +49,19 @@ public class AuthentificationFilter implements Filter {
 			final ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		log.info(">>>> checking authentification");
-		
+
 		// http://stackoverflow.com/questions/10551694/how-to-access-a-running-servlet-filter/10551806#10551806
 		ServletContext ctx = getFilterConfig().getServletContext();
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		// FIXME CHECK!!!
-		if(ctx.getAttribute(AuthUtils.SECRET).equals(session.getAttribute(AuthUtils.SECRET)))
-			
-		chain.doFilter(request, response);
-		else {
-			RequestDispatcher rd = request.getRequestDispatcher(PathUtils.LOGIN_SERVLET);
-			
-			
+		if (ctx.getAttribute(AuthUtils.SECRET).equals(
+				session.getAttribute(AuthUtils.SECRET))) {
+			chain.doFilter(request, response);
+		} else {
+			RequestDispatcher rd = request
+					.getRequestDispatcher(PathUtils.LOGIN_SERVLET);
+			request.setAttribute(PathUtils.ERROR, "You Must login first ;)");
+			rd.forward(request, response);
 		}
 	}
 
