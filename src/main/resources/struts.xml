@@ -21,6 +21,7 @@
 			<result name="ERROR">/login.jsp</result>
 		</action>
 	</package>
+	<!-- TODO CHECK IF POPERCONEVNTION TO AVOID BOILERPLATE  -->
 	
 	<package name="contact" namespace="/Contact" extends="struts-default">
 		<action name="PrepAdd">
