@@ -5,8 +5,11 @@
 <html>
 <head>
 <title><s:text name="title" /></title>
-<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
-<link href="css/agency.css" rel="stylesheet">
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/agency.css">
 <script src="https://code.jquery.com/jquery.js"></script>
 </head>
 <body>
@@ -18,10 +21,17 @@
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<footer>
-	<p> <s:text name="language.select" />
-	<s:a href="%{localeEN}" >En</s:a>
-    <s:a href="%{localeFR}" >Fr</s:a>
-    </p>
+		<s:url id="localeEN" namespace="/" action="locale">
+			<s:param name="request_locale">en</s:param>
+		</s:url>
+		<s:url id="localeFR" namespace="/" action="locale">
+			<s:param name="request_locale">fr</s:param>
+		</s:url>
+		<p>
+			<s:text name="language.select" />
+			<s:a href="%{localeEN}">En</s:a>
+			<s:a href="%{localeFR}">Fr</s:a>
+		</p>
 	</footer>
 	<script src="js/bootstrap.min.js"></script>
 </body>
