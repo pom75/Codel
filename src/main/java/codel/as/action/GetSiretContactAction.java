@@ -117,7 +117,7 @@ public class GetSiretContactAction extends ContactAction{
 	// all struts logic here
 	public String execute() {
 
-		Contact c = null ;//FIXMe
+		Contact c = CS.searchContactBySiret(siretNum);
 
 		if(c == null){
 			return "ERROR";
