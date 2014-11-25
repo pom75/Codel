@@ -161,7 +161,7 @@ public class AddContactAction {
 				if (!mobileNum.isEmpty())
 					profiles.add(PhoneNumber.newHome(mobileNum));
 			}
-			ContactService.addContact(fname, lname, email, address, profiles, numSiret);
+			//ContactService.addContact(fname, lname, email, address, profiles, numSiret);
 			return "SUCCESS";
 		}
 		

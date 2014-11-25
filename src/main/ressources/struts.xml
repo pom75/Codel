@@ -21,7 +21,7 @@
 		</action>
 	</package>
 	
-	<package name="user" namespace="/Contact" extends="struts-default">
+	<package name="contact" namespace="/Contact" extends="struts-default">
 		<action name="PrepAdd">
 			<result>/addContact.jsp</result>
 		</action>
