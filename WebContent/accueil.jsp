@@ -12,6 +12,7 @@
 				<li><a href="/Codel/Contact/PrepRm.action">Supprimer un contact</a></li>
 				<li><a href="/Codel/Contact/PrepUp.action">Mettre un jour un contact</a></li>
 				<li><a href="/Codel/Contact/PrepGet.action">Chercher un contact</a></li>
+				<li><a href="/Codel/Contact/AllGet.action">Mes contacts</a></li>
 			</ul>
 		</div>
 	</div>

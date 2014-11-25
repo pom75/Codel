@@ -51,6 +51,9 @@
 			<result name="SUCCESS">/affContact.jsp</result>
 			<result name="ERROR">/searchContact.jsp</result>
 		</action>
+		<action name="AllGet" class="codel.as.action.AllGetContactAction">
+			<result name="SUCCESS">/allContact.jsp</result>
+		</action>
 	</package>
 
 </struts>
