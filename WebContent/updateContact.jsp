@@ -2,46 +2,46 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:wrapper>
 	<div class="container">
-		<h2>Mise a jour d'un contact</h2>
+		<h2><s:text name="majC" /></h2>
 		
 		<form action="Up" method="post" class="form-horizontal">
 			<div class="form-group">
-				<label  for="inputId">Id
+				<label  for="inputId"><s:text name="IDC" />
 					</label> <input type="text" id="inputId" name="id"
 					Value="12" placeholder="Id Contact" class="form-control"/>
 			</div>
 			<div class="form-group">
-				<label  for="inputSiretNum">Siret
-					number</label> <input type="text" id="inputSiretNum" name="siretNum"
+				<label  for="inputSiretNum"><s:text name="SIRC" />
+					</label> <input type="text" id="inputSiretNum" name="siretNum"
 					Value="123456789" placeholder="Siret number" class="form-control"/>
 			</div>
 
 			<div class="form-group">
-				<label  for="inputFname">First Name</label> <input
+				<label  for="inputFname"><s:text name="FNAME" /></label> <input
 					type="text" id="inputFName" name="fname" Value="Test"
 					placeholder="Firstname"class="form-control" />
 			</div>
 
 			<div class="form-group">
-				<label  for="inputLname">Last Name</label> <input
+				<label  for="inputLname"><s:text name="LNAME" /></label> <input
 					type="text" id="inputLName" name="lname" Value="Test"
 					placeholder="Lastname" class="form-control"/>
 			</div>
 
 			<div class="form-group">
-				<label  for="inputEmail">Email</label> <input
+				<label  for="inputEmail">Mail</label> <input
 					type="text" name="email" id="inputEmail" Value="Test"
 					placeholder="Email" class="form-control"/>
 			</div>
 
 			<div class="form-group">
-				<label  for="inputStreet">Street</label> <input
+				<label  for="inputStreet"><s:text name="STREET" /></label> <input
 					type="text" name="street" id="inputStreet" Value="Test"
 					placeholder="Street" class="form-control"/>
 			</div>
 
 			<div class="form-group">
-				<label  for="inputZip">Zip code</label> <input
+				<label  for="inputZip"><s:text name="ZIP" /></label> <input
 					type="text" name="zip" id="inputZip" Value="Test"
 					placeholder="Zip code" class="form-control"/>
 			</div>
