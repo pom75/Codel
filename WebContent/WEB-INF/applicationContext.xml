@@ -45,6 +45,7 @@
 			<tx:method name="find*" read-only="true" />
 			<tx:method name="create*" read-only="false" />
 			<tx:method name="add*" read-only="false" />
+			<tx:method name="generate*" read-only="false" />
 			<tx:method name="delete*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
