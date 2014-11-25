@@ -173,16 +173,17 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			Set<PhoneNumber> profiles) {
 		for (PhoneNumber p : profiles) {
 			switch (p.getPhoneKind()) {
+			case HOME_CATEGORY:
+				updatePhone(home, profiles, p);
+				break;
 			case MOBILE_CATEGORY:
 				updatePhone(mobile, profiles, p);
 				break;
 
 			case WORK_CATEGORY:
-				updatePhone(mobile, profiles, p);
+				updatePhone(office, profiles, p);
 				break;
-			case HOME_CATEGORY:
-				updatePhone(mobile, profiles, p);
-				break;
+			
 			}
 		}
 
