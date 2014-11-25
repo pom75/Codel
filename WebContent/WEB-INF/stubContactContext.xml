@@ -9,8 +9,6 @@
 
 	<!-- Fichier de définitions des contacts subs, prépeuplant la base -->
 
-
-
 	<bean id="Address" class="domain.Address" scope="prototype">
 		<property name="street" value="4 rue Jussieu" />
 		<property name="city" value="Paris" />
@@ -49,10 +47,10 @@
 			<value>Jean</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value>Charle</value>
+			<value>Charlie</value>
 		</constructor-arg>
 		<constructor-arg type="String">
-			<value>dzdqdqd</value>
+			<value>alo.bean@toto.cmo</value>
 		</constructor-arg>
 		<constructor-arg>
 			<ref bean="Address" />
@@ -94,7 +92,7 @@
 
 	<bean id="EntrepriseExp2" parent="ContactSetter" class="domain.Entreprise"
 		scope="prototype">
-		<property name="firstname" value="Hello Mdoc" />
+		<property name="firstname" value="Hello Codel" />
 		<property name="lastname" value="" />
 		<property name="email" value="contact@hellomdoc.com" />
 		<property name="address">

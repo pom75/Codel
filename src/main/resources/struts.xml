@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- Internationalisation -->
+	<constant name="struts.custom.i18n.resources" value="global" />
+
+	<!-- Servlet combo http://stackoverflow.com/questions/5295491/how-to-use-servlet-in-struts2/5298740#5298740 -->
+	<constant name="struts.action.excludePattern" value="/login,/logout,/contact/new,/contact/delete,/contact/search,/contact/update" />
+
+	<package name="user" namespace="/User" extends="struts-default">
+		<action name="Login">
+			<result>/login.jsp</result>
+		</action>
+		<action name="Welcome" class="codel.as.action.WelcomeUserAction">
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/login.jsp</result>
+		</action>
+	</package>
+
+</struts>

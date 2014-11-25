@@ -52,6 +52,7 @@ public class AuthentificationFilter implements Filter {
 
 		// http://stackoverflow.com/questions/10551694/how-to-access-a-running-servlet-filter/10551806#10551806
 		ServletContext ctx = getFilterConfig().getServletContext();
+		//FIXME null pointer?
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		// FIXME CHECK!!!
 		if (ctx.getAttribute(AuthUtils.SECRET).equals(

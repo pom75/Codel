@@ -70,9 +70,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 		<!-- Session factory pour les templates!! -->
 		<constructor-arg>
-			<ref bean="DAOPhoneNumber" />
-		</constructor-arg>
-		<constructor-arg>
 			<ref bean="DAOContactGroup" />
 		</constructor-arg>
 	</bean>
@@ -82,10 +79,5 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-
-	<bean id="DAOPhoneNumber" class="codel.as.dao.hibernate.DAOPhoneNumber"
-		scope="singleton">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 
 </beans>

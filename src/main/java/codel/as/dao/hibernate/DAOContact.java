@@ -14,7 +14,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
-import codel.as.dao.IDAOPhoneNumber;
 import codel.as.domain.Address;
 import codel.as.domain.Contact;
 import codel.as.domain.ContactGroup;
@@ -29,12 +28,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
 	private static Logger log = Logger.getLogger("template.DAOContact");
 
-	private IDAOPhoneNumber daoPhone;
 	private IDAOContactGroup daoContactGroup;
 
-	public DAOContact(IDAOPhoneNumber daoPhone, IDAOContactGroup daoContactGroup) {
+	public DAOContact(IDAOContactGroup daoContactGroup) {
 		super();
-		this.daoPhone = daoPhone;
 		this.daoContactGroup = daoContactGroup;
 	}
 
@@ -114,41 +111,29 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	@Override
 	public boolean addContact(String fname, String lname, String email,
-			Address address, Set<PhoneNumber> profiles, int numSiret) {
+			Address address, Set<PhoneNumber> phones, int numSiret) {
 		// FIXME Signature.
 
 		Contact c;
 		if (numSiret <= 0) {
-			c = new Contact(fname, lname, email, address, profiles);
+			c = new Contact(fname, lname, email, address, phones);
 		} else {
-			c = new Entreprise(fname, lname, email, address, profiles, numSiret);
+			c = new Entreprise(fname, lname, email, address, phones, numSiret);
 		}
 
 		getHibernateTemplate().setCheckWriteOperations(false);
-		// FIXME
-		getHibernateTemplate().save(c);
+		// FIXME what is this?
 
-		try {
-
-			/*
-			 * if (numSiret <= 0) { c = new Contact();
-			 * 
-			 * } else { c = new Entreprise(); ((Entreprise)
-			 * c).setNumSiret(numSiret); }
-			 * 
-			 * // FIXME Dis check if cascade if (address != null) {
-			 * getHibernateTemplate().save(address); }
-			 * 
-			 * if (profiles != null) { for (PhoneNumber profile : profiles) {
-			 * profile.setContact(c); c.getProfiles().add(profile);
-			 * getHibernateTemplate().save(profile); } }
-			 */
-
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		if (phones != null) {
+			for (PhoneNumber profile : phones) {
+				profile.setContact(c);
+				c.getProfiles().add(profile);
+				getHibernateTemplate().save(profile);
+			}
 		}
+		getHibernateTemplate().save(c);
+		// CHECK SOME HYBERNATE EXCEPTION
+		return true;
 	}
 
 	@Override
@@ -243,31 +228,54 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	@Override
-	public List<Contact> searchContactByName(String fname, String lname) {
+	public Contact findContactByName(String fname, String lname) {
 		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class);
 		filter.add(Restrictions.like("firstname", fname));
 		filter.add(Restrictions.like("lastname", lname));
-		return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		List<Contact> res = (List<Contact>) getHibernateTemplate()
+				.findByCriteria(filter);
+
+		if (res.isEmpty()) {
+			return null;
+		} else {
+			return res.get(0);
+		}
+	}
+
+	@Override
+	public Entreprise findEntrepriseBySiret(int siret) {
+		DetachedCriteria filter = DetachedCriteria.forClass(Entreprise.class);
+		filter.add(Restrictions.like("numSiret", siret));
+		List<Entreprise> res = (List<Entreprise>) getHibernateTemplate()
+				.findByCriteria(filter);
+		if (res.isEmpty()) {
+			return null;
+		} else {
+			return res.get(0);
+		}
 	}
 
 	@Override
 	public List<Contact> searchContactByPhone(String phone) {
 		// TODO Check
-		return (List<Contact>) getHibernateTemplate().findByNamedParam(
-				"FROM Contact c WHERE (  elements(c.profiles).phoneNumber LIKE :phone   ) ", "phone", phone);
+		return (List<Contact>) getHibernateTemplate()
+				.findByNamedParam(
+						"FROM Contact c WHERE (  elements(c.profiles).phoneNumber LIKE :phone   ) ",
+						"phone", phone);
 	}
 
-	// FIXME Kill??? Update with ours
+	// FIXME Update with ours
 	@Override
 	public boolean generateContacts() {
-		
+
 		Contact premierContact = (Contact) ApplicationContextUtils
 				.getApplicationContext().getBean("ContactExp1");
-		
-		// TODO Check no exist?
-		if(this.searchContactByName(premierContact.getFirstname(), premierContact.getLastname()).isEmpty()){
 
-			//FIXME
+		// TODO Check no exist?
+		if (this.findContactByName(premierContact.getFirstname(),
+				premierContact.getLastname())!= null) {
+
+			// FIXME
 			List<Contact> contacts = new ArrayList<Contact>();
 			List<Address> addresses = new ArrayList<Address>();
 			List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
@@ -308,4 +316,5 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return false;
 		}
 	}
+
 }

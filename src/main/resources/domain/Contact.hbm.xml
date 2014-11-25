@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-	<!--  MAYBE PUT IN codel.as.domain? -->
+<!-- MAYBE PUT IN codel.as.domain? -->
 <hibernate-mapping package="codel.as.domain">
 	<class name="Contact" table="contact_table">
 		<cache usage="read-write" />
@@ -10,18 +10,22 @@
 			<generator class="increment" />
 		</id>
 		<version name="version" access="field" column="VERSION" />
-		<property name="firstname">
-			<column name="FIRSTNAME" />
-		</property>
-		<property name="lastname">
-			<column name="LASTNAME" />
-		</property>
+		<!--http://stackoverflow.com/questions/2741088/how-to-do-multiple-column-uniqueconstraint-in-hbm -->
+		<properties name="name" unique="true">
+			<property name="firstname">
+				<column name="FIRSTNAME" />
+			</property>
+			<property name="lastname">
+				<column name="LASTNAME" />
+			</property>
+		</properties>
 		<property name="email">
 			<column name="EMAIL" />
 		</property>
-		<many-to-one name="address" column="ID_ADDRESS" class="codel.as.domain.Address"
-			unique="true" cascade="all-delete-orphan" lazy="false"></many-to-one>
-			
+		<many-to-one name="address" column="ID_ADDRESS"
+			class="codel.as.domain.Address" unique="true" cascade="all-delete-orphan"
+			lazy="false"></many-to-one>
+
 		<set name="profiles" table="phonenumber_table" inverse="true"
 			cascade="all-delete-orphan" lazy="false">
 			<key column="ID_CONTACT" />
@@ -29,13 +33,14 @@
 		</set>
 		<set name="books" table="contactsbooks_table" lazy="false">
 			<key column="ID_CONTACT" />
-			<many-to-many class="codel.as.domain.ContactGroup" column="ID_CONTACTGROUP" />
+			<many-to-many class="codel.as.domain.ContactGroup"
+				column="ID_CONTACTGROUP" />
 		</set>
 
 		<!-- Définition de la sous classe entreprise -->
-		<joined-subclass name="Entreprise" table="entreprise_table">
+		<joined-subclass name="Entreprise" table="entreprise_table" >
 			<key column="ID_CONTACT" />
-			<property name="numSiret" column="NUMSIRET" />
+			<property name="numSiret" column="NUMSIRET" unique="true"/>
 		</joined-subclass>
 	</class>
 </hibernate-mapping>

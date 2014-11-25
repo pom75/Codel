@@ -8,7 +8,7 @@
 		<id name="groupId" type="long" column="ID_CONTACTGROUP">
 			<generator class="increment" />
 		</id>
-		<property name="groupName">
+		<property name="groupName" unique="true">
 			<column name="GROUPNAME" />
 		</property>  
 		<set name="contacts" table="contactsbooks_table" inverse="true" lazy="false" cascade="save-update">
