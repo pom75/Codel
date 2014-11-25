@@ -12,7 +12,8 @@
 			<result>/login.jsp</result>
 		</action>
 		<action name="Welcome" class="codel.as.action.WelcomeUserAction">
-			<result name="SUCCESS">/welcome_user.jsp</result>
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/login.jsp</result>
 		</action>
 	</package>
 
