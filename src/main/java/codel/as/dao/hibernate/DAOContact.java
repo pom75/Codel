@@ -1,6 +1,7 @@
 package codel.as.dao.hibernate;
 
-import org.springframework.dao.DataAccessExceptions
+import org.springframework.dao.DataAccessException;
+
 import static codel.as.domain.PhoneNumber.MOBILE_CATEGORY;
 import static codel.as.domain.PhoneNumber.WORK_CATEGORY;
 
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
 import codel.as.domain.Address;
@@ -58,7 +60,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					"id", idContact);
 			// FIXME CHECK QUERRY
 			return contactGroup;
-		} catch (DataAccessExceptions e) {
+		} catch (DataAccessException e) {
 			log.warning(e.getMessage());
 			log.warning("idContact: " + idContact + ":");
 			return null;

@@ -11,8 +11,9 @@
 				<li><a href="/Codel/Contact/PrepAdd.action">Ajouter un contact</a></li>
 				<li><a href="/Codel/Contact/PrepRm.action">Supprimer un contact</a></li>
 				<li><a href="/Codel/Contact/PrepUp.action">Mettre un jour un contact</a></li>
-				<li><a href="/Codel/Contact/PrepGet.action">Chercher un contact</a></li>
+				<li><a href="/Codel/Contact/PrepGet.action">Chercher un contact by id</a></li>
 				<li><a href="/Codel/Contact/AllGet.action">Mes contacts</a></li>
+				<li><a href="/Codel/contact/generate">Generer Stub</a></li>
 			</ul>
 		</div>
 	</div>
