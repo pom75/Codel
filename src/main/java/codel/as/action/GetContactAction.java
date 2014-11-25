@@ -135,7 +135,9 @@ public class GetContactAction extends ContactAction{
 			 officeNum 
 			 homeNum;
 			 */
-			 siretNum = ((Entreprise)c).getNumSiret(); // geter setter int may be bug?
+			 
+			 // FIXME Check entreprise
+		//	 siretNum = ((Entreprise)c).getNumSiret(); // geter setter int may be bug?
 			return "SUCCESS";
 		}
 		

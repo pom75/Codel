@@ -123,20 +123,7 @@ public class AddContactAction extends ContactAction {
 			
 			// FIXME: tu devrais extraire une méthode utils dans Phone nombre:
 			// createSet, qui te prends les trois chaine (et ignore les nuls) 
-			Set<PhoneNumber> profiles;
-			if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
-				profiles = null;
-			} else {
-				profiles = new HashSet<PhoneNumber>();
-				if (!homeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(homeNum));
-
-				if (!officeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(officeNum));
-
-				if (!mobileNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(mobileNum));
-			}
+			Set<PhoneNumber> profiles = PhoneNumber.newSet(homeNum,mobileNum,workNum);
 
 			CS.addContact(fname, lname, email, address, profiles, numSiret);
 

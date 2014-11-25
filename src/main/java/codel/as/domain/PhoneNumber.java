@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import codel.as.action.HashSet;
+
 @Entity
 public class PhoneNumber {
 
@@ -39,35 +41,6 @@ public class PhoneNumber {
 		result = prime * result
 				+ ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PhoneNumber other = (PhoneNumber) obj;
-		if (contact == null) {
-			if (other.contact != null)
-				return false;
-		} else if (!contact.equals(other.contact))
-			return false;
-		if (id != other.id)
-			return false;
-		if (phoneKind == null) {
-			if (other.phoneKind != null)
-				return false;
-		} else if (!phoneKind.equals(other.phoneKind))
-			return false;
-		if (phoneNumber == null) {
-			if (other.phoneNumber != null)
-				return false;
-		} else if (!phoneNumber.equals(other.phoneNumber))
-			return false;
-		return true;
 	}
 
 	public PhoneNumber() {
@@ -123,6 +96,27 @@ public class PhoneNumber {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
+	
+	// CHECK
+	public static Set<PhoneNumber> PhoneNumber newSet(String homeNum,String mobileNum,String workNum);{
+				if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
+			return null;
+			// or empyt
+		} else {
+			Set<PhoneNumber> profiles = new HashSet<PhoneNumber>();
+			if (!homeNum.isEmpty())
+				profiles.add(newHome(homeNum));
+
+			if (!officeNum.isEmpty())
+				profiles.add(newHome(officeNum));
+
+			if (!mobileNum.isEmpty())
+				profiles.add(newHome(mobileNum));
+			
+			return profiles;
+		}
+	}
+	
 
 	public static PhoneNumber newHome(String num) {
 		PhoneNumber tmp = new PhoneNumber();
@@ -144,4 +138,30 @@ public class PhoneNumber {
 		tmp.setPhoneNumber(MOBILE_CATEGORY);
 		return tmp;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PhoneNumber other = (PhoneNumber) obj;
+			if (id != other.id)
+			return false;
+		if (phoneKind == null) {
+			if (other.phoneKind != null)
+				return false;
+		} else if (!phoneKind.equals(other.phoneKind))
+			return false;
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		return true;
+	}
+	
+	
 }
