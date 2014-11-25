@@ -1,6 +1,7 @@
 package codel.as.action;
 
 import codel.as.domain.Contact;
+import codel.as.domain.Entreprise;
 
 public class GetSiretContactAction extends ContactAction{
 
@@ -117,7 +118,7 @@ public class GetSiretContactAction extends ContactAction{
 	// all struts logic here
 	public String execute() {
 
-		Contact c = CS.searchContactBySiret(siretNum);
+		Entreprise c = CS.searchContactBySiret(siretNum);
 
 		if(c == null){
 			return "ERROR";

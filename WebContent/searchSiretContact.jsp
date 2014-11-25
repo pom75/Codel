@@ -8,7 +8,7 @@
 			
 			<div class="form-group">
 				<label for="inputSiretNum">Siret</label> <input type="text"
-					id="inputSiretNum" name="numSiret" Value="1" placeholder="Siret Contact"
+					id="inputSiretNum" name="siretNum" Value="1" placeholder="Siret Contact"
 					class="form-control" />
 			</div>
 			
