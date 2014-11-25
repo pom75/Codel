@@ -1,5 +1,6 @@
 package codel.as.dao.hibernate;
 
+import org.springframework.dao.DataAccessExceptions
 import static codel.as.domain.PhoneNumber.MOBILE_CATEGORY;
 import static codel.as.domain.PhoneNumber.WORK_CATEGORY;
 
@@ -12,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-
 import codel.as.dao.IDAOContact;
 import codel.as.dao.IDAOContactGroup;
 import codel.as.domain.Address;
@@ -24,6 +24,7 @@ import codel.as.util.ApplicationContextUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 // FIXME Try togenetic
+// Notes:  converts checked HibernateExceptions into unchecked DataAccessExceptions
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
@@ -57,7 +58,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					"id", idContact);
 			// FIXME CHECK QUERRY
 			return contactGroup;
-		} catch (Exception e) {
+		} catch (DataAccessExceptions e) {
 			log.warning(e.getMessage());
 			log.warning("idContact: " + idContact + ":");
 			return null;
@@ -65,7 +66,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	}
 
 	// FIXME What is it?
-	private void checkAndAdd(String kind, String number, Contact contact,
+	private void updatePhones(String kind, String number, Contact contact,
 			Set<PhoneNumber> profiles) {
 		if (number.equals("")) {
 			for (PhoneNumber p : profiles) {
@@ -91,29 +92,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
-	// FIXME See what is it
-	private boolean keep(String kind, String number, List phoneNumbers) {
-		if (number.isEmpty()) {
-			return true;
-		}
-		if ((!number.isEmpty()) && (phoneNumbers == null)) {
-			return false;
-		}
-		for (Object o : phoneNumbers) {
-			PhoneNumber p = (PhoneNumber) o;
-			if (p.getPhoneKind().equalsIgnoreCase(kind)
-					&& (p.getPhoneNumber().equalsIgnoreCase(number) || (p
-							.getPhoneNumber().contains(number)))) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> phones, int numSiret) {
 		// FIXME Signature.
+		// Preconditions checkying
 
 		Contact c;
 		if (numSiret <= 0) {
@@ -132,9 +116,15 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				getHibernateTemplate().save(profile);
 			}
 		}
+		try {
 		getHibernateTemplate().save(c);
 		// CHECK SOME HYBERNATE EXCEPTION
 		return true;
+		} catch(DataAccessException e){
+			log.info("Could not save contact:" +fname);
+			log.info("Error (probable duplicate): " + e.getLocalizedMessage());
+			return false;
+		}
 	}
 
 	@Override
@@ -167,7 +157,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String country, String home, String office, String mobile,
 			int siretnum) {
 		try {
-			// FIXME JUST CHECL VALUE!!!
+			// FIXME JUST CHECK VALUE!!!
 			log.info("Updating contact. version prev : " + c.getVersion());
 
 			c.setFirstname(fname);
@@ -176,12 +166,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			Address adr = new Address(street, city, zip, country);
 			c.setAddress(adr);
 
-			checkAndAdd(MOBILE_CATEGORY, home, c, c.getProfiles());
-			checkAndAdd(WORK_CATEGORY, office, c, c.getProfiles());
-			checkAndAdd(MOBILE_CATEGORY, mobile, c, c.getProfiles());
+			// FIXME refactor
+			updatePhones(MOBILE_CATEGORY, home, c, c.getProfiles());
+			updatePhones(WORK_CATEGORY, office, c, c.getProfiles());
+			updatePhones(MOBILE_CATEGORY, mobile, c, c.getProfiles());
 
-			if (siretnum == -1) {
+			if (siretnum <= 0) {
 				if (c instanceof Entreprise) {
+					log.info("Num siret vas not valid!....");
 					return false;
 				}
 			} else {

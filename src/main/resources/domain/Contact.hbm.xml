@@ -11,14 +11,15 @@
 		</id>
 		<version name="version" access="field" column="VERSION" />
 		<!--http://stackoverflow.com/questions/2741088/how-to-do-multiple-column-uniqueconstraint-in-hbm -->
-		<!-- DISTEMP <properties name="name" unique="true"> -->
+		 
+		<properties name="name" unique="true"> 
 			<property name="firstname">
 				<column name="FIRSTNAME" />
 			</property>
 			<property name="lastname">
 				<column name="LASTNAME" />
 			</property>
-	<!--	</properties>-->
+		</properties>
 		<property name="email">
 			<column name="EMAIL" />
 		</property>
@@ -37,7 +38,8 @@
 				column="ID_CONTACTGROUP" />
 		</set>
 
-		<!-- Définition de la sous classe entreprise -->
+		<!-- Définition de la sous classe entreprise 
+		stockée dans une table fille à part (juste le siret stocké à part)-->
 		<joined-subclass name="Entreprise" table="entreprise_table" >
 			<key column="ID_CONTACT" />
 			<property name="numSiret" column="NUMSIRET" unique="true"/>
