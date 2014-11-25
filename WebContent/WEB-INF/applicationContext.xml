@@ -238,46 +238,73 @@
 	<bean id="PhoneNumberExp1" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
 		<property name="phoneNumber" value="01010101" />
+		<property name="contact">
+			<ref bean="ContactExp1" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp2" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="0165971256" />
+		<property name="contact">
+			<ref bean="ContactExp1" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp3" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="062482323" />
+		<property name="contact">
+			<ref bean="ContactExp1" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp4" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
 		<property name="phoneNumber" value="028080834" />
+		<property name="contact">
+			<ref bean="ContactExp2" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp5" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="02458234" />
+	 	<property name="contact">
+			<ref bean="ContactExp2" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp6" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="07489254728" />
+		<property name="contact">
+			<ref bean="ContactExp2" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp7" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
 		<property name="phoneNumber" value="090298271" />
+		<property name="contact">
+			<ref bean="ContactExp3" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp8" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="02803030" />
+		<property name="contact">
+			<ref bean="ContactExp3" />
+		</property>
 	</bean>
 
 	<bean id="PhoneNumberExp9" class="codel.as.domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
 		<property name="phoneNumber" value="078387461" />
+		<property name="contact">
+			<ref bean="ContactExp3" />
+		</property>
 	</bean>
 
 </beans>
