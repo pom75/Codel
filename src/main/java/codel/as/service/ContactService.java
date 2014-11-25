@@ -9,9 +9,7 @@ import codel.as.domain.Contact;
 import codel.as.domain.ContactGroup;
 import codel.as.domain.PhoneNumber;
 
-// FIXME Extract interface and make it a bean!m!!
 public class ContactService {
-	// FIXME Static MEthod??
 
 	IDAOContact daoContact;
 
@@ -25,8 +23,8 @@ public class ContactService {
 	public void addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> profiles, int numSiret) {
 		daoContact.addContact(fname, lname, email, address, profiles, numSiret);
-		// MAYBE CHANGE SIGNATURE
-		// MAYBE: send back contact?
+		// FIXME CHANGE SIGNATURE
+		// FIXME: send back contact?
 	}
 
 	public void updateContact(Contact c, String fname, String lname,

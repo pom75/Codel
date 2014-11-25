@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import codel.as.domain.Contact;
 
 /**
- * Servlet implementation class login
- * 
- * 
- * Servlet de test. 
- * 
+ * Servlet implementation de test. Pour facilement invoquer les tests
+ *
+ * Servlet de test.
+ *
  */
 public class TestServlet extends ContactServlet {
 	private static final long serialVersionUID = 1L;
 
 
 	private static Logger log = Logger.getLogger("LoginServlet");
-	private static final String CURRENT = "0";
+	private static final String CURRENT = "all";
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +33,7 @@ public class TestServlet extends ContactServlet {
 
 		if(test == null) test = CURRENT;
 
+		//FIXME Retrieve toString
 
 		switch(test){
 		case "delete":
@@ -46,6 +46,15 @@ public class TestServlet extends ContactServlet {
 		case "add":
 			CS.addContact("toto", "toto", "toto", null, null, 12);
 			break;
+		case "stub":
+			CS.generateContacts();
+			break;
+		case "all":
+		    log.info(CS.getAllContacts());
+		    break;
+		case "nb":
+		    log.info(CS.getAllContacts().size());
+
 
 		default:
 			log.severe("Should not test this: provide a test");
