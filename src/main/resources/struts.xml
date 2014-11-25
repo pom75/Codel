@@ -55,6 +55,22 @@
 		<action name="AllGet" class="codel.as.action.AllGetContactAction">
 			<result name="SUCCESS">/allContact.jsp</result>
 		</action>
+		
+		<action name="PrepGetName">
+			<result>/searchNameContact.jsp</result>
+		</action>
+		<action name="GetName" class="codel.as.action.GetNameContactAction">
+			<result name="SUCCESS">/affContact.jsp</result>
+			<result name="ERROR">/searchNameContact.jsp</result>
+		</action>
+		<action name="PrepGetSiret">
+			<result>/searchSiretContact.jsp</result>
+		</action>
+		<action name="GetSiret" class="codel.as.action.GetSiretContactAction">
+			<result name="SUCCESS">/affContact.jsp</result>
+			<result name="ERROR">/searchSiretContact.jsp</result>
+		</action>
+		
 	</package>
 
 </struts>

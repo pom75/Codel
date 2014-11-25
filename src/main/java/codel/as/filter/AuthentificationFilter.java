@@ -51,19 +51,21 @@ public class AuthentificationFilter implements Filter {
 		log.info(">>>> checking authentification");
 
 		// http://stackoverflow.com/questions/10551694/how-to-access-a-running-servlet-filter/10551806#10551806
+		/*   FIX WHEN USED
+
 		ServletContext ctx = getFilterConfig().getServletContext();
-		//FIXME null pointer?
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		// FIXME CHECK!!!
 		if (ctx.getAttribute(AuthUtils.SECRET).equals(
 				session.getAttribute(AuthUtils.SECRET))) {
+				*/
 			chain.doFilter(request, response);
-		} else {
+			/* 	} else {
 			RequestDispatcher rd = request
 					.getRequestDispatcher(PathUtils.LOGIN_SERVLET);
 			request.setAttribute(PathUtils.ERROR, "You Must login first ;)");
 			rd.forward(request, response);
-		}
+		}*/
 	}
 
 	@Override
