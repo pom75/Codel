@@ -28,7 +28,8 @@ import codel.as.util.ApplicationContextUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 // FIXME Try togenetic
-// Notes:  converts checked HibernateExceptions into unchecked DataAccessExceptions
+// Notes: converts checked HibernateExceptions into unchecked
+// DataAccessExceptions
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	// http://stackoverflow.com/questions/8977121/advantages-of-using-hibernate-callback
@@ -69,34 +70,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 	}
 
-	// FIXME What is it?
-	private void updatePhones(String kind, String number, Contact contact,
-			Set<PhoneNumber> profiles) {
-		if (number.equals("")) {
-			for (PhoneNumber p : profiles) {
-				if (p.getPhoneKind().equalsIgnoreCase(kind)) {
-					getHibernateTemplate().delete(p);
-					break;
-				}
-			}
-		} else {
-			boolean add = true;
-			for (PhoneNumber p : profiles) {
-				if (p.getPhoneKind().equalsIgnoreCase(kind)) {
-					add = false;
-					p.setPhoneNumber(number);
-				}
-			}
-			if (add) {
-
-				PhoneNumber p = new PhoneNumber(kind, number, contact);
-				getHibernateTemplate().save(p);
-				profiles.add(p);
-			}
-		}
-	}
-
-
 	@Override
 	public boolean addContact(String fname, String lname, String email,
 			Address address, Set<PhoneNumber> phones, int numSiret) {
@@ -121,11 +94,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 		}
 		try {
-		getHibernateTemplate().save(c);
-		// CHECK SOME HYBERNATE EXCEPTION
-		return true;
-		} catch(DataAccessException e){
-			log.info("Could not save contact:" +fname);
+			getHibernateTemplate().save(c);
+			// CHECK SOME HYBERNATE EXCEPTION
+			return true;
+		} catch (DataAccessException e) {
+			log.info("Could not save contact:" + fname);
 			log.info("Error (probable duplicate): " + e.getLocalizedMessage());
 			return false;
 		}
@@ -164,17 +137,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			// FIXME JUST CHECK VALUE!!!
 			log.info("Updating contact. version prev : " + c.getVersion());
 
-			c.setFirstname(fname);
-			c.setLastname(lname);
-			c.setEmail(email);
-			Address adr = new Address(street, city, zip, country);
-			c.setAddress(adr);
-
-			// FIXME refactor
-			updatePhones(MOBILE_CATEGORY, home, c, c.getProfiles());
-			updatePhones(WORK_CATEGORY, office, c, c.getProfiles());
-			updatePhones(MOBILE_CATEGORY, mobile, c, c.getProfiles());
-
 			if (siretnum <= 0) {
 				if (c instanceof Entreprise) {
 					log.info("Num siret vas not valid!....");
@@ -188,14 +150,52 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				}
 			}
 
+			c.setFirstname(fname);
+			c.setLastname(lname);
+			c.setEmail(email);
+			Address adr = new Address(street, city, zip, country);
+			c.setAddress(adr);
+
+			updatePhones(home, office, mobile, c.getProfiles());
+			log.warning("Updating all the thing" + c);
 			getHibernateTemplate().update(c);
 
-			System.out.println("version : " + c.getVersion());
+			log.info("version après mise à jour : " + c.getVersion());
 
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	private void updatePhones(String home, String office, String mobile,
+			Set<PhoneNumber> profiles) {
+		for (PhoneNumber p : profiles) {
+			switch (p.getPhoneKind()) {
+			case MOBILE_CATEGORY:
+				updatePhone(mobile, profiles, p);
+				break;
+
+			case WORK_CATEGORY:
+				updatePhone(mobile, profiles, p);
+				break;
+			case HOME_CATEGORY:
+				updatePhone(mobile, profiles, p);
+				break;
+			}
+		}
+
+	}
+
+	private void updatePhone(String home, Set<PhoneNumber> profiles,
+			PhoneNumber p) {
+		if (home != null) {
+			if (home.isEmpty()) {
+				profiles.remove(p);
+			} else {
+				p.setPhoneNumber(home);
+			}
 		}
 	}
 
@@ -281,23 +281,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			contacts.add((Contact) ApplicationContextUtils
 					.getApplicationContext().getBean("EntrepriseExp2"));
 
-			  Session s = getHibernateTemplate().getSessionFactory().getCurrentSession(); // FIXME
-			  
-			  
-			  getHibernateTemplate().execute(new HibernateCallback<Void>() {
+			Session s = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession(); // FIXME
+
+			getHibernateTemplate().execute(new HibernateCallback<Void>() {
 
 				@Override
 				public Void doInHibernate(Session session)
-						throws HibernateException {		
-					for(Contact c : contacts) {
-					    s.save(c);
+						throws HibernateException {
+					for (Contact c : contacts) {
+						s.save(c);
 					}
 					return null;
 				}
 			});
 			// HERE get Session, save
-			
-			  
+
 			return true;
 		} else {
 			log.warning("Stub contact already created");
