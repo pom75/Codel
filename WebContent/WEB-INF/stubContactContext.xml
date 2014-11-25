@@ -37,7 +37,7 @@
 	</bean>
 
 	<bean id="ContactConstrNoArgs" class="domain.Contact" scope="prototype"></bean>
-	<!-- chck -->
+	<!-- check -->
 
 	<bean id="ContactConstrWithArgs" class="domain.Contact" scope="prototype">
 		<constructor-arg type="long">
@@ -59,7 +59,6 @@
 
 	<bean id="Entreprise" parent="ContactSetter" class="domain.Entreprise"
 		scope="prototype">
-		<property name="numSiret" value="0" />
 	</bean>
 
 
@@ -82,9 +81,10 @@
 	</bean>
 
 	<bean id="EntrepriseExp1" class="domain.Entreprise" scope="prototype">
-		<property name="firstname" value="Future Life" />
+		<property name="firstname" value="Hello" />
 		<property name="lastname" value="Allo" />
-		<property name="email" value="contact@futurelife.com" />
+		<property name="email" value="hello.allo@hola.es" />
+		<property name="numSiret" value="123" />
 		<property name="address">
 			<ref bean="AddressExp2" />
 		</property>
@@ -92,12 +92,15 @@
 
 	<bean id="EntrepriseExp2" parent="ContactSetter" class="domain.Entreprise"
 		scope="prototype">
-		<property name="firstname" value="Hello Codel" />
-		<property name="lastname" value="" />
-		<property name="email" value="contact@hellomdoc.com" />
+		<property name="firstname" value="L'entreprise" />hn
+		<property name="lastname" value="JoSmith" />
+		<property name="email" value="john@smith.com" />
+		<property name="numSiret" value="2222" />
 		<property name="address">
 			<ref bean="AddressExp3" />
 		</property>
+<!-- profiles -->
+
 	</bean>
 
 	<bean id="AddressExp1" class="domain.Address" scope="prototype">
@@ -108,42 +111,42 @@
 	</bean>
 
 	<bean id="AddressExp2" class="domain.Address" scope="prototype">
-		<property name="street" value="221B Baker Street" />
-		<property name="city" value="London" />
-		<property name="zip" value="NW16XE" />
-		<property name="country" value="England" />
+		<property name="street" value="22 rue que tal" />
+		<property name="city" value="Madrid" />
+		<property name="zip" value="Hola33" />
+		<property name="country" value="Espagne" />
 	</bean>
 
 	<bean id="AddressExp3" class="domain.Address" scope="prototype">
-		<property name="street" value="29 Main Street" />
-		<property name="city" value="New York" />
-		<property name="zip" value="02138" />
+		<property name="street" value="22 Toto Street" />
+		<property name="city" value="Los Angeles" />
+		<property name="zip" value="22442" />
 		<property name="country" value="USA" />
 	</bean>
 
 	<bean id="PhoneNumberExp1" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
-		<property name="phoneNumber" value="0189625412" />
+		<property name="phoneNumber" value="01010101" />
 	</bean>
 
 	<bean id="PhoneNumberExp2" class="domain.PhoneNumber" scope="prototype">
-		<property name="phoneKind" value="office" />
+		<property name="phoneKind" value="work" />
 		<property name="phoneNumber" value="0165971256" />
 	</bean>
 
 	<bean id="PhoneNumberExp3" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
-		<property name="phoneNumber" value="0624859715" />
+		<property name="phoneNumber" value="062482323" />
 	</bean>
 
 	<bean id="PhoneNumberExp4" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
-		<property name="phoneNumber" value="0289758038" />
+		<property name="phoneNumber" value="028080834" />
 	</bean>
 
 	<bean id="PhoneNumberExp5" class="domain.PhoneNumber" scope="prototype">
-		<property name="phoneKind" value="office" />
-		<property name="phoneNumber" value="0245895924" />
+		<property name="phoneKind" value="home" />
+		<property name="phoneNumber" value="0245823°4" />
 	</bean>
 
 	<bean id="PhoneNumberExp6" class="domain.PhoneNumber" scope="prototype">
@@ -153,17 +156,17 @@
 
 	<bean id="PhoneNumberExp7" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="home" />
-		<property name="phoneNumber" value="(914)246-8051" />
+		<property name="phoneNumber" value="090298271" />
 	</bean>
 
 	<bean id="PhoneNumberExp8" class="domain.PhoneNumber" scope="prototype">
-		<property name="phoneKind" value="office" />
-		<property name="phoneNumber" value="(516)712-6528" />
+		<property name="phoneKind" value="work" />
+		<property name="phoneNumber" value="02803030" />
 	</bean>
 
 	<bean id="PhoneNumberExp9" class="domain.PhoneNumber" scope="prototype">
 		<property name="phoneKind" value="mobile" />
-		<property name="phoneNumber" value="773-338-7786" />
+		<property name="phoneNumber" value="078387461" />
 	</bean>
 
 </beans>

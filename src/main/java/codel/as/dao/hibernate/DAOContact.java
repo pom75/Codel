@@ -269,7 +269,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public boolean generateContacts() {
 
 		Contact premierContact = (Contact) ApplicationContextUtils
-				.getApplicationContext().getBean("ContactExp1");
+				.getApplicationContext().getBean("ContactConstructor");
 
 		// TODO Check no exist?
 		if (this.findContactByName(premierContact.getFirstname(),
@@ -277,39 +277,20 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 			// FIXME
 			List<Contact> contacts = new ArrayList<Contact>();
-			List<Address> addresses = new ArrayList<Address>();
-			List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 
 			contacts.add(premierContact);
 			contacts.add((Contact) ApplicationContextUtils
-					.getApplicationContext().getBean("L'entreprise"));
+					.getApplicationContext().getBean("EntrepriseExp1"));
 			contacts.add((Contact) ApplicationContextUtils
 					.getApplicationContext().getBean("EntrepriseExp2"));
 
-			((Entreprise) contacts.get(1)).setNumSiret(999999999);
-			((Entreprise) contacts.get(2)).setNumSiret(888888888);
+			// HERE get Session, save
+			for(Contact c : contacts) {
+			    Session s = getSession(); // FIXME
+			    s.save(c);
+}
 
-			for (int i = 1; i <= 3; i++) {
-				addresses.add((Address) ApplicationContextUtils
-						.getApplicationContext().getBean("AddressExp" + i));
-				contacts.get(i - 1).setAddress(addresses.get(i - 1));
-				getHibernateTemplate().save(contacts.get(i - 1));
-			}
 
-			for (int i = 1; i <= 9; i++) {
-				phoneNumbers.add((PhoneNumber) ApplicationContextUtils
-						.getApplicationContext().getBean("PhoneNumberExp" + i));
-			}
-			// Good idea, indexed names of bean!
-
-			for (int i = 0; i <= 2; i++) {
-				for (int j = 0; j < 3; j++) {
-					phoneNumbers.get(j + 3 * i).setContact(contacts.get(i));
-					contacts.get(i).getProfiles()
-							.add(phoneNumbers.get(j + 3 * i));
-					getHibernateTemplate().save(phoneNumbers.get(j + 3 * i));
-				}
-			}
 			return true;
 		} else {
 			log.warning("Stub contact already created");
