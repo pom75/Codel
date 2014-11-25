@@ -6,7 +6,7 @@
 		
 		<!-- TODO message about error or stuff being done! -->
 		
-		<form action="contact/new" method="post" class="form-horizontal">
+		<form action="Add"" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label  for="inputSiretNum">Siret
 					number</label> <input type="text" id="inputSiretNum" name="siretNum"
@@ -57,21 +57,21 @@
 
 			<div class="form-group">
 				<label  for="inputCountry">Home</label> <input
-					type="text" name="homepn" id="inputHomepn" Value=""
+					type="text" name="homeNum" id="inputHomepn" Value=""
 					placeholder="Home phone number"class="form-control" />
 
 			</div>
 
 			<div class="form-group">
 				<label  for="inputOfficepn">Office</label> <input
-					type="text" name="officepn" id="inputOfficepn" Value="010101"
+					type="text" name="officeNum" id="inputOfficepn" Value="010101"
 					placeholder="Office phone number"  class="form-control"/>
 			</div>
 
 
 			<div class="form-group">
 				<label  for="inputOfficepn">Mobile</label> <input
-					type="text" name="mobilepn" id="inputOfficepn" Value="010101"
+					type="text" name="mobileNum" id="inputOfficepn" Value="010101"
 					placeholder="Mobile phone number" class="form-control"/>
 			</div>
 

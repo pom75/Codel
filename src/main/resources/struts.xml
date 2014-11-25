@@ -21,5 +21,36 @@
 			<result name="ERROR">/login.jsp</result>
 		</action>
 	</package>
+	
+	<package name="contact" namespace="/Contact" extends="struts-default">
+		<action name="PrepAdd">
+			<result>/addContact.jsp</result>
+		</action>
+		<action name="Add" class="codel.as.action.AddContactAction">
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/addContact.jsp</result>
+		</action>
+		<action name="PrepRm">
+			<result>/addContact.jsp</result>
+		</action>
+		<action name="RM" class="codel.as.action.RMContactAction">
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/deleteContact.jsp</result>
+		</action>
+		<action name="PrepUp">
+			<result>/addContact.jsp</result>
+		</action>
+		<action name="Up" class="codel.as.action.UpContactAction">
+			<result name="SUCCESS">/accueil.jsp</result>
+			<result name="ERROR">/updateContact.jsp</result>
+		</action>
+		<action name="PrepGet">
+			<result>/addContact.jsp</result>
+		</action>
+		<action name="Get" class="codel.as.action.GetContactAction">
+			<result name="SUCCESS">/affContact.jsp</result>
+			<result name="ERROR">/searchContact.jsp</result>
+		</action>
+	</package>
 
 </struts>

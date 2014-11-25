@@ -4,7 +4,7 @@
 	<div class="container">
 		<h2>Chercher un contact</h2>
 		
-		<form action="contact/search" method="post" class="form-horizontal">
+		<form action="Get" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label for="inputSiretNum">First Name</label> <input type="text"
 					id="inputSiretNum" name="fname" Value="Jean" placeholder="First Name Contact"
@@ -30,5 +30,7 @@
 			
 			<button type="submit" class="btn btn-primary">Search</button>
 		</form>
+		
+		
 	</div>
 </t:wrapper>

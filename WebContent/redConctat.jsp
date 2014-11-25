@@ -1,3 +1,3 @@
 <% 
-  response.sendRedirect("/Codel/Contact/PrepAdd.action");
+  response.sendRedirect("/Codel/Contact/Prepadd.action");
 %>

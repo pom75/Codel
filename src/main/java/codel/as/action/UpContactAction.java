@@ -3,11 +3,13 @@ package codel.as.action;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import codel.as.domain.Address;
+import codel.as.domain.Contact;
 import codel.as.domain.PhoneNumber;
 
-public class AddContactAction extends ContactAction {
+public class UpContactAction extends ContactAction {
+	
+	private String id;
 	private String fname;
 	private String lname;
 	private String email;
@@ -19,6 +21,14 @@ public class AddContactAction extends ContactAction {
 	private String officeNum;
 	private String homeNum;
 	private String siretNum;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getFname() {
 		return fname;
@@ -110,38 +120,51 @@ public class AddContactAction extends ContactAction {
 
 	// all struts logic here
 	public String execute() {
-		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()) {
+		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || id.isEmpty()) {
 			return "ERROR";
 		} else {
-			// FIXME PAs eu le temps d'extraire addresse.
-			
-			int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
-			Address address = (street.isEmpty() && zip.isEmpty()
-					&& city.isEmpty() && country.isEmpty()) ? null
-					: new Address(street, city, zip, country);
-			
-			
-			// FIXME: tu devrais extraire une méthode utils dans Phone nombre:
-			// createSet, qui te prends les trois chaine (et ignore les nuls) 
-			Set<PhoneNumber> profiles;
-			if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
-				profiles = null;
-			} else {
-				profiles = new HashSet<PhoneNumber>();
-				if (!homeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(homeNum));
+			try{
+				// FIXME PAs eu le temps d'extraire addresse.
 
-				if (!officeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(officeNum));
+				Long idL = Long.valueOf(id);
+				int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
+				Address address = (street.isEmpty() && zip.isEmpty()
+						&& city.isEmpty() && country.isEmpty()) ? null
+								: new Address(street, city, zip, country);
 
-				if (!mobileNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(mobileNum));
+
+				// FIXME: tu devrais extraire une méthode utils dans Phone nombre:
+				// createSet, qui te prends les trois chaine (et ignore les nuls) 
+				Set<PhoneNumber> profiles;
+				if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
+					profiles = null;
+				} else {
+					profiles = new HashSet<PhoneNumber>();
+					if (!homeNum.isEmpty())
+						profiles.add(PhoneNumber.newHome(homeNum));
+
+					if (!officeNum.isEmpty())
+						profiles.add(PhoneNumber.newHome(officeNum));
+
+					if (!mobileNum.isEmpty())
+						profiles.add(PhoneNumber.newHome(mobileNum));
+				}
+
+				Contact c = new Contact();
+				c.setAddress(address);
+				c.setEmail(email);
+				c.setId(idL);
+				c.setLastname(lname);
+				c.setFirstname(fname);
+
+				CS.updateContact(c, fname, lname, email, street, zip,
+						city, country, homeNum, officeNum, mobileNum, numSiret);
+				return "SUCCESS";
+			}catch(Exception e){
+				return "ERROR";
 			}
-
-			CS.addContact(fname, lname, email, address, profiles, numSiret);
-
-			return "SUCCESS";
 		}
 
 	}
+
 }

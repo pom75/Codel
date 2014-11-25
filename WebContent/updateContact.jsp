@@ -2,9 +2,9 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:wrapper>
 	<div class="container">
-		<h2>Ajout d'un nouveau contact</h2>
+		<h2>Mise a jour d'un contact</h2>
 		
-		<form action="contact/update" method="post" class="form-horizontal">
+		<form action="Up" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label  for="inputId">Id
 					</label> <input type="text" id="inputId" name="id"

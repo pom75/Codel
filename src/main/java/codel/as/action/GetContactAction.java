@@ -1,13 +1,11 @@
 package codel.as.action;
 
-import java.util.HashSet;
-import java.util.Set;
+import codel.as.domain.Contact;
+import codel.as.domain.Entreprise;
 
-import org.apache.commons.lang3.StringUtils;
-import codel.as.domain.Address;
-import codel.as.domain.PhoneNumber;
+public class GetContactAction extends ContactAction{
 
-public class AddContactAction extends ContactAction {
+	private String id;
 	private String fname;
 	private String lname;
 	private String email;
@@ -18,7 +16,7 @@ public class AddContactAction extends ContactAction {
 	private String mobileNum;
 	private String officeNum;
 	private String homeNum;
-	private String siretNum;
+	private int siretNum;
 
 	public String getFname() {
 		return fname;
@@ -100,48 +98,47 @@ public class AddContactAction extends ContactAction {
 		this.homeNum = homeNum;
 	}
 
-	public String getSiretNum() {
+	public int getSiretNum() {
 		return siretNum;
 	}
 
-	public void setSiretNum(String siretNum) {
+	public void setSiretNum(int siretNum) {
 		this.siretNum = siretNum;
+	}
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	// all struts logic here
 	public String execute() {
-		if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()) {
+
+		Contact c = CS.getContact(Long.valueOf(id)); //contact + num ?
+
+		if(c == null){
 			return "ERROR";
-		} else {
-			// FIXME PAs eu le temps d'extraire addresse.
-			
-			int numSiret = (siretNum == null) ? -1 : Integer.valueOf(siretNum);
-			Address address = (street.isEmpty() && zip.isEmpty()
-					&& city.isEmpty() && country.isEmpty()) ? null
-					: new Address(street, city, zip, country);
-			
-			
-			// FIXME: tu devrais extraire une méthode utils dans Phone nombre:
-			// createSet, qui te prends les trois chaine (et ignore les nuls) 
-			Set<PhoneNumber> profiles;
-			if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
-				profiles = null;
-			} else {
-				profiles = new HashSet<PhoneNumber>();
-				if (!homeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(homeNum));
-
-				if (!officeNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(officeNum));
-
-				if (!mobileNum.isEmpty())
-					profiles.add(PhoneNumber.newHome(mobileNum));
-			}
-
-			CS.addContact(fname, lname, email, address, profiles, numSiret);
-
+		}else {
+			 fname = c.getFirstname();
+			 lname = c.getLastname();
+			 email = c.getEmail();
+			 street = c.getAddress().getStreet();
+			 city = c.getAddress().getCity();
+			 zip = c.getAddress().getZip();
+			 country = c.getAddress().getCountry();
+			 /* TODO How?
+			 mobileNum 
+			 officeNum 
+			 homeNum;
+			 */
+			 siretNum = ((Entreprise)c).getNumSiret(); // geter setter int may be bug?
 			return "SUCCESS";
 		}
-
+		
 	}
+
 }

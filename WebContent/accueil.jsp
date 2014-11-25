@@ -8,10 +8,10 @@
 		<div>
 			<ul class="nav nav-pills nav-stacked span3">
 				<!--  Rather use buttun style ;) -->
-				<li><a href="/redContact.jsp">Ajouter un contact</a></li>
-				<li><a href="removeContact.jsp">Supprimer un contact</a></li>
-				<li><a href="updateContact.jsp">Mettre un jour un contact</a></li>
-				<li><a href="searchContact.jsp">Chercher un contact</a></li>
+				<li><a href="/Codel/Contact/PrepAdd.action">Ajouter un contact</a></li>
+				<li><a href="/Codel/Contact/PrepRm.action">Supprimer un contact</a></li>
+				<li><a href="/Codel/Contact/PrepUp.action">Mettre un jour un contact</a></li>
+				<li><a href="/Codel/Contact/PrepGet.action">Chercher un contact</a></li>
 			</ul>
 		</div>
 	</div>
