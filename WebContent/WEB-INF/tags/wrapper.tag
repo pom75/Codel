@@ -17,6 +17,12 @@
 
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<footer>
+	<p> <s:text name="language.select" />
+	<s:a href="%{localeEN}" >En</s:a>
+    <s:a href="%{localeFR}" >Fr</s:a>
+    </p>
+	</footer>
 	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
