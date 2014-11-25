@@ -1,4 +1,6 @@
 <%@tag description="Page template!!" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
 <html>
 <head>

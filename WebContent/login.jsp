@@ -1,11 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<!DOCTYPE html>
-<html>
-<!--  On passera ptetre après à une tuile -->
-<%@include file="templates/header.jsp"%>
-<body>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:wrapper>
 	<div class="container">
 	<h2>Connexion</h2>
  
@@ -31,5 +26,4 @@
 			<s:button type="reset" class="btn btn-default">Reset</s:button>
 		</s:form>
 	</div>
-</body>
-</html>
+</t:wrapper>

@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:wrapper>
+
 	<div class="container">
 		<h2>Connexion</h2>
 		<form method="post" action="login" class="form-horizontal">
@@ -18,4 +18,3 @@
 			<button type="reset" class="btn btn-default">Reset</button>
 		</form>
 	</div>
-</t:wrapper>

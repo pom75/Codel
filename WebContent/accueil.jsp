@@ -1,9 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<%@include file="templates/header.jsp"%>
-<body>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:wrapper>
 	<div class="container">
 		<h2>Sommaire :</h2>
 		<div>
@@ -16,5 +13,4 @@
 			</ul>
 		</div>
 	</div>
-</body>
-</html>
+</t:wrapper>

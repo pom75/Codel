@@ -1,9 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<%@include file="templates/header.jsp"%>
-<body>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:wrapper>
 	<div class="container">
 		<h2>Chercher un contact</h2>
 		
@@ -34,5 +31,4 @@
 			<button type="submit" class="btn btn-primary">Search</button>
 		</form>
 	</div>
-</body>
-</html>
+</t:wrapper>
