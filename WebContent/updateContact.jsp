@@ -14,7 +14,7 @@
 			<div class="form-group">
 				<label  for="inputSiretNum"><s:text name="SIRC" />
 					</label> <input type="text" id="inputSiretNum" name="siretNum"
-					Value="123456789" placeholder="Siret number" class="form-control"/>
+					Value="" placeholder="Siret number" class="form-control"/>
 			</div>
 
 			<div class="form-group">

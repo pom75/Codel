@@ -158,12 +158,13 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 			updatePhones(home, office, mobile, c.getProfiles());
 			log.warning("Updating all the thing" + c);
-			getHibernateTemplate().update(c);
+			getHibernateTemplate().merge(c);
 
 			log.info("version après mise à jour : " + c.getVersion());
 
 			return true;
 		} catch (Exception e) {
+			log.severe("Error happen while updating");
 			e.printStackTrace();
 			return false;
 		}
@@ -173,7 +174,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			Set<PhoneNumber> profiles) {
 		for (PhoneNumber p : profiles) {
 			switch (p.getPhoneKind()) {
-			case HOME_CATEGORY:
+			case PhoneNumber.HOME_CATEGORY:
 				updatePhone(home, profiles, p);
 				break;
 			case MOBILE_CATEGORY:
