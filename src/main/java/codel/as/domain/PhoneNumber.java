@@ -94,14 +94,14 @@ public class PhoneNumber {
 			// or empyt
 		} else {
 			Set<PhoneNumber> profiles = new HashSet<PhoneNumber>();
-			if (!homeNum.isEmpty())
+			if (homeNum !=null && !homeNum.isEmpty())
 				profiles.add(newHome(homeNum));
 
-			if (!officeNum.isEmpty())
-				profiles.add(newHome(officeNum));
+			if (officeNum !=null && !officeNum.isEmpty())
+				profiles.add(newWork(officeNum));
 
-			if (!mobileNum.isEmpty())
-				profiles.add(newHome(mobileNum));
+			if (mobileNum !=null && !mobileNum.isEmpty())
+				profiles.add(newMobile(mobileNum));
 			
 			return profiles;
 		}
