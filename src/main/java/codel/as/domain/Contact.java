@@ -3,6 +3,7 @@ package codel.as.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+// LATER: JPA annotate it.
 public class Contact {
 
 	protected long id;
@@ -171,5 +172,19 @@ public class Contact {
 			return false;
 
 		return true;
+	}
+
+	//FIXME check
+	public String toHtmlFragment() {
+		// Ugly mais isolé compris....
+		return 	 "<p>Nom : "+getLastname()+ "</p>"+	
+				"<p>Prenom : "+getFirstname()+ "</p>"+
+				"<p>Email : "+getEmail()+ "</p>"+
+				"<p>City : "+getAddress().getCity()+ "</p>"+
+				"<p>Zip : "+getAddress().getZip()+ "</p>"+
+				"<p>Country : "+getAddress().getCountry()+ "<p/><br/>";
+;	
+		
+		
 	}
 }
