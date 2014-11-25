@@ -1,7 +1,6 @@
 package codel.as.action;
 
 import codel.as.domain.Contact;
-import codel.as.domain.Entreprise;
 
 public class GetContactAction extends ContactAction{
 

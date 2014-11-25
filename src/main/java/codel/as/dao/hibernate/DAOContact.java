@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import codel.as.dao.IDAOContact;
@@ -268,7 +270,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 		// TODO Check no exist?
 		if (this.findContactByName(premierContact.getFirstname(),
-				premierContact.getLastname())!= null) {
+				premierContact.getLastname()) == null) {
 
 			// FIXME
 			List<Contact> contacts = new ArrayList<Contact>();
@@ -281,12 +283,21 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 			  Session s = getHibernateTemplate().getSessionFactory().getCurrentSession(); // FIXME
 			  
+			  
+			  getHibernateTemplate().execute(new HibernateCallback<Void>() {
+
+				@Override
+				public Void doInHibernate(Session session)
+						throws HibernateException {		
+					for(Contact c : contacts) {
+					    s.save(c);
+					}
+					return null;
+				}
+			});
 			// HERE get Session, save
-			for(Contact c : contacts) {
-			    s.save(c);
-}
-
-
+			
+			  
 			return true;
 		} else {
 			log.warning("Stub contact already created");

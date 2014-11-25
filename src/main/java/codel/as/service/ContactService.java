@@ -7,6 +7,7 @@ import codel.as.dao.IDAOContact;
 import codel.as.domain.Address;
 import codel.as.domain.Contact;
 import codel.as.domain.ContactGroup;
+import codel.as.domain.Entreprise;
 import codel.as.domain.PhoneNumber;
 
 public class ContactService {
@@ -54,6 +55,10 @@ public class ContactService {
 
 	public List<Contact> searchContactByEmail(String email) {
 		return daoContact.searchContactByEmail(email);
+	}
+	
+	public Entreprise searchContactBySiret(int siret) {
+		return daoContact. findEntrepriseBySiret(siret);
 	}
 
 	public Contact searchContactByName(String fname, String lname) {

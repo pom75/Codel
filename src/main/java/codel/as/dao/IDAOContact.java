@@ -29,6 +29,7 @@ public interface IDAOContact {
 	
 	public Entreprise findEntrepriseBySiret (int siret);
 	
+	// FIXM renamed
 	public List<Contact> searchContactByPhone ( final String phone);
 	
 	// MAYBE JUST AN UPDATE, SAVE OPERATION??

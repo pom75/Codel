@@ -139,9 +139,6 @@
 
 
 	<bean id="ContactExp1" class="codel.as.domain.Contact" scope="prototype">
-		<constructor-arg type="long">
-			<value>0</value>
-		</constructor-arg>
 		<constructor-arg type="String">
 			<value>Jules</value>
 		</constructor-arg>
