@@ -264,7 +264,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public boolean generateContacts() {
 
 		Contact premierContact = (Contact) ApplicationContextUtils
-				.getApplicationContext().getBean("ContactConstructor");
+				.getApplicationContext().getBean("ContactExp1");
 
 		// TODO Check no exist?
 		if (this.findContactByName(premierContact.getFirstname(),
