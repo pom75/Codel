@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -284,9 +285,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			contacts.add((Contact) ApplicationContextUtils
 					.getApplicationContext().getBean("EntrepriseExp2"));
 
+			  Session s = getHibernateTemplate().getSessionFactory().getCurrentSession(); // FIXME
+			  
 			// HERE get Session, save
 			for(Contact c : contacts) {
-			    Session s = getSession(); // FIXME
 			    s.save(c);
 }
 

@@ -182,8 +182,7 @@ public class Contact {
 				"<p>Email : "+getEmail()+ "</p>"+
 				"<p>City : "+getAddress().getCity()+ "</p>"+
 				"<p>Zip : "+getAddress().getZip()+ "</p>"+
-				"<p>Country : "+getAddress().getCountry()+ "<p/><br/>";
-;	
+				"<p>Country : "+getAddress().getCountry()+ "<p/><br/>";	
 		
 		
 	}

@@ -17,7 +17,7 @@ public class ContactLogger {
 
 	public void log(String firstname, String lastname) {
 
-		log.info("Attempt to create new user "+ firstname+", "+ lastname)	
+		log.info("Attempt to create new user "+ firstname+", "+ lastname);	
 		
 	}
 }

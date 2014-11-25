@@ -1,11 +1,12 @@
 package codel.as.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import codel.as.action.HashSet;
 
 @Entity
 public class PhoneNumber {
@@ -30,18 +31,7 @@ public class PhoneNumber {
 				+ ", phoneNumber=" + phoneNumber + ", contact=" + contact + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((contact == null) ? 0 : contact.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result
-				+ ((phoneKind == null) ? 0 : phoneKind.hashCode());
-		result = prime * result
-				+ ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		return result;
-	}
+	
 
 	public PhoneNumber() {
 	}
@@ -98,7 +88,7 @@ public class PhoneNumber {
 	}
 	
 	// CHECK
-	public static Set<PhoneNumber> PhoneNumber newSet(String homeNum,String mobileNum,String workNum);{
+	public static Set<PhoneNumber>  newSet(String homeNum,String mobileNum, String officeNum){
 				if (homeNum.isEmpty() && officeNum.isEmpty() && mobileNum.isEmpty()) {
 			return null;
 			// or empyt
@@ -163,5 +153,16 @@ public class PhoneNumber {
 		return true;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((phoneKind == null) ? 0 : phoneKind.hashCode());
+		result = prime * result
+				+ ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		return result;
+	}
 	
 }

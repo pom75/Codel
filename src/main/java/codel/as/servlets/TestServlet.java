@@ -50,10 +50,10 @@ public class TestServlet extends ContactServlet {
 			CS.generateContacts();
 			break;
 		case "all":
-		    log.info(CS.getAllContacts());
+		    log.info(CS.getAllContacts().toString());
 		    break;
 		case "nb":
-		    log.info(CS.getAllContacts().size());
+		    log.info(CS.getAllContacts().size()+"");
 
 
 		default:
