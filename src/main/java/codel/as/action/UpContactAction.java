@@ -151,6 +151,7 @@ public class UpContactAction extends ContactAction {
 						profiles.add(PhoneNumber.newHome(mobileNum));
 				}
 
+				//FIXME. should have older one....
 				Contact c = new Contact();
 				c.setAddress(address);
 				c.setEmail(email);

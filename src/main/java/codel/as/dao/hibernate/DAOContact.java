@@ -134,8 +134,17 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String country, String home, String office, String mobile,
 			int siretnum) {
 		try {
-			// FIXME JUST CHECK VALUE!!!
+
 			log.info("Updating contact. version prev : " + c.getVersion());
+
+			// TODO: devrait conserver etat du contact courrant
+			// Contact persisted = getHibernateTemplate().get(Contact.class,
+			// c.getId());
+			//
+			// if(c.getVersion() != persisted.getVersion()){
+			// throw new DataAccessException("Concurrency exception");
+			// log.info("Tentative de modification alors que l'objet a été modifié entretemps");
+			// }
 
 			if (siretnum <= 0) {
 				if (c instanceof Entreprise) {
@@ -184,7 +193,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			case WORK_CATEGORY:
 				updatePhone(office, profiles, p);
 				break;
-			
+
 			}
 		}
 
